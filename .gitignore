@@ -2,6 +2,7 @@
 .env
 .env.local
 .env.*.local
+.env.production
 
 # Dependencies
 node_modules/
@@ -41,7 +42,6 @@ lerna-debug.log*
 # OS
 Thumbs.db
 .DS_Store
-.env.*.local
 
 # Build outputs
 *.tgz
@@ -77,13 +77,6 @@ wheels/
 .installed.cfg
 *.egg
 
-# Yarn
-.yarn/cache/
-.yarn/unplugged/
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-
 # Local development
 .local/
 tmp/
@@ -106,3 +99,6 @@ redis_data/
 # IDE Settings
 .prettierrc.local
 .eslintrc.local
+
+# Heroku
+.env

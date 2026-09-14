@@ -1,0 +1,71 @@
+{
+  "name": "executive-assistant-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Executive Assistant AI Platform",
+  "main": "src/index.js",
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest --coverage",
+    "lint": "eslint src/**/*.js",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "start:worker": "node src/workers/emailSyncWorker.js"
+  },
+  "keywords": [
+    "executive-assistant",
+    "ai",
+    "scheduling",
+    "meetings",
+    "transcription"
+  ],
+  "author": "Executive Assistant AI Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-ratelimit": "^7.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-microsoft": "^1.6.0",
+    "pg": "^8.10.0",
+    "redis": "^4.6.10",
+    "sequelize": "^6.33.0",
+    "ioredis": "^5.3.2",
+    "amqplib": "^0.10.3",
+    "bull": "^4.11.4",
+    "axios": "^1.5.0",
+    "lodash": "^4.17.21",
+    "joi": "^17.10.2",
+    "winston": "^3.11.0",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.7.2",
+    "stripe": "^13.8.0",
+    "twilio": "^3.85.0",
+    "nodemailer": "^6.9.5",
+    "openai": "^4.14.1",
+    "@anthropic-ai/sdk": "^0.9.0",
+    "googleapis": "^118.0.0",
+    "@deepgram/sdk": "^3.0.0",
+    "zoom-us-api-nodejs": "^1.0.0",
+    "express-async-errors": "^3.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.50.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "prettier": "^3.0.3"
+  }
+}
