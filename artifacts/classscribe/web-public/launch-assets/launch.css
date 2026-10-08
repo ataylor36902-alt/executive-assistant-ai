@@ -1,0 +1,31 @@
+@font-face{font-family:"DejaVu Sans";src:url(DejaVuSans.ttf);font-weight:400;font-display:swap}
+@font-face{font-family:"DejaVu Sans";src:url(DejaVuSans-Bold.ttf);font-weight:700;font-display:swap}
+:root{--bg:#0a2b21;--bg2:#0f3a2d;--mint:#2a9d78;--ink:#fff;--soft:#cfe5dc}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:radial-gradient(circle at 80% 10%,var(--bg2),var(--bg) 60%);color:var(--ink);font-family:"DejaVu Sans",Verdana,sans-serif;line-height:1.55}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+header{padding:22px 0}
+header img{height:36px;width:auto;display:block}
+.hero{display:grid;gap:36px;padding:24px 0 56px;align-items:center}
+h1{font-size:clamp(2.1rem,7vw,3.8rem);line-height:1.08;margin:0 0 16px}
+.tag{color:var(--soft);font-size:1.1rem;margin:0 0 24px}
+.cta{display:inline-block;background:#fff;color:var(--bg);font-weight:700;text-decoration:none;padding:16px 28px;border-radius:14px;font-size:1.05rem;transition:transform .2s}
+.cta:hover{transform:translateY(-2px)}
+.cta:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.fine{font-size:.85rem;color:var(--soft);margin-top:14px}
+.phone{margin:0}
+.phone img{width:100%;max-width:440px;height:auto;display:block;margin:0 auto;border-radius:20px}
+.phone figcaption{font-size:.8rem;color:var(--soft);text-align:center;margin-top:10px}
+.steps{display:grid;gap:14px;padding:0 0 48px;margin:0;list-style:none}
+.steps li{background:rgba(255,255,255,.07);border-radius:16px;padding:20px}
+.steps strong{display:block;font-size:1.2rem;margin-bottom:4px}
+.plans{background:rgba(255,255,255,.07);border-radius:18px;padding:26px;margin-bottom:48px}
+.plans h2{margin:0 0 10px}
+.plans p{margin:8px 0;color:var(--soft)}
+.final{text-align:center;padding:0 0 56px}
+.final h2{font-size:1.8rem;margin:0 0 20px}
+footer{border-top:1px solid rgba(255,255,255,.15);padding:22px 0 36px;font-size:.85rem;color:var(--soft)}
+footer a{margin-right:18px}
+@media(min-width:800px){.hero{grid-template-columns:1.1fr .9fr}.steps{grid-template-columns:repeat(3,1fr)}}
+@media(prefers-reduced-motion:reduce){.cta{transition:none}}

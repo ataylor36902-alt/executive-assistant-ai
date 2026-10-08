@@ -1,0 +1,12 @@
+# TEMPLATE ONLY: for an independently published, non-artifact Scheduled project.
+# Do not copy over this app's .replit or change its Autoscale deployment.
+# Copy the required workspace source/dependencies into the separate project;
+# remove artifact registration metadata ONLY in that separate scheduler copy.
+# Owner must confirm schedule timezone UTC in Publishing before activation.
+# Publishing UI schedule: 17 3 * * * ; timezone UTC ; job timeout 3300 seconds.
+# Schedule/timezone/timeout keys are not documented in the .replit reference;
+# enter them in Publishing rather than relying on unverified TOML fields.
+[deployment]
+deploymentTarget = "scheduled"
+build = ["sh", "-c", "pnpm install --frozen-lockfile"]
+run = ["sh", "-c", "pnpm --filter @workspace/scripts nightly-classscribe-credits"]

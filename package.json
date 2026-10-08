@@ -1,0 +1,36 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
+    "build": "pnpm run check:classscribe-source-integrity && pnpm run typecheck && pnpm -r --if-present run build",
+    "check:classscribe-source-integrity": "node scripts/check-classscribe-source-integrity.mjs",
+    "test:classscribe-source-integrity": "node --test scripts/test-classscribe-source-integrity.test.mjs",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
+    "test:appearance": "node scripts/test-appearance.mjs",
+    "preflight:android-store": "pnpm --filter @workspace/scripts run preflight:android-store",
+    "test:android-store": "pnpm --filter @workspace/scripts run test:android-store",
+    "test:grade-guidance": "pnpm --filter @workspace/classscribe run test:grade-guidance && pnpm --filter @workspace/classscribe-mobile run test:grade-guidance",
+    "test:help-navigation": "pnpm --filter @workspace/api-server run test:help-navigation && pnpm --filter @workspace/api-server run test:help-support",
+    "test:syllabus-links": "sh -c 'fixture=$(mktemp); trap \"rm -f \\\"$fixture\\\"\" EXIT; export SYLLABUS_UI_FIXTURE=\"$fixture\"; pnpm --filter @workspace/api-server run test:coursework && pnpm --filter @workspace/classscribe run test:syllabus-tab && pnpm --filter @workspace/classscribe exec node --test test/syllabus-links.test.mjs'",
+    "test:example-courses": "node scripts/test-example-courses.mjs",
+    "test:sample-pages": "node --test scripts/test-sample-writes.mjs && node scripts/test-sample-pages.mjs",
+    "test:study-guides": "sh -c 'fixture=$(mktemp); trap \"rm -f \\\"$fixture\\\"\" EXIT; export GUIDE_TEST_FIXTURE=\"$fixture\"; pnpm --filter @workspace/api-server run test:study-guides && pnpm --filter @workspace/classscribe run test:study-guide && pnpm --filter @workspace/classscribe-mobile run test:study-guide'",
+    "test:ask-switch": "pnpm --filter @workspace/classscribe run test:ask-switch && pnpm --filter @workspace/classscribe-mobile run test:ask-switch",
+    "test:companion": "pnpm --filter @workspace/classscribe run test:companion && pnpm --filter @workspace/classscribe-mobile run test:companion"
+  },
+  "private": true,
+  "dependencies": {
+    "@replit/connectors-sdk": "^0.4.3",
+    "music-metadata": "^11.16.1",
+    "stripe": "^22.6.2",
+    "stripe-replit-sync": "^1.0.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.3"
+  }
+}

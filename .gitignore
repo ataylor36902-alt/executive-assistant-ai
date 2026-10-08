@@ -102,3 +102,18 @@ redis_data/
 
 # Heroku
 .env
+
+# ClassScribe shared source (the existing Python lib/ rule must not hide it)
+!/lib/
+!/lib/**
+
+# ClassScribe local outputs, credentials, and private workspace data
+*.tsbuildinfo
+.expo/
+.expo-shared/
+.agents/
+.replit-artifact/
+.env.*
+*.p8
+attached_assets/*
+!attached_assets/0_ClassScribe-complete-source_1791487925572.zip

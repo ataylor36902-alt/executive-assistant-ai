@@ -1,0 +1,30 @@
+{
+  "name": "@workspace/scripts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "hello": "tsx ./src/hello.ts",
+    "seed-classscribe-plans": "tsx ./src/seed-classscribe-plans.ts",
+    "seed-classscribe-revenuecat": "tsx ./src/seed-classscribe-revenuecat.ts",
+    "edu-license": "tsx ./src/classscribe-edu-license.ts",
+    "test:edu-license": "tsx --test test/classscribe-edu-license.test.ts",
+    "migrate-classscribe-credit-currency": "tsx src/migrate-classscribe-credit-currency.ts",
+    "reconcile-classscribe-credits": "tsx src/reconcile-classscribe-credits.ts",
+    "nightly-classscribe-credits": "tsx src/run-nightly-classscribe-credits.ts",
+    "test:credits-nightly": "tsx --test test/credits-nightly-*.test.ts",
+    "test:credits-migration": "tsx --test test/credits-migration-adapter.test.ts",
+    "preflight:android-store": "tsx src/check-classscribe-android-store-identity.ts",
+    "test:android-store": "tsx --test test/android-store-preflight.test.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@clerk/express": "^1.7.0",
+    "@replit/connectors-sdk": "^0.4.3",
+    "@workspace/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsx": "catalog:"
+  }
+}

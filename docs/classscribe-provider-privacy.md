@@ -1,0 +1,50 @@
+# ClassScribe provider privacy review
+
+This report describes the provider calls and local handling found in the API server. It is an implementation inventory, not a provider contract, legal opinion, or certification. Public provider documentation was checked during this review; the actual Replit, provider, and connector account settings and agreements were not inspected. Do not describe any provider path as contract-verified or zero-retention until an account owner completes the checklist below.
+
+## Provider call inventory
+
+| Product path | Provider and exact model | Request path and configured defaults |
+| --- | --- | --- |
+| Modern schedule import preview, syllabus preview, lecture analysis, ClassScribe Ask, and study guide | OpenAI via `@workspace/integrations-openai-ai-server`; `gpt-5.6-luna` | Chat Completions. Each supported chat request explicitly sets `store: false`. The current logic sends the request messages it needs; it does not use a stored Responses ID or conversation/thread API. |
+| Modern lecture transcription and EDU lecture transcription | OpenAI via `@workspace/integrations-openai-ai-server`; `gpt-4o-mini-transcribe` | Audio Transcriptions API, JSON text response. No unsupported storage/training flags are sent. |
+| Legacy ClassScribe assistant/help/guide/Ask operations | Anthropic Messages API through `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` and `AI_INTEGRATIONS_ANTHROPIC_API_KEY` | The model is `AI_MODEL`, default `claude-sonnet-4-5`; quick requests use `AI_MODEL_QUICK`, which defaults to `AI_MODEL`. Both are environment-overridable. Requests use `/v1/messages` and do not send invented `train:false` or other retention parameters. |
+| Legacy timed transcription | ElevenLabs via the Replit `elevenlabs` connector, model `scribe_v2`; OpenAI fallback uses `whisper-1` | ElevenLabs `/v1/speech-to-text`, `timestamps_granularity=word`; OpenAI fallback is the Audio Transcriptions API. |
+| Legacy untimed transcription | OpenAI via managed integration, model `gpt-4o-mini-transcribe`, or direct `OPENAI_API_KEY`, model `whisper-1` | Audio Transcriptions API. No raw consumer recording is stored by these transcription handlers. |
+
+The code's `AI_INTEGRATIONS_*` variables and Replit connector establish integration/proxy paths, but do not prove the actual provider organization, service tier, endpoint routing, contractual terms, or enabled retention settings for any deployed environment.
+
+No server-side speech-synthesis/TTS model call was found in the API source; server voice/audio processing in this inventory is transcription only. Client voice capture or device speech APIs are outside this server-provider inventory.
+
+## Provider documentation checked
+
+These are public documentation statements, not verified commitments for the app's specific accounts:
+
+- **OpenAI:** [Data controls in the OpenAI platform](https://developers.openai.com/api/docs/guides/your-data) says API data is not used to train/improve OpenAI models unless a customer opts in. Its current table lists Chat Completions abuse-monitoring retention as up to 30 days by default, no Chat Completions application-state retention, and `/v1/audio/transcriptions` with no abuse-monitoring or application-state retention. The docs also say abuse-monitoring logs can contain prompts and responses; ZDR/MAM require approval and have feature limitations. `store: false` is used on Chat Completions to avoid opting into stored completion state; it is not a claim that abuse-monitoring logs are disabled, nor a claim that the Replit-managed route uses a particular approved project. No Responses API stateful feature is currently used.
+- **Anthropic:** [API and data retention / ZDR](https://docs.anthropic.com/en/docs/build-with-claude/zero-data-retention) says retained data is not used for model training without express permission and that ZDR is an organization-level arrangement that must be requested and separately enabled. Its [commercial data retention policy](https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data) says standard Anthropic API inputs/outputs are automatically deleted within 30 days, subject to stated exceptions (including flagged usage-policy violations, legal requirements, and services with longer retention). This app does not verify whether the Replit proxy is covered by an Anthropic account arrangement or whether its actual model is ZDR eligible.
+- **ElevenLabs:** [Speech-to-Text API reference](https://elevenlabs.io/docs/api-reference/speech-to-text/convert) documents `enable_logging` defaulting to `true`; setting it to `false` invokes zero-retention mode, which may only be used by enterprise customers. The [Zero Retention Mode guide](https://elevenlabs.io/docs/resources/zero-retention-mode) lists Speech to Text as eligible and describes enterprise eligibility and limitations. The app does not set `enable_logging=false`: the actual connected account's entitlement and connector passthrough have not been verified. Do not represent current requests as ZRM-protected.
+- **Replit-managed AI integrations:** [Replit AI Integrations](https://docs.replit.com/features/integrations/replit-ai-integrations) describes managed provider credentials, says paid model providers' endpoints do not train on customer data, and warns that free endpoints may train on prompts/completions. It describes an enterprise ZDR-only privacy setting. This does not identify the app's effective endpoint, account plan, provider, or settings; an owner must confirm them in the actual Replit environment.
+
+The citations above should be rechecked by the service owner before making a customer-facing retention claim. Provider policy, model eligibility, and account-specific terms can change.
+
+## In-app handling implemented
+
+- OpenAI Chat Completions requests that process study material use `store: false`. No previous-response ID was in use, so there is no Responses API history behavior to preserve or migrate.
+- Server request logging uses an allowlisted HTTP request serializer; query strings are not logged. Privacy export/download opaque path tokens are replaced before URLs are logged. Pino redaction covers transcript, prompt, audio, request body, file, token, key, and raw provider error fields, including nested values.
+- Consumer modern and legacy transcription handlers hold request audio in process memory while the provider call runs and do not write it to object storage. A transcript may be retained as app data until the user's app-data deletion is completed by the privacy lifecycle.
+- EDU transcription temporarily uploads the request audio to private object storage while transcription runs. On success and failure, the route attempts to delete that exact lecture-scoped object and clears its database audio key, MIME type, and filename before returning. The audio key is restricted to the matching course/lecture prefix. The route no longer provides a server-stored retry copy: the user must re-upload from the local device recording after failure. Local-device recording behavior is not changed by this server work. Older/stale objects from before this change need a separately authorized cleanup review; this code does not sweep arbitrary object paths.
+
+Deletion of app data or a server object cannot retract data already processed by a provider or remove the provider's separate abuse/security records. Hosted request logs, deployment logs, database/object backups, object-store lifecycle rules, legal holds, and provider-side deletion are outside this route's control. The app does not claim that a provider, Replit-hosted log, or platform backup has been deleted.
+
+## Owner verification checklist
+
+- [ ] In each deployed environment, confirm whether the OpenAI and Anthropic integrations resolve to Replit-managed credentials, direct provider credentials, or another proxy. Confirm the actual paid/free endpoint and exact model presented to the provider without copying or logging credentials.
+- [ ] Confirm Replit AI Integration privacy settings and plan for the deployed app. Verify that the effective endpoint is not a free endpoint with prompt training/publication enabled. If claiming endpoint ZDR, verify the account setting and model/feature eligibility in the actual organization.
+- [ ] Confirm the OpenAI provider organization/project and any approved ZDR/MAM controls. Review whether the selected models and transcription features are covered; `store:false` alone does not establish ZDR.
+- [ ] Confirm Anthropic commercial account/proxy terms, standard retention, any training opt-in status, and whether this Messages API/model is included in an enabled ZDR arrangement. No contract is verified by this report.
+- [ ] Ask the ElevenLabs account owner to verify enterprise eligibility and ZRM availability specifically for `/v1/speech-to-text`, then verify that the Replit connector forwards `enable_logging=false`. Only then consider enabling that documented option; otherwise communicate the default logging behavior.
+- [ ] Confirm service-provider data-subject request, provider abuse-log, and legal-hold handling with the applicable account owners. App-data deletion cannot promise removal of provider-held records.
+- [ ] Confirm the core-owned hosted-log policy: app-controlled logs should have a 30-day retention interval and must remain free of request/body/provider content. Verify actual Replit-hosted logs and any external log drain separately.
+- [ ] Obtain and document actual database, object-store, and deployment-backup retention/deletion guarantees and restore-cycle behavior. Do not state that platform backups are deleted unless the platform owner confirms it.
+- [ ] Review legacy EDU object keys created before temporary-audio cleanup. Any cleanup must be scoped to the matching course/library owner and use an authorized disposable/test account or a separately approved deletion process; never sweep other libraries.
+- [ ] Core owner review: ensure idempotent credit-action records retain only stripped billing/credit metadata and never cache AI responses, transcripts, prompts, or study content.
