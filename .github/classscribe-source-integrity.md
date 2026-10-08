@@ -19,5 +19,10 @@ These settings live in GitHub, not in the workflow YAML. A failed or missing
 required check must block merging. If the job name changes, update the branch
 rules at the same time; otherwise the required check will never report.
 
+`classscribe-source-integrity.ruleset.json` records the API configuration for
+this policy. Its integration ID was verified against the live GitHub Actions
+check. The JSON file does not apply itself; repository administrators must
+create or update the matching ruleset in GitHub.
+
 This check verifies the protected website baseline only. It does not assert
 that the full application build or the scheduled billing checks are ready.
