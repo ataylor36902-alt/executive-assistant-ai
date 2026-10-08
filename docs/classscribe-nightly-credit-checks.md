@@ -14,13 +14,18 @@ source is preserved; source runtime/provider settings, secrets, and the original
 schema-pushing post-merge hook were not copied. The scheduler hook installs
 dependencies only. Do not invent or substitute billing table definitions.
 
-There is conflicting evidence about the intended production database: the guide
-below says the migration-control record is absent, whereas an earlier read-only
-inspection through the original project's production pool returned
-`maintenance=false`, `activeCurrency=CREDITS`,
-`serverSubscriptionGrantReady=true`, and `version=test-ready-v1`.
-The owner must confirm the intended production database identity and resolve
-that discrepancy before comparisons, reports, or database attestation.
+The production migration-control state is **unknown**. This guide reports that
+a read-only production inspection found no migration-control record; a separate
+observation reported `maintenance=false`, `activeCurrency=CREDITS`,
+`serverSubscriptionGrantReady=true`, and `version=test-ready-v1`. The owner's
+provenance note says neither observation is linked to a verified original
+production database identity: the build records identify only this workspace,
+local snapshots are development observations without recorded database
+identity or per-probe timestamps, and the scheduler role/grants are unverified.
+PostgreSQL/`pg` identifies the engine and client, not the database host/resource.
+Do not attribute either record-state observation to original production.
+Comparisons, reports, and database attestation remain blocked until the owner
+verifies the exact database identity and read-only role.
 
 Gmail is attached to this scheduler project and the production recipient is
 configured through `CREDITS_RECONCILIATION_OWNER_EMAIL`. No delivery test or report
@@ -66,19 +71,23 @@ but has not been executed.
 ## Current activation status
 
 The guarded runner and separate-project deployment template are prepared.
-**No live schedule has been activated and no app has been published.**
-With owner approval on 2026-10-08, the runner sent one labeled delivery-test
-report to the selected support inbox. Gmail accepted it and its Sent copy was
-read back successfully. **The owner confirmed actual receipt in the support
-inbox on 2026-10-08.** This verifies the approved development delivery test,
-not delivery from a future separately published scheduler. The temporary
-development recipient setting was removed after the test.
+**No live schedule has been activated and no app has been published.** The
+supplied source guide contains a historical claim that an owner-approved
+development delivery test was sent and confirmed received on 2026-10-08. That
+claim has not been independently verified for this scheduler copy. During this
+build, Gmail profile access alone was checked with a read-only GET; no message
+was sent and no Gmail Sent copy was inspected. Do not report scheduler email
+delivery as confirmed based on the historical guide. Confirm any delivery only
+with owner authorization and a verified Sent copy.
 
-Read-only production inspection on 2026-10-08 found no migration-control record.
-The existing migration-state reader treats a missing record as legacy CRD
-maintenance, not a verified CREDITS cutover. Provider comparison must not run
-until the owner completes and verifies the existing credit migration process.
-This check must never create or change that control record.
+The source guide also reports that a read-only production inspection on
+2026-10-08 found no migration-control record. The provenance note says this
+observation lacks database identity and collection details connecting it to the
+original production target. The existing migration-state reader treats a
+missing record as legacy CRD maintenance, not a verified CREDITS cutover.
+Provider comparison must remain blocked until the owner establishes which
+database each observation came from and verifies the intended production state.
+This check must never create or change a control record.
 
 The existing published app was verified as a public Autoscale deployment at
 https://class-scribe.replit.app. Preserve that deployment. A development

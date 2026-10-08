@@ -28,4 +28,6 @@ jobs:
           version: 10.26.1
 
       - name: Verify protected website source
+        env:
+          CLASSSCRIBE_SOURCE_ZIP_SHA256: ${{ vars.CLASSSCRIBE_SOURCE_ZIP_SHA256 }}
         run: pnpm check:classscribe-source-integrity

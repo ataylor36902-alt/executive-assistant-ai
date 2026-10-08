@@ -9,9 +9,13 @@ website/mobile source matches the supplied export. Gmail is attached, profile
 GET access is verified, and the requested production recipient is configured.
 
 **This is not production database verification.** No live reconciliation,
-provider comparison, report/test email, balance/ledger/control/catalog/provider
-write, or publishing has occurred. There is no active schedule. Execution is
-blocked by default, even for `--test-delivery`.
+provider comparison, report/test email from this scheduler copy,
+balance/ledger/control/catalog/provider write, or publishing has occurred.
+There is no active schedule. Execution is blocked by default, even for
+`--test-delivery`. The supplied source guide contains a historical claim about a
+development test email on 2026-10-08; it was not independently verified here.
+Only Gmail profile access was checked. No message was sent and no Gmail Sent
+copy was inspected for this scheduler.
 
 ## 1. Confirm the intended production database
 
@@ -21,15 +25,25 @@ scheduler's managed development database.
 
 Resolve the conflicting evidence before continuing:
 
-- The supplied guide says production has no migration-control record.
-- An earlier read-only inspection through the original production pool returned
-  `maintenance=false`, `activeCurrency=CREDITS`,
-  `serverSubscriptionGrantReady=true`, `version=test-ready-v1`.
+- The supplied guide reports an earlier read-only production inspection with no
+  migration-control record.
+- A separate observation reported `maintenance=false`,
+  `activeCurrency=CREDITS`, `serverSubscriptionGrantReady=true`,
+  `version=test-ready-v1`.
 
-Confirm which state belongs to the intended production database and why the
-other observation differed. Do not change any control record to resolve this
-discrepancy. Share only non-secret identity/state information; never paste a
-database URL, password, token, connection string, or private user records.
+The newest owner-provided provenance note does **not** tie either observation to
+the intended original production database. The build records belong to this
+workspace; local API/Expo snapshots are development observations whose database
+identities and individual probe times were not recorded. The compute provider
+and Postgres engine do not identify the database resource. The scheduler's
+authenticated role and grants are unverified.
+
+Provide non-secret evidence linking the original ClassScribe source project,
+database provider/resource and environment, each observation's timestamp and
+collection location, and the scheduler role/grants. Then confirm the expected
+control-record state on that identified database. Do not change the record to
+resolve the discrepancy. Never paste a database URL, password, token, connection
+string, or private user records.
 
 ## 2. Independently verify least-privilege access
 

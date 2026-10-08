@@ -14,3 +14,9 @@ For this scheduler copy, run `pnpm check:classscribe-source-integrity` from the
 workspace root to verify the manifest-listed files under `artifacts/classscribe/`.
 The check is local and offline; it excludes Replit-generated artifact metadata
 and does not cover scheduler files outside the ClassScribe artifact.
+
+It also requires `CLASSSCRIBE_SOURCE_ZIP_SHA256` from externally managed,
+owner-approved configuration. Missing or mismatched archive fingerprints fail;
+the manifest is not a trust anchor. See
+`docs/classscribe-source-baseline.md` for the trust boundary and reviewed
+baseline-update procedure.

@@ -8,10 +8,12 @@ activation remain blocked. Never modify the original ClassScribe project.
 
 - Do not publish, activate a schedule, send a delivery test, or change balances,
   ledgers, migration controls, catalog records, or provider data.
-- The supplied guide and earlier production read-only inspection conflict:
-  the guide says no migration-control record exists; the observed record was
-  ready for CREDITS with version `test-ready-v1`. The owner must resolve the
-  intended database identity before live checks or reports.
+- Production migration-control state and target identity are unverified. The
+  guide reports no control record while a separate observation reports a
+  CREDITS-ready `test-ready-v1` record. The owner’s provenance note cannot link
+  either to original production: builds identify this workspace only, dev logs
+  lack database IDs/probe times, and scheduler role/grants are unknown.
+  Treat both observations as unattributed and resolve identity before live use.
 - Do not request or use `CREDITS_RECONCILIATION_DATABASE_URL` or
   `REVENUECAT_CREDITS_API_KEY`, or set
   `CREDITS_RECONCILIATION_DATABASE_VERIFIED`, until that verification and
@@ -35,6 +37,9 @@ activation remain blocked. Never modify the original ClassScribe project.
 ## Run & Operate
 
 - `pnpm run typecheck` — full typecheck across all packages
+- `pnpm check:classscribe-source-integrity` — offline website check; requires
+  externally recorded `CLASSSCRIBE_SOURCE_ZIP_SHA256`. Never auto-repin it from
+  workspace files. See `docs/classscribe-source-baseline.md` for baseline review.
 - `pnpm --filter @workspace/scripts test:credits-nightly` — local parser and inactive-runner tests; no live access
 - `pnpm --filter @workspace/scripts typecheck` — scheduler script typecheck
 - Never run schema push, seeding, migration, balance repair, or provider writes.
@@ -89,6 +94,9 @@ not yet an integrated or production-verified scheduler.
   to make this scheduler install.
 - Historical delivery and database claims in the supplied guide are not
   verification of this separate scheduler copy.
+- Historical source-guide claims of a development email test/receipt are not
+  verified Sent-copy evidence for this scheduler. No message was sent or
+  searched for here; only Gmail profile GET access was checked.
 - Remaining owner gates: `ops/credits-nightly/OWNER-VERIFICATION.md`.
 
 ## Pointers

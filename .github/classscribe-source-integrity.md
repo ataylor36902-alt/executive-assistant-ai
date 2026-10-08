@@ -6,6 +6,13 @@ There are no path filters, secret inputs, application dependencies to install,
 or database/provider calls. A nonzero exit from
 `pnpm check:classscribe-source-integrity` fails the job.
 
+The checker receives the owner-approved public archive fingerprint from the
+repository Actions variable `CLASSSCRIBE_SOURCE_ZIP_SHA256`. This is configuration,
+not a credential or a GitHub secret. Provision it from the independently approved
+owner setting, never by computing and approving a replacement from an archive in
+the pull request. Missing, malformed, or mismatched configuration fails the check.
+The read-only workflow token cannot change this repository setting.
+
 ## Required repository policy
 
 The hosting repository must have an active branch ruleset named
@@ -14,6 +21,8 @@ The hosting repository must have an active branch ruleset named
 - `classscribe-source-integrity` required from the GitHub Actions app;
 - the branch required to be up to date before merge;
 - no bypass actors.
+- the owner-approved archive fingerprint stored outside the repository files in
+  the repository Actions variable named above.
 
 These settings live in GitHub, not in the workflow YAML. A failed or missing
 required check must block merging. If the job name changes, update the branch
