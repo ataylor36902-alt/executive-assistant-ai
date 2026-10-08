@@ -1,0 +1,5051 @@
+{
+  "includedFiles": [
+    {
+      "path": ".gitattributes",
+      "bytes": 182,
+      "sha256": "9654bd4f48957f4d81949f721b9256b08630215ac8c19b01ba823ab53b851cfb"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 741,
+      "sha256": "69c1d83be55c1219e157d95eb9a52584577a09cf4e1de4aee1235f7bcf864fda"
+    },
+    {
+      "path": ".npmrc",
+      "bytes": 56,
+      "sha256": "1ded4f26f4851b35dae702edd5719d1be5ff31db6983858d088d5e6593ea7c99"
+    },
+    {
+      "path": ".replitignore",
+      "bytes": 201,
+      "sha256": "44e7ee407200c8a55f3ea30b8f48803562c799d1b481c8d1559fc98c467303b8"
+    },
+    {
+      "path": "artifacts/api-server/.replit-artifact/artifact.toml",
+      "bytes": 784,
+      "sha256": "e461708bfe50f6eb964fa755cf0c6ba813c19392be055d5ef96c729aa0173539"
+    },
+    {
+      "path": "artifacts/api-server/build.mjs",
+      "bytes": 3676,
+      "sha256": "01c6620eb8b8831c0f2715e1adb91c8247b3fad9be0c7263e26441c823c262f8"
+    },
+    {
+      "path": "artifacts/api-server/package.json",
+      "bytes": 12187,
+      "sha256": "4491f979a20d62997f5abd0956c074c69900f6ee9129c704b3e924ae02abc342"
+    },
+    {
+      "path": "artifacts/api-server/src/app.ts",
+      "bytes": 3443,
+      "sha256": "fa9b6e166306a433ce7756e70f90f25ac2200eb24819edd6cfaff324ce2eae9d"
+    },
+    {
+      "path": "artifacts/api-server/src/index.ts",
+      "bytes": 1528,
+      "sha256": "bc991ed37b32c8c5884b453a441f14c905b329b6cf7cf9ba26adeea99ca1148e"
+    },
+    {
+      "path": "artifacts/api-server/src/jobs/edu-course-file-cleanup.ts",
+      "bytes": 3822,
+      "sha256": "25bdf4fa0d679a3259e52a061325b8e1eac0e475b8fe627cf21213760f4de472"
+    },
+    {
+      "path": "artifacts/api-server/src/jobs/privacy-retention-cli.ts",
+      "bytes": 357,
+      "sha256": "47c0e2e64cba5b9cf575b5319227b6818ee82e93c116fc11acd23b21f1a0f10d"
+    },
+    {
+      "path": "artifacts/api-server/src/jobs/privacy-retention.ts",
+      "bytes": 8266,
+      "sha256": "855851ea280417dd9fb1e7ab4526d74d8e102b166e26a37fd292cebdbbe6955f"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/ai-consent.ts",
+      "bytes": 2203,
+      "sha256": "d27e501ee710bf2370010f06d05168009e8d47a368d63f3a0fa0b9346eef9115"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/ask-private-passages.ts",
+      "bytes": 2558,
+      "sha256": "880df5295d32271179e4b0ab28c58f5bb9f091acbf17e6463fa095650c7069c6"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/ask-retrieval.ts",
+      "bytes": 3867,
+      "sha256": "cac0702ad0ea281ee7a6b1b504fc01d43e8b3fa47310f6dee2f35dec4a709226"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/ask-semantic-provider.ts",
+      "bytes": 1350,
+      "sha256": "97f0e1b9e4976d43475cd4ed7914df0b79c855ef01259f3081178a29e4dcc6d6"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-billing.ts",
+      "bytes": 127727,
+      "sha256": "301357fb688c17d4bd46b2268a7e28cf5521b70f271946c7b47a7a7700dfae22"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-consents.ts",
+      "bytes": 7643,
+      "sha256": "ef21a012f90c7c523c6cf1ef18b71fc9b7fa64f4aac4042e61ec7800500be92a"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-credits.ts",
+      "bytes": 76407,
+      "sha256": "f277d5b0a8b02f492f867d7c6fc0dc01589d2408689c7026f149ae9b62d152d0"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-edu-client-credentials.ts",
+      "bytes": 1739,
+      "sha256": "44711f918c48b537be4946b442a8c1f965cf23e4d40c825cb972303effd447b8"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-help-navigation.ts",
+      "bytes": 971,
+      "sha256": "e4df2c65fd6077c2ec59f62ebd90e0748c0d0b3d335a44e67f29dc9c90e9dbf8"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-legacy-access.ts",
+      "bytes": 3109,
+      "sha256": "ce9815da16d22dd206e7f257ef459bb2574624bf343346ade79caf75a4c46bbd"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-rate-limit.ts",
+      "bytes": 1195,
+      "sha256": "184392635f302bcd9977ecde3e55c132f0e886f8d46071c0cb55fea44800a073"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-scribe.ts",
+      "bytes": 1711,
+      "sha256": "242b124b5a2a8277888ff7fc60f5d84cf23e712a3f67e2d2294731687edf3d29"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-study-validation.ts",
+      "bytes": 2150,
+      "sha256": "3676399f78a1c70e5fd7ee6c438ae1f48ff2f7bdde9eda1cb2eac4e1a17ceaaf"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/classscribe-support-email.ts",
+      "bytes": 3117,
+      "sha256": "2a3f761a7be01d9bf7fd1bf84797b78ea8a2d1b4b4160d064e47fe5aa296a7d7"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/credits-config.ts",
+      "bytes": 791,
+      "sha256": "cba21ffaae8db594e845641f34f67c844b5e3c371d337233059adc08716618e5"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/credits-migration-state.ts",
+      "bytes": 2664,
+      "sha256": "7bb0bb3bc08065c966ad7e28209867ec067af9d141363492a7f1f1b0c3561151"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/credits-pack-refunds.ts",
+      "bytes": 662,
+      "sha256": "10510a34945ae90acd7a61dea696e1c879897aaa36f1976b78d73ebeb9ad2d7f"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/credits-subscription-periods.ts",
+      "bytes": 4229,
+      "sha256": "5ae01614ae0c541a0d90d18bb3610b0687bdde66eae53f188e6a53d9872f58d0"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/edu-expiry-warning.ts",
+      "bytes": 630,
+      "sha256": "c402d84c5ea30e0b9240c9bf9e8005964492bed2c80d8704877bcb24660d89fb"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/edu-gradebook-csv.ts",
+      "bytes": 1901,
+      "sha256": "3fb32b9e9e80aeb955d71ea914523353de34b855d66373b929a3d39c30d1afd4"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/edu-gradebook-status.ts",
+      "bytes": 290,
+      "sha256": "2f265d1dcfae679744b84cb180c441f2259671e3398af8e89b053a985655bb86"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/edu-submission-files.ts",
+      "bytes": 2032,
+      "sha256": "a1825c18f6ac4a8ca8da01b953cfb5bab047f63b01700241c3e91a7d0e74978a"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/grades.ts",
+      "bytes": 6892,
+      "sha256": "3ebb7cb2ab78a1cfe4c1b3c9c67261fd7f6d935c3fa95ae02eb50240f2bb0819"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/logger.ts",
+      "bytes": 1551,
+      "sha256": "47977d2110f0c26120818977be2a16dc6af91174332b8e97cdb96a30bccbcb91"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/modern-library-link.ts",
+      "bytes": 2616,
+      "sha256": "5dc1ba395d801c0aa08a96e8d486895dc1e36822ab72ddbb1c2f5f0770e0a2b5"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/objectStorage.ts",
+      "bytes": 3050,
+      "sha256": "0d5fdb9364b876110129c207a7077a01f3ce6cba1faccece295061e24ba9162e"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/privacy-access.ts",
+      "bytes": 8045,
+      "sha256": "0844e3b51f0ce0a253bf283c703c19632aeb028169a708c455911b409702be54"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/privacy-archive.ts",
+      "bytes": 2721,
+      "sha256": "23a05ee46a37bacc2300f54ed358456d6e32ab897d59dede6b0046b0d8025910"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/privacy-billing.ts",
+      "bytes": 124,
+      "sha256": "13c85859b62fae04afe6e40366f9478c4494eedb89e0af4b534dbfd939063bb3"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/privacy-config.ts",
+      "bytes": 2239,
+      "sha256": "cbbb35a13470944c6b0b41c7d212a631124010132c35ded74b3328d2bdaad187"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/privacy-deletion.ts",
+      "bytes": 8730,
+      "sha256": "0f23c855aebcc3dc6450d6e7e435cc3dbacfc03cf14c922a14f56f549f48dd25"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/privacy-minor.ts",
+      "bytes": 2150,
+      "sha256": "8ac4d90543b7bd0dd952aeb5eb7a4f4e623eb047589acbac76cd3dfb81120004"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/revenuecat-request.ts",
+      "bytes": 1307,
+      "sha256": "1fd9879d274aaf92f3c904d78542b57ba4e65c82d5d97a230ec677a739e4408c"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/stripeClient.ts",
+      "bytes": 3669,
+      "sha256": "75718ca89329f8b519a26221ea8f0a8b3ef125127ab6390fffa0cb2cf510c790"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/student-grades.ts",
+      "bytes": 3965,
+      "sha256": "6f63fba76d3b78983301aa204347f19876a5ad6c8802e4992946cfa978feca36"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/syllabus-coursework.ts",
+      "bytes": 3628,
+      "sha256": "62ed132646e1ed36043ae86c553806e16699bf52b19cd68da40eef8b9dce12bf"
+    },
+    {
+      "path": "artifacts/api-server/src/lib/syllabus-proposals.ts",
+      "bytes": 850,
+      "sha256": "3ac70b874edeed2e3b66d50a8d5c1b12740244535a1e102c0238a2f305559df3"
+    },
+    {
+      "path": "artifacts/api-server/src/middlewares/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/api-server/src/middlewares/clerkProxyMiddleware.ts",
+      "bytes": 5931,
+      "sha256": "4709696f6020bc6f869ec9becc2e332c1522724bd17cc42937c31bfe95b6d2ab"
+    },
+    {
+      "path": "artifacts/api-server/src/middlewares/privacy-write-lock.ts",
+      "bytes": 6543,
+      "sha256": "ef60a8465ac8e7e1d27bb78d6d6387c45fede449a540e10d429262da25475ef7"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/ai-consent.ts",
+      "bytes": 3065,
+      "sha256": "c7ff5968634cf32476b9fb29a9dc219a9f253e0a3cdc59e685230b849e59043f"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/billing.ts",
+      "bytes": 13666,
+      "sha256": "902ec84c950ef8fb5a3232d316d5522a7ea408faff1eff6f54eed2e4317e782d"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-credits.ts",
+      "bytes": 2253,
+      "sha256": "ba812ca9448cddba1462dcff00b76fbfa080924660b9106190beb19041571349"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-edu-inquiries.ts",
+      "bytes": 3863,
+      "sha256": "bbf7a7a79f3f033f27e4bef820b99094c19221eb796d5fca285d041ec70e1979"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-edu-learning.ts",
+      "bytes": 21585,
+      "sha256": "64139a1238ac59ddd0307e2a3d4ed0db12f0607d32fd42d13d0eba2bb91a7af0"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-edu-media.ts",
+      "bytes": 36577,
+      "sha256": "123de6402a22c3e86d9505651c0f5936a354cdde0597fdc79fc92e155dac20e2"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-edu.ts",
+      "bytes": 78285,
+      "sha256": "4b773774b148e3e1471269d18710720fb936faa6f3a6a8683f62337e7785840c"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-legacy.ts",
+      "bytes": 111763,
+      "sha256": "95c54655f0178b7141ed1e28b9120b158c6aed183c6bfd5c29ebd3411dfb0df2"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-materials-extract.ts",
+      "bytes": 5252,
+      "sha256": "3afdb3f8f6046bf69528f0467e1953cf65fcb2bff218688adb83857f7e164aca"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-profile-photo.ts",
+      "bytes": 13392,
+      "sha256": "9d913cc96d5029736ce99ecb57cec32773c47a64e1404b9dc31fc0c3be469399"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe-syllabus-confirm.ts",
+      "bytes": 6439,
+      "sha256": "7057cbd46f7725cccf35c0c2d81bbea89f7d2636f47ab24c6eb1b0d32130c67b"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribe.ts",
+      "bytes": 76119,
+      "sha256": "125fc66700d4bf9fdd97aa69b31cfd364dcb72aff75d5f693a93fa4965e0467c"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/classscribeAsk.ts",
+      "bytes": 29374,
+      "sha256": "9cdd55fd5e334d65db4ed0d170a582d316ec7dbc92595b2cebda39e32992a5de"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/course-access.ts",
+      "bytes": 1087,
+      "sha256": "d9a680aa7f7fa31da39d8bad65e9750f09044cd58f81940b0db21e657704a477"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/grades.ts",
+      "bytes": 8987,
+      "sha256": "14f63a45335d69ada3d9d6783dd1d3db2e9b2ec85a812f1e82d4b95832e07c2f"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/health.ts",
+      "bytes": 288,
+      "sha256": "0386ceddb4ff4bff220af72ca38a62191ad95a2f41fd619df3bb9ceffce03db2"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/index.ts",
+      "bytes": 2179,
+      "sha256": "d9c5eb46e25524ac539a20fc15bfd3337051c134e808e9c53b9bf0561fabbc62"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/library-link.ts",
+      "bytes": 10879,
+      "sha256": "17572d914602e668940d22fa3de3b85a4f8d5395298d1d909af246fd24241e27"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/modern-entitlements.ts",
+      "bytes": 812,
+      "sha256": "99234fc3bfbd74aa1ef20f3ad476664861685d0367d6cbd5fd63774e39f15120"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/notes.ts",
+      "bytes": 4047,
+      "sha256": "54bdd0c3989af7351a6f2a1bb162b62e52a58b105120a2b4de5c8b0ff624f7fd"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/privacy-consents.ts",
+      "bytes": 2695,
+      "sha256": "cffe0b7e7ac45974c2f688cae697932f67464080bd5d9654990a0aced568979e"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/privacy.ts",
+      "bytes": 51505,
+      "sha256": "f378d2663541d4e6ae9ea1b2de2f40dee24f35c94c6a26ccdeb20d50aa524929"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/revenuecat-webhook.ts",
+      "bytes": 2545,
+      "sha256": "ac2e5774e9d504567dd127bf8100d391e32cab9c5990fc6a468bbb8f1290ebe2"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/student-grades.ts",
+      "bytes": 12356,
+      "sha256": "3cdd7901ffcfb11dae6fc32e437845d14ff927974fc1461e15927b71c0c0ae5a"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/study-guides.ts",
+      "bytes": 11331,
+      "sha256": "fc7c23007617493ead7b73b8b26891c0935d0ee6e92ec6decee25d8ea71200ac"
+    },
+    {
+      "path": "artifacts/api-server/src/routes/study-plans.ts",
+      "bytes": 3655,
+      "sha256": "9bec380e2a719e88fa46b933251fa178a4837fb7d5306b5dcb9d32d206564380"
+    },
+    {
+      "path": "artifacts/api-server/test/EDU-INQUIRY-DELIVERY.md",
+      "bytes": 2434,
+      "sha256": "728e67a502e3a266fccbe92314e1869e3a885feeb793e1eeb5b1fa6db0c11c7e"
+    },
+    {
+      "path": "artifacts/api-server/test/ai-consent.test.mjs",
+      "bytes": 4601,
+      "sha256": "1033784e0ee42d1c635f8ca687a78b203b0faed4907aa226e68cb252634bd139"
+    },
+    {
+      "path": "artifacts/api-server/test/ask-semantic.test.mjs",
+      "bytes": 8644,
+      "sha256": "eed2ce6360a9c72ddfd7380361c7bc47c5009d3e5f48381c1af2b83a5c4354c2"
+    },
+    {
+      "path": "artifacts/api-server/test/billing.test.mjs",
+      "bytes": 134231,
+      "sha256": "11d292fd01c625430110e7960cf97b7279c8b294e88da5ce0b034557a83851eb"
+    },
+    {
+      "path": "artifacts/api-server/test/build-edu-media-test.mjs",
+      "bytes": 1038,
+      "sha256": "ff32eaaf6fd9a748b8f642eb5a32b6f9f9dfbe759e1e6cd5f3a8f90a15cab22a"
+    },
+    {
+      "path": "artifacts/api-server/test/build-edu-submission-test.mjs",
+      "bytes": 749,
+      "sha256": "b093d6f1e6099c0d767114af38b55e65b57b0779a2abe69fb0da61e5ce0aeacc"
+    },
+    {
+      "path": "artifacts/api-server/test/build-privacy-logging-test.mjs",
+      "bytes": 369,
+      "sha256": "be1b5ad731344c3d7a17d47cfb1de2d660d929e0c6900d0ebb4bd29eefa4600c"
+    },
+    {
+      "path": "artifacts/api-server/test/build-privacy-test.mjs",
+      "bytes": 1626,
+      "sha256": "0a47fd0d81dbcb2898dd975b5c3f9603ca586710a90342f0221413709ab21357"
+    },
+    {
+      "path": "artifacts/api-server/test/build-stripe-webhook-test.mjs",
+      "bytes": 2868,
+      "sha256": "529be90603920599c208acd6d67f0fb89cb74cf8534c6672a4118c05c5a9a604"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-billing.test.mjs",
+      "bytes": 10506,
+      "sha256": "2b3c66d0cce883b5e5f0c14194196c31692df0d231fa4c3d49a80592cf592b0e"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-consents.test.mjs",
+      "bytes": 4786,
+      "sha256": "85e6abffb95f9a18dcd2a577b7455b52ca391ec7d16ddb0feaee5c60e3115385"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-edu-inquiries.test.mjs",
+      "bytes": 6809,
+      "sha256": "1922de7bfb52bd5220543de634df5161a64aa31990b44c997013c896198c61e5"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-edu-learning.test.mjs",
+      "bytes": 20796,
+      "sha256": "3068e93a052a4fcf88c36060b4cba8ac9b1bf6e81bb7c9dbe1e2716a8b39473e"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-edu-media.test.mjs",
+      "bytes": 21112,
+      "sha256": "efc0cf7721382c9e475f42bc466ff30d69ae4dd8f1d64ac92c1db2eddd55c155"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-edu.test.mjs",
+      "bytes": 47466,
+      "sha256": "a1b39ecd686a2a3399ddc9c2523196af226a80f142bbbb6fc8cadd96effcfeb3"
+    },
+    {
+      "path": "artifacts/api-server/test/classscribe-legacy.test.mjs",
+      "bytes": 87150,
+      "sha256": "aa57357d476699a9014784b79990e2e597374ca0509ef3890ebd4bc7fe32107e"
+    },
+    {
+      "path": "artifacts/api-server/test/course-access.test.mjs",
+      "bytes": 1296,
+      "sha256": "a4ced7b2a89ca667a216e1e76b0908d056975807ffeddd4079548d4e94359e22"
+    },
+    {
+      "path": "artifacts/api-server/test/credits-overage-ask.test.mjs",
+      "bytes": 17094,
+      "sha256": "e269c3d5c42864fe8edfbf5f62a99b13c0ec3be6dcce2d38e3a3922ccbeb44d3"
+    },
+    {
+      "path": "artifacts/api-server/test/credits-subscription-periods.test.mjs",
+      "bytes": 3995,
+      "sha256": "a8d6fa6a447788829366e105e7bfe5a0456ec18ec4f8e65e8a9803e52d618237"
+    },
+    {
+      "path": "artifacts/api-server/test/credits.test.mjs",
+      "bytes": 75847,
+      "sha256": "50da8e4b76cfa3559be8c74eef79dc3f65161c86f6505d24e2724dc6ac84fc7f"
+    },
+    {
+      "path": "artifacts/api-server/test/edu-course-file-cleanup.test.mjs",
+      "bytes": 9104,
+      "sha256": "feee02c750c9f82511779c8ae4a5cc18196fe514f26d3d3d3724f66466fc5516"
+    },
+    {
+      "path": "artifacts/api-server/test/edu-instructor-history.test.mjs",
+      "bytes": 6243,
+      "sha256": "dff4aed7c04807935ba92c635d9dfe1e1b10d467a618ead2bef9e27272363aa7"
+    },
+    {
+      "path": "artifacts/api-server/test/edu-submission-files.test.mjs",
+      "bytes": 12518,
+      "sha256": "1a80ed69916afb7b938f34b6c217d2ad7f1886bb8db91ed969fd64818700c07d"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/ask-test-ai.mjs",
+      "bytes": 407,
+      "sha256": "9fbd4b3b1833016040f7d227ac3a18e280f9bceefcf479d8f917c26c5b31331a"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/clerk-test-auth.mjs",
+      "bytes": 832,
+      "sha256": "b342a184644fcd6eba777cc5bd672173aba02031a52960772fa36304a77ac74a"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/edu-inquiry-db.mjs",
+      "bytes": 1127,
+      "sha256": "f6ebb47cb92939ac4e5813133d837550eadea12255bf491cea595f617e0f1539"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/edu-managed-transcription.mjs",
+      "bytes": 901,
+      "sha256": "9171f99720fc13dbe73767127e09bc89e692f4b6345d9dbb38f8161c488500ef"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/edu-object-storage.mjs",
+      "bytes": 1571,
+      "sha256": "626b0fabf54813fc56c003b3fbddfe702d2a9afd814873470246553ee5552953"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/elevenlabs-connector.mjs",
+      "bytes": 347,
+      "sha256": "352d08af7ee8b180a5d2e993a253ebf13ead391fb4b1192af13f2137630afa57"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/guide-client.mjs",
+      "bytes": 263,
+      "sha256": "f358e2836b84fbec5490a477a0ac01eb514927e8bbc5666e9562d2096d175122"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/help-navigation-contract.mjs",
+      "bytes": 6784,
+      "sha256": "e0231346446f4582e9e024d927f7ed286931cd22a290ba7142b5820a5387b76f"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/modern-transcription-ai.mjs",
+      "bytes": 585,
+      "sha256": "63eb7e4767b76621a065a033bfbfa9dede1dca8526de8fab4e95da981ff0d841"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-auth.mjs",
+      "bytes": 785,
+      "sha256": "6cbd149f0f546bee3ae5e687b20018b80dabfc328adcdfef39d4f00657af4d5a"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-billing.mjs",
+      "bytes": 451,
+      "sha256": "6ca933b55add4c5f390cc645aab05a61316c300e0a8295790dace190c3ad542d"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-connectors.mjs",
+      "bytes": 761,
+      "sha256": "f2d58256660a4a1a34ccaf892a25498b5b6a5ed68b51354d050d9184a2ce3e36"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-consent-db.mjs",
+      "bytes": 124,
+      "sha256": "88b3f5480cea646ba894d3c924f347888b6eea5bd156ce26027fc206679b4145"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-db.mjs",
+      "bytes": 6771,
+      "sha256": "8300f7880b1be75d401bbcd5c7881bd6be9447ea7df8aee905cf706f7c298655"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-link.mjs",
+      "bytes": 68,
+      "sha256": "e2f2277c1c53dbbd50dac2b2d98ca72ffe8308167bd3359ec74bd9e96d2b2fc8"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-minor-db.mjs",
+      "bytes": 286,
+      "sha256": "838a59113d0b2d42488a3014fa0500ea132cf28c24c11fd61c500b021df4badd"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/privacy-storage.mjs",
+      "bytes": 179,
+      "sha256": "ca32d264e6fd03f72c141c1280c4b250d4517b88e38dd20e8e7ca9123579bc81"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/stripe-replit-sync.mjs",
+      "bytes": 509,
+      "sha256": "90a7c6fb0de7de50789727bac1c9434cfda0167df061908737c9c95a11e1862e"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/stripe-webhook.mjs",
+      "bytes": 4681,
+      "sha256": "f688af086850d3c4355c0edf9d435fbe2533d0206911c95ba3050abc99cbf9a4"
+    },
+    {
+      "path": "artifacts/api-server/test/fixtures/study-guide-ai.mjs",
+      "bytes": 588,
+      "sha256": "d2e51ec533d5ded8bd1b384c2f3120548f2d8437675d04bc4c01686436c848fd"
+    },
+    {
+      "path": "artifacts/api-server/test/grades.test.mjs",
+      "bytes": 2488,
+      "sha256": "a7f977c3b4f911dc0fffcddb0ba33bac072ce666f27484614b4be8dd9da59baa"
+    },
+    {
+      "path": "artifacts/api-server/test/help-navigation.test.mjs",
+      "bytes": 3215,
+      "sha256": "a7081ab49f7815ef0d0bbedab8e0b2a3297916be1de64a4859e9991bada492c2"
+    },
+    {
+      "path": "artifacts/api-server/test/library-link.test.mjs",
+      "bytes": 8202,
+      "sha256": "9ce90f1c49fb471bf8240693bdf845b0c5eb5169d9e0b5b24d5affd6d9a4d8b6"
+    },
+    {
+      "path": "artifacts/api-server/test/library-syllabus.test.mjs",
+      "bytes": 5238,
+      "sha256": "52bcafd1ec5416ea0631eb5ff494cfa3a907012d9f68852f078d36a517ecfdcf"
+    },
+    {
+      "path": "artifacts/api-server/test/materials-extract.test.mjs",
+      "bytes": 5744,
+      "sha256": "829821c15a5e09735b6284165acf8cb4b8888747ece83790d5eb82ae6e9bd846"
+    },
+    {
+      "path": "artifacts/api-server/test/privacy-logging.test.mjs",
+      "bytes": 1814,
+      "sha256": "8c5a45d6af4fe9b09b979cba0843c295c8c33c862224eb016ecdb25e83154cae"
+    },
+    {
+      "path": "artifacts/api-server/test/privacy-minor.test.mjs",
+      "bytes": 856,
+      "sha256": "c45aeee8bbedc941ebe782599fe0c7f54b6bb9a95c6afa532a8462f9e2208f1d"
+    },
+    {
+      "path": "artifacts/api-server/test/privacy-write-lock.test.mjs",
+      "bytes": 6851,
+      "sha256": "75e590d4ee2b6ac9b329b706420a0fcb1c3859376171ff885cb05d94e5e53984"
+    },
+    {
+      "path": "artifacts/api-server/test/privacy.test.mjs",
+      "bytes": 25355,
+      "sha256": "608e87a7bcedf826474cfa0589b9a9ed84962815de189ef41ce911890970b3d2"
+    },
+    {
+      "path": "artifacts/api-server/test/source-summary.test.mjs",
+      "bytes": 3546,
+      "sha256": "5256c3df4ffb429d8b66108567e71c5015d9301ab169c080418a3c8bc9997e41"
+    },
+    {
+      "path": "artifacts/api-server/test/stripe-webhook.test.mjs",
+      "bytes": 6200,
+      "sha256": "c0207f746e95155592f554dfa5bd333f31b7fb9070f5733fe60b3bc058a1584f"
+    },
+    {
+      "path": "artifacts/api-server/test/student-grades.test.mjs",
+      "bytes": 10252,
+      "sha256": "8ed4734b4eb41ad89cb2ff7a2ae300df8245370183300d8a45a0d6b4ba026010"
+    },
+    {
+      "path": "artifacts/api-server/test/study-guides.test.mjs",
+      "bytes": 12581,
+      "sha256": "e22041d6206c32dd196951b77f9f00f6374c71b3e8c4e34c9e3483b6a19f1b3c"
+    },
+    {
+      "path": "artifacts/api-server/test/study-injection-provider.mjs",
+      "bytes": 17289,
+      "sha256": "65ab1c4eeee0ae5b1a1f92fdae6dd1f0a8cfaae062a18c1afc8c66009ca46042"
+    },
+    {
+      "path": "artifacts/api-server/test/syllabus-coursework.test.mjs",
+      "bytes": 13004,
+      "sha256": "0041c25c6eeba16afe6a28ae87a8c290991397bb03d14dc9f620d025f1cb0a40"
+    },
+    {
+      "path": "artifacts/api-server/test/syllabus-proposals.test.mjs",
+      "bytes": 2016,
+      "sha256": "620699c7f9c54eb8734407c6369199cf188a51e6b6ff9a1a62d01338e252d3c1"
+    },
+    {
+      "path": "artifacts/api-server/tsconfig.json",
+      "bytes": 404,
+      "sha256": "0b4d8606d69440a7298ecc4d013c7fb452d33b5910ebd52eb2c8cfd5382c486d"
+    },
+    {
+      "path": "artifacts/classscribe/.replit-artifact/artifact.toml",
+      "bytes": 735,
+      "sha256": "3a55051ff46866b72f61f840c9a669e51d3e81c6086ea0a7ae201c10ba48e381"
+    },
+    {
+      "path": "artifacts/classscribe/components.json",
+      "bytes": 434,
+      "sha256": "3a5d5af62f05e6e3de6c5085f31ed4f49273d57cfeae4d69d00a2568c91f54f9"
+    },
+    {
+      "path": "artifacts/classscribe/index.html",
+      "bytes": 1745,
+      "sha256": "f84b8eccb441914670a152d46e5265ba9d7ad315f738a5ae68966f17e10b58f3"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/api.ts",
+      "bytes": 3786,
+      "sha256": "ed3bb9a881725d762ef09a20235817ec76eca1a198bf1eded7a0b24237081f71"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/features.tsx",
+      "bytes": 28787,
+      "sha256": "d718382cc42fc0ae248f192129202b6baf2a2630afb145ab62fb30b87a8f1edf"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/gradebook-table.tsx",
+      "bytes": 2251,
+      "sha256": "451d589d0a60eadcd3f204a4799adf8c5463c9244f2840f567bfd64def567351"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/index.html",
+      "bytes": 455,
+      "sha256": "65be4ba96cfcdbd46d80a2739eb81b710a56da1b39423014afffd5832558e112"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/instructor-history.tsx",
+      "bytes": 3633,
+      "sha256": "f774f015e3c41ab3a387fa589836b56730e5c231b4b266e254c94be7adc0e0d1"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/main.tsx",
+      "bytes": 836,
+      "sha256": "06e1b69b33dde44faf1a385a70c017756d1b916f0943b26369d7c70fbfb61edf"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/portal.tsx",
+      "bytes": 54193,
+      "sha256": "41bdaddb8ae12fd198e15853f61580d55422d5a5f70819b1e8f9976b6b865b25"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/school.tsx",
+      "bytes": 8682,
+      "sha256": "60d88badf8c0025c46da878c0eace5319c3d7bda890dc7960c847c840d32c46c"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/source-features.css",
+      "bytes": 504,
+      "sha256": "356568ef221c88bf94c7bd491a13ee1023344fc90d202afb29c2c21d79d103eb"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/style.css",
+      "bytes": 15824,
+      "sha256": "51a6e5f94095b531e5b5f919971ac26fe325eb06f45da897e5fe59ed5fe8038f"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/submission.tsx",
+      "bytes": 6057,
+      "sha256": "83b823d244aaddf82ef63143d2b76a3bd0c52ca497c56e1001f87f15055270aa"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/tsconfig.json",
+      "bytes": 211,
+      "sha256": "42ff78d8544b77e85f0e786fbda453450cfef6ae6b4526c8027f65dfca234f22"
+    },
+    {
+      "path": "artifacts/classscribe/instructor-src/vite.config.ts",
+      "bytes": 400,
+      "sha256": "ccf7a5222fefa2d7efd0b11f1a40fb01cd44d37270aa9d5a9684a7325fe99834"
+    },
+    {
+      "path": "artifacts/classscribe/package.json",
+      "bytes": 5946,
+      "sha256": "fbf06f80cbf61374dcdeab378a1c449a61f8ee9ea58344fbe87044d511ac3f6f"
+    },
+    {
+      "path": "artifacts/classscribe/public/apple-touch-icon.png",
+      "bytes": 3990,
+      "sha256": "82a196fa5bf575a547d6a774118137b70bd23d938701eaa4c5d7015ba16b5b20"
+    },
+    {
+      "path": "artifacts/classscribe/public/favicon.svg",
+      "bytes": 477,
+      "sha256": "a6c1b87a5a626f33b8881f98f8ce4568a828c4a9c52673027dfa8c5534489576"
+    },
+    {
+      "path": "artifacts/classscribe/public/icon-192.png",
+      "bytes": 4221,
+      "sha256": "f9b798487858feca75ab56136926244f5ec1f0b506ba770c72a65c99ca0c15fb"
+    },
+    {
+      "path": "artifacts/classscribe/public/icon-512.png",
+      "bytes": 12560,
+      "sha256": "8d9c76a6e4eb5211235b17787f6a1f78bd73023b7494d52e4c8189fc9d1b0215"
+    },
+    {
+      "path": "artifacts/classscribe/public/manifest.webmanifest",
+      "bytes": 536,
+      "sha256": "d8cc36ba84b972a896a663644c00e1146bc2bdf22288aa53c735a6c3c4bc5640"
+    },
+    {
+      "path": "artifacts/classscribe/public/robots.txt",
+      "bytes": 23,
+      "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95"
+    },
+    {
+      "path": "artifacts/classscribe/scripts/build-public.mjs",
+      "bytes": 2332,
+      "sha256": "5e9d4cfe273419563dfd90cde57fd2c94ba980b2f1312cf87f7eb37be954a539"
+    },
+    {
+      "path": "artifacts/classscribe/scripts/serve-public.mjs",
+      "bytes": 3053,
+      "sha256": "e9e7b262de3bec2b031f488a241adec21f607910f8087e70228c3e39f7f851d6"
+    },
+    {
+      "path": "artifacts/classscribe/scripts/test-syllabus-tab.mjs",
+      "bytes": 983,
+      "sha256": "a05a87516dd2d84643dee71141708b82e0de392b4a124aaa8d3a43e218e5ea93"
+    },
+    {
+      "path": "artifacts/classscribe/src/App.tsx",
+      "bytes": 13457,
+      "sha256": "a47ff9d6ca8defad682a01fca990c8c513aaa12919c725b46c1d8b40342f73d0"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/AcademicDates.tsx",
+      "bytes": 7027,
+      "sha256": "d4c9fbb2a01f769b513173827209ffc9b6ee2d999762b371e07d4b06f23f1906"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/CourseGradesPanel.tsx",
+      "bytes": 18180,
+      "sha256": "860c4a6ca8ac3f17ba8b376466712fac259ee1a576d3455ec0fe4088ebe29195"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/PlansWidget.tsx",
+      "bytes": 4058,
+      "sha256": "dee7fb9c9258584798e598fd359e91ace2712230b55e34b1a641ad27e10142a9"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/StudyGuidePanel.tsx",
+      "bytes": 3367,
+      "sha256": "4ab7cf79588f930efe08685158ce265426041b7fc362b1b2aeebf7b0f2de5711"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/SyllabusAssignments.tsx",
+      "bytes": 2898,
+      "sha256": "2565863466259d12b3a42347e4c99e2849ee1c9dadfe576e809854aca21a30b3"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/SyllabusTab.tsx",
+      "bytes": 23388,
+      "sha256": "110e39757aa2211ea0061e7849c2001ad43a168e4223e73daaaf983d9e5dace0"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/auth/PasswordResetPage.tsx",
+      "bytes": 9228,
+      "sha256": "85c351e5d208158bf5789c5d4b04ad38901c0617ef7a94c1c7c9ab926c2615b7"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/error-boundary.tsx",
+      "bytes": 2735,
+      "sha256": "c1ea4d88be8cd206a46bd87f19edf025b2504a70a2b65cd9c438e4a0e62dafe0"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/layout/RootLayout.tsx",
+      "bytes": 8422,
+      "sha256": "f7f163b845030e9004852a6ed6228e66cc5ab082bdc4231b04e6308d802765c2"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/accordion.tsx",
+      "bytes": 2013,
+      "sha256": "8e4230a3e6d38bfab7b02f00f9e948c8c4038432c5b1bf2d0ea44dc8b5ce09cc"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/alert-dialog.tsx",
+      "bytes": 4447,
+      "sha256": "d76901a06e6881e94aa3847fde2602ee6f6ddc9f4cace9fa238627a5572bd24e"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/alert.tsx",
+      "bytes": 1609,
+      "sha256": "695369ea4d1ba4438dcedacaa8059b08b6463ac93170360f3bd42b983b7608e9"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/aspect-ratio.tsx",
+      "bytes": 143,
+      "sha256": "2f5b0ed3cbcf84e526caad0c6b88d4457f8745a365c86cc74d924a1b6e013a36"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/avatar.tsx",
+      "bytes": 1431,
+      "sha256": "429f5e82fc3dcf265625650176f16ff9b35e55826183e1f1b2d4dc2a338f9b15"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/badge.tsx",
+      "bytes": 1528,
+      "sha256": "ba6f51e428a520f54e600fded4ea030a8099fa6a9a7b7110af8dca34795415d1"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/breadcrumb.tsx",
+      "bytes": 2735,
+      "sha256": "44b4de47f806eec0e3de5130f0399e83700eaf0bc8deb47af5ffda2bb11eb3f1"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/button-group.tsx",
+      "bytes": 2222,
+      "sha256": "b89025c11d08652597cb46b097d3e04658ad2c383bf81ed445c8182c0ed1b260"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/button.tsx",
+      "bytes": 2370,
+      "sha256": "9c20a340ca0c948d0164158eff44fca2e26343c8ee387ffc22f9cd677c59d27d"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/calendar.tsx",
+      "bytes": 7607,
+      "sha256": "1cdd1e62797356fe62f61f5521fcf0da8e3570b1120868ccca2b48370157fe46"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/card.tsx",
+      "bytes": 1856,
+      "sha256": "9fed39a53303c12fa6ac6f5f8813c1683e2198df9ee067cffbdfe69044cf3e4f"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/carousel.tsx",
+      "bytes": 6288,
+      "sha256": "4ae2f69bc2c1ce33c60b23ddc5382f4b93882dac07c2d18cce32fb148ff52c48"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/chart.tsx",
+      "bytes": 10846,
+      "sha256": "ac747c83483d742e207426a193ba5e2cf639fa18cd819c1f12d12329520c6c12"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/checkbox.tsx",
+      "bytes": 1038,
+      "sha256": "6b9e336fa42475bbb2ad4d76478afb8d2555e6e26bac245b9ccde62a9a033adc"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/collapsible.tsx",
+      "bytes": 335,
+      "sha256": "aedcd10b62404b39d8d5544c01fee90aa7b66e7280bb80a215601ad198a1b8fd"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/command.tsx",
+      "bytes": 4918,
+      "sha256": "d8fb66e44f9f8de558f6a94c781f3d890871d76dbabcda64e6fab3c917b3237d"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/context-menu.tsx",
+      "bytes": 7446,
+      "sha256": "bdff38b45a6010e3db808c099c799bd61e6aca619378074e7b14b63c1291e4c9"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/dialog.tsx",
+      "bytes": 3889,
+      "sha256": "e0d3fa53f4cb7d8011ab09f2d198c24234062d24638fabf5142f5fbce57d2ba5"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/drawer.tsx",
+      "bytes": 3029,
+      "sha256": "152bc340ad982e84f851e3bc1a6b8e7ffd0151a7445c6ecf1b1e3e13cbc19210"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/dropdown-menu.tsx",
+      "bytes": 7646,
+      "sha256": "a79d5419ee174de35880340aef44d67847cee54846c058e02ac4a846b603c60f"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/empty.tsx",
+      "bytes": 2410,
+      "sha256": "48824b1b37bd406fa74f48db726a4f1d70cf88db5b3432f7b1d59f584f1c5dad"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/field.tsx",
+      "bytes": 6079,
+      "sha256": "c3787ffb045354e9f18e70d94890627caea94939a226e49c1e6cedee84a1e9e1"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/form.tsx",
+      "bytes": 4232,
+      "sha256": "1960463b09152760fdd99ca3eb16187408d064c7599ed66384b42d1613d3a3a3"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/hover-card.tsx",
+      "bytes": 1245,
+      "sha256": "e0b4e3f0126757a8eb5c6e436c8c041c049430abe9a2eb84b10154144b31c29c"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/input-group.tsx",
+      "bytes": 4993,
+      "sha256": "f4befbf9bf8ebd755b267c4db2b396be296adb95acca5c3fba54f6495bdedebd"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/input-otp.tsx",
+      "bytes": 2160,
+      "sha256": "b4891335e70920518cfbdef2aeb399f61477fbc4b3ffe3b8a2938f19074164cc"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/input.tsx",
+      "bytes": 775,
+      "sha256": "03ac1648171bd5ad90dbc03e9ebff9a9cc77708bcc53bdac914b80eeebfe3032"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/item.tsx",
+      "bytes": 4519,
+      "sha256": "4a84cda22d692ee176f5128517a4003a63d11f907df445e7586ef034c88e8772"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/kbd.tsx",
+      "bytes": 867,
+      "sha256": "4348a7a06a715e9e9673602cbb9ed89a6a4c6cbdd457d4c03db0f23a139d19eb"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/label.tsx",
+      "bytes": 733,
+      "sha256": "fbc0c7db4221227941271a004bf71db5067aee9d8668f3351d91113cd5934c8c"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/menubar.tsx",
+      "bytes": 8655,
+      "sha256": "26dbbf36e4ffd87aab74e61dd1e3613f0c640988479679d53bacd8dbd15cc891"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/navigation-menu.tsx",
+      "bytes": 5150,
+      "sha256": "222020e1ac703ce01700d6e8822c6263932bc71c481d724b8ef53ccaae8ad63f"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/pagination.tsx",
+      "bytes": 2772,
+      "sha256": "dd65d2e59226a3f384014b596ae701aef50f130cb3061f4657e81c588587b8da"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/popover.tsx",
+      "bytes": 1351,
+      "sha256": "dc574442536873c8aa88733c348503c4599ad6ed0fc9898fd25406d94e095cca"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/progress.tsx",
+      "bytes": 799,
+      "sha256": "74223bcccf7ca2ed026d197476abbe3d48fbc531c40f4252445f56954a270c75"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/radio-group.tsx",
+      "bytes": 1421,
+      "sha256": "8155d32dea5d4ddea2048b6d12f83fe4805d9bc87c97b994dbb0d040981334f2"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/resizable.tsx",
+      "bytes": 1733,
+      "sha256": "8e73dfb8b582944364d73b64ed03378016f20f7251f15f880dcf0fb140e1ad41"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/scroll-area.tsx",
+      "bytes": 1650,
+      "sha256": "73f5dedda781e5285092ea269f747378dbad8d95631eab638e15b3c31595dc59"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/select.tsx",
+      "bytes": 5773,
+      "sha256": "c64c9c1574c91f1eff922f3557e7609ba6c1d5e39959dbdecf8d386d7ae41990"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/separator.tsx",
+      "bytes": 764,
+      "sha256": "2b129347f918742bf006099f7f56a9be373250de2ecc3ad201297563e3d1f807"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/sheet.tsx",
+      "bytes": 4307,
+      "sha256": "ef2ae35ccab1252c4eee56e67e9f1b2499b5bbfb3ae39037d8d4be39915c272f"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/sidebar.tsx",
+      "bytes": 21969,
+      "sha256": "de7566e708ba8bf34cb4a78fc018c784315c9d7a16d70e66255f8c72caf9d1db"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/skeleton.tsx",
+      "bytes": 269,
+      "sha256": "d78130b2e311a750e7bb524e66e3af4c04e2ab02b04fd68539c1afd0bbb47152"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/slider.tsx",
+      "bytes": 1043,
+      "sha256": "ecac74b8f3a044ba7a9e4eb0bdbfdf48be92483a32d2c414c5078c9f38e1f369"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/sonner.tsx",
+      "bytes": 902,
+      "sha256": "de5a5d9ae404545fcb0f21123530ffcf89d24a47812c70b3ca1376591e28dbdd"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/spinner.tsx",
+      "bytes": 334,
+      "sha256": "4458ea392b32f439cd4c64b9593846f339370fa1295c04f9003f05c1f3386689"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/switch.tsx",
+      "bytes": 1155,
+      "sha256": "f81bc9b5ce2d6a92b6b2f1f3376c0489f30f7073081a1d9d6c56553880f44c58"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/table.tsx",
+      "bytes": 2881,
+      "sha256": "dd29f5ef260af67ed09c84505495e3fddbad14009e3b3ce689d0c354ffaf55d3"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/tabs.tsx",
+      "bytes": 1890,
+      "sha256": "320609101fbaa6cccda0b899154cb510fa322926cfdbaf07e33b79c00c83fcd6"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/textarea.tsx",
+      "bytes": 655,
+      "sha256": "63fb699771afe60c5073ed50e1a042d7d7f21eefd12d15bcb750cf3230985011"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/toast.tsx",
+      "bytes": 4871,
+      "sha256": "04d4ef720079342e2f4380c22683f1544bd8e93a581fb55e447458f04a6127d5"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/toaster.tsx",
+      "bytes": 777,
+      "sha256": "d34c7cd51482ddd5703a13378d9ac69b3459a304581e42f56ac2c696e53163ac"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/toggle-group.tsx",
+      "bytes": 1767,
+      "sha256": "6d7aca86245edf5d0a8f6f3ed73bd19316f4865425891eabccd6f3e37e59519e"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/toggle.tsx",
+      "bytes": 1494,
+      "sha256": "5800d2099224ef90892e8c1d972d2a0964391c33cd43d7f5c6abf5cd42e023e1"
+    },
+    {
+      "path": "artifacts/classscribe/src/components/ui/tooltip.tsx",
+      "bytes": 1277,
+      "sha256": "e3c6ea9d4ecd62881af33564e25be013d35a8a7fa78475a6dcc98a06c7f894eb"
+    },
+    {
+      "path": "artifacts/classscribe/src/hooks/use-mobile.tsx",
+      "bytes": 585,
+      "sha256": "82bff42ff087bd5dc90a5d17609cc428b8688de92d1333073a839af5ad3c9cbd"
+    },
+    {
+      "path": "artifacts/classscribe/src/hooks/use-toast.ts",
+      "bytes": 3952,
+      "sha256": "12cce940e597e1d597f7063131acd19658d25e924904308bf719bde17b67e351"
+    },
+    {
+      "path": "artifacts/classscribe/src/hooks/useStudyPlans.ts",
+      "bytes": 3314,
+      "sha256": "a3dc1145f7f583f46a372bb8bc8a675c21e03986c0765ef59203ad1c24258a0a"
+    },
+    {
+      "path": "artifacts/classscribe/src/index.css",
+      "bytes": 10209,
+      "sha256": "e59d15fbfd32a7b73ba193b6c6886587c71fb56704395de9abc9b77fe0f77c3b"
+    },
+    {
+      "path": "artifacts/classscribe/src/lib/analytics.ts",
+      "bytes": 669,
+      "sha256": "72bf167b0768f2ce3084c59d6dcaed04378a572737f2bccc248e84ae7622c8eb"
+    },
+    {
+      "path": "artifacts/classscribe/src/lib/recordingStorage.ts",
+      "bytes": 6468,
+      "sha256": "163a50e438533a8194e51a0a8f273c6793e88326be0a51bdae84cb669de955b7"
+    },
+    {
+      "path": "artifacts/classscribe/src/lib/student-level.ts",
+      "bytes": 362,
+      "sha256": "d3ce164fb755bdc6d3eca10af5115278bbb14e179066d6ca21b5f25828fc5d65"
+    },
+    {
+      "path": "artifacts/classscribe/src/lib/utils.ts",
+      "bytes": 170,
+      "sha256": "afc0e1dc0e142d6b81f688d91087f81a4b2db4240cf70f55b6e5e4dcc199ebf1"
+    },
+    {
+      "path": "artifacts/classscribe/src/main.tsx",
+      "bytes": 446,
+      "sha256": "e7e03b61f962dc1787ea029d4941424475455366b5a4f079c8fcb4f5df4d076c"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Account.tsx",
+      "bytes": 16280,
+      "sha256": "8945c5b83a6e22bfcbe9a22f36aa7cc40511800d84ef809c5841889be48edac9"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/AskClassScribe.tsx",
+      "bytes": 11701,
+      "sha256": "2d591fcf6b6b948804716cf60537c2630c1f9187d5a7bb50816513d358d87f81"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/AskSourceDetail.tsx",
+      "bytes": 3876,
+      "sha256": "e6b9ce4d184c4c0cafb5b6d9d06d7bae31df46f6432112fed50b0b4ab2ea27fb"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Classmates.tsx",
+      "bytes": 4105,
+      "sha256": "38fe9b5cd29cbf6d7c32a927a6a7d5a99d72622726853793683ba58b1fd14a47"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/CourseDetail.tsx",
+      "bytes": 20900,
+      "sha256": "77c3bb0411e847bb95b19689f4ac5e648a3edecfa0ed3fabef1542b63e2e6f05"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Courses.tsx",
+      "bytes": 15330,
+      "sha256": "6ac00865f8a0dd62a786aedcfe225917ab6b71d9886c305bbb1c39672a775aa9"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Dashboard.tsx",
+      "bytes": 19626,
+      "sha256": "13db1f95ea301b07d7b9cb8e9826f77a460ca02af502bed5fae24992e3e39b7d"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/ExamCenter.tsx",
+      "bytes": 19146,
+      "sha256": "8933d8b1b294e5aadb9b669a818962f14e65790a9df084d6283194eed050e95c"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Home.tsx",
+      "bytes": 4830,
+      "sha256": "482dc504f5b55494d3b1d09faeed207f1265e584f29a0812e5afe15409695524"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/LectureDetail.tsx",
+      "bytes": 22304,
+      "sha256": "7329a114590d669efb87f26ed67ce343bdbe4c964761f448b5cfbd82cbc78c96"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Plans.tsx",
+      "bytes": 6222,
+      "sha256": "cb82824ad40f56906252e643e50fc51ceab2a001ab736cfd174c99cc5a84a671"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Privacy.tsx",
+      "bytes": 4162,
+      "sha256": "6b7a3080323fa83d9c1afd32e796efe045a3dc6ca8dd156f63718bd86ac9c250"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/RecordLecture.tsx",
+      "bytes": 21975,
+      "sha256": "8802156dd7e34e0d0876835f2fa3708752dacdaba7a76a73fdf7cfbcb1ac6b28"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/Schedule.tsx",
+      "bytes": 33073,
+      "sha256": "a02c7ecde2ecd29dbf77390c282e1b9562cd9ffc0cdfdbc4d787a71005a3d8f0"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/SubscriptionPlans.tsx",
+      "bytes": 18494,
+      "sha256": "4e4bb79cd35636c6f8f63875ed05f663c0c79dda1282303bd3bd157b41d601a7"
+    },
+    {
+      "path": "artifacts/classscribe/src/pages/not-found.tsx",
+      "bytes": 631,
+      "sha256": "79d9b6c95533fc1c8ce2669d9ed1fbe1ed9dab1d3ba5ee180178b624d155f3b8"
+    },
+    {
+      "path": "artifacts/classscribe/test/ask-private-evidence.test.mjs",
+      "bytes": 2706,
+      "sha256": "2e30d2e35ccfed9377be08a0a9697519679eddd05ac7af5b39d9978f48b1842f"
+    },
+    {
+      "path": "artifacts/classscribe/test/ask-switch.test.mjs",
+      "bytes": 7872,
+      "sha256": "3c474c4681d9319ed497e5821f7af6e3fcc443f9ddca18dec556419ba85468a5"
+    },
+    {
+      "path": "artifacts/classscribe/test/browser-private-sources.test.mjs",
+      "bytes": 10891,
+      "sha256": "33aeb1f9ca0583f2edd0fafcf3f01ee325593a1cba797695a746f37a66ac2fe5"
+    },
+    {
+      "path": "artifacts/classscribe/test/clerk-account.test.mjs",
+      "bytes": 4901,
+      "sha256": "b8ecc46346592a74da990366497e932db73cab6abf6281d6608bad78c2dbaf35"
+    },
+    {
+      "path": "artifacts/classscribe/test/companion-grading.test.mjs",
+      "bytes": 6242,
+      "sha256": "27667a4189c725b472c7cc0d84d602abb20679aadb4ed60f721f785ccb8306ff"
+    },
+    {
+      "path": "artifacts/classscribe/test/edu-expiry-warning.test.tsx",
+      "bytes": 1490,
+      "sha256": "6a4e645860b8cf7cb8e849a30f8bfc8c4753fb6e739b1ab8258541288b10caff"
+    },
+    {
+      "path": "artifacts/classscribe/test/edu-gradebook.test.tsx",
+      "bytes": 2100,
+      "sha256": "3b40dc39ca3df43eed262a68e719461d5fab1b14fbe161eb0d7243f3bc7e22ba"
+    },
+    {
+      "path": "artifacts/classscribe/test/edu-inquiry-analytics.test.mjs",
+      "bytes": 6627,
+      "sha256": "a5920db28cdd853ac2199ff12c01b50bd24bdd4d879af0d3390f85f9e70e7b97"
+    },
+    {
+      "path": "artifacts/classscribe/test/edu-open-tab.test.mjs",
+      "bytes": 17817,
+      "sha256": "071dbc0815a93c13cbc581e6614e1f0f4aaba94a3d82a182ea9e142848025a64"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/controlled-html-audio.mjs",
+      "bytes": 1038,
+      "sha256": "20d1cc7b23b6a1f6712c7180e22a1caf56bea562ddde41e798ed42ed14edcd83"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/edu-browser-clerk.tsx",
+      "bytes": 1329,
+      "sha256": "5c85da7f58fcfd362040bfe40319d5e1ddf0fec3fe3a0a75edce215e53350438"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/edu-browser-entry.tsx",
+      "bytes": 156,
+      "sha256": "85445339cd8a4056cf5eb5f97de1f9a57d70c5ee0afedbbd5f1c0e4b9588c205"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/edu-export-auth.ts",
+      "bytes": 71,
+      "sha256": "9a6c828af9480547a1ff79a5fc08bf2f98d144fea58de083366bb82bf2077c14"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/study-guide-ui.tsx",
+      "bytes": 639,
+      "sha256": "13b073c0de5c33fe6cb208057dac85494047ae4118fd015fc04406c8fd228310"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/syllabus-client.tsx",
+      "bytes": 1913,
+      "sha256": "2abb8524ef9e4a70e76658dc661fcd58231cb4c5fd5b49c2cc4765ee3c29cfb9"
+    },
+    {
+      "path": "artifacts/classscribe/test/fixtures/syllabus-ui.tsx",
+      "bytes": 749,
+      "sha256": "0b48bcffa797cc471a67d9edcc9cba1125f9070f029b4fc40f09a35898344555"
+    },
+    {
+      "path": "artifacts/classscribe/test/grade-guidance.test.mjs",
+      "bytes": 6527,
+      "sha256": "a630ed151427c6a3906e88b1ebd681b068f332d2175d7fb129ae6096c4301260"
+    },
+    {
+      "path": "artifacts/classscribe/test/gradebook-export.test.tsx",
+      "bytes": 894,
+      "sha256": "fa2d7556d30b35aba3c1d0d1d49ddcb2cc37ef0ee4beb3005b925f0c515a3c7d"
+    },
+    {
+      "path": "artifacts/classscribe/test/header-record.test.mjs",
+      "bytes": 2250,
+      "sha256": "86c98569e638f65a4aaf5918ce8e530bc8a49a01fba8e60ca5cfc01a098acf5d"
+    },
+    {
+      "path": "artifacts/classscribe/test/home-layout.test.mjs",
+      "bytes": 18270,
+      "sha256": "a24bb0875971a53ccf341187cc9c9187c2fa52e241516a1c65a51ec4c7e148c2"
+    },
+    {
+      "path": "artifacts/classscribe/test/instructor-history.test.tsx",
+      "bytes": 3704,
+      "sha256": "8b6747c024fc19665d692cb2e380d76f869dd3fb27ab994ed6fced1539c78196"
+    },
+    {
+      "path": "artifacts/classscribe/test/launch-intro.test.mjs",
+      "bytes": 1754,
+      "sha256": "6f8d9b5e25488dadcd32095ddc09eca26e49d0205e050c46122a5a9eaebdec94"
+    },
+    {
+      "path": "artifacts/classscribe/test/launch-landing.test.mjs",
+      "bytes": 4749,
+      "sha256": "38aa7c2903d2e261d8df0212b6f2f2fb7d447835f7fa772aa5dcc8fa0afee2e1"
+    },
+    {
+      "path": "artifacts/classscribe/test/lecture-audio.test.mjs",
+      "bytes": 3484,
+      "sha256": "9a94f9b34466b313344d5f712615f6d0ece4d4c7aece570807140373498de06e"
+    },
+    {
+      "path": "artifacts/classscribe/test/online-capture.test.mjs",
+      "bytes": 6893,
+      "sha256": "2d798702fe519cd4635800f60eaa98551895e7ada60e797785b23adb97e17ed3"
+    },
+    {
+      "path": "artifacts/classscribe/test/privacy-web.test.mjs",
+      "bytes": 6587,
+      "sha256": "9f786595b8b7e3ac7a12f6f4ada49b52da4aedadb9b0f55c4dde16d33f9f0023"
+    },
+    {
+      "path": "artifacts/classscribe/test/recording-safety.test.mjs",
+      "bytes": 7001,
+      "sha256": "a4fece16c0cbb5dbaa46bf036ce5df4469a24e52ec76247a871d58090b80a7da"
+    },
+    {
+      "path": "artifacts/classscribe/test/schedule-import.test.mjs",
+      "bytes": 4602,
+      "sha256": "5f9baf0fb30edf42ecc52337d1144daa662f827442044c371b91716493cbe7b6"
+    },
+    {
+      "path": "artifacts/classscribe/test/study-guide.test.tsx",
+      "bytes": 1241,
+      "sha256": "01e355dd62faef28b5990810ac8df24c4ab7eb2d8f612ad37939acc7fdf92f37"
+    },
+    {
+      "path": "artifacts/classscribe/test/syllabus-confirm.test.mjs",
+      "bytes": 5204,
+      "sha256": "d619dfe9d4f82af0d80caac062f4a64c13c9efad9fa1de0cc0f0eac0bff3db80"
+    },
+    {
+      "path": "artifacts/classscribe/test/syllabus-links.test.mjs",
+      "bytes": 3091,
+      "sha256": "53809ef85a694f4aa5dbb72154430fc50e490efb896c0ba0629514caff0d30d4"
+    },
+    {
+      "path": "artifacts/classscribe/test/syllabus-tab.test.tsx",
+      "bytes": 6645,
+      "sha256": "47a5e4b5e77b70691dd30c6e300e4ca802dc4826fe3eadeb1645ab7094ba6e03"
+    },
+    {
+      "path": "artifacts/classscribe/test/sync-code-recovery.test.mjs",
+      "bytes": 9943,
+      "sha256": "1661642399e45f3576f19ec737e91795915bd71dc73fa8db94a6eca3ddf72687"
+    },
+    {
+      "path": "artifacts/classscribe/test/untimed-transcript.test.mjs",
+      "bytes": 1113,
+      "sha256": "802f0afb91d0b5cb7fec2c7d05194fa66c3977df0f7e18af05989c750335a2b0"
+    },
+    {
+      "path": "artifacts/classscribe/test/web-credit-confirmation.test.mjs",
+      "bytes": 5318,
+      "sha256": "a6244783f20090838070a136c646eea7c4e1b4c2f2eed505666c3f7d6a2ef90a"
+    },
+    {
+      "path": "artifacts/classscribe/test/web-credits-balance-refresh.test.mjs",
+      "bytes": 3854,
+      "sha256": "1a6dd303f28454cbe368a71d491ee27f38ef7caa99b384e646194ef6485470b2"
+    },
+    {
+      "path": "artifacts/classscribe/test/web-credits-maintenance.test.mjs",
+      "bytes": 1979,
+      "sha256": "72ad37aceb3033bfc0e428d18404a6eb02b143fd4de4870509067f5247341db9"
+    },
+    {
+      "path": "artifacts/classscribe/test/web-credits-packs.test.mjs",
+      "bytes": 4321,
+      "sha256": "aab5a31cd806d6ab889c0bc4048dae9082a264da4f951817e1afad55fdd288df"
+    },
+    {
+      "path": "artifacts/classscribe/test/web-plans-billing.test.mjs",
+      "bytes": 6215,
+      "sha256": "136c4776a218108a417a50de6f6836d44b5a0b151af175d0f3f91a1a8c1eb465"
+    },
+    {
+      "path": "artifacts/classscribe/test/welcome-refresh.test.mjs",
+      "bytes": 2960,
+      "sha256": "fed460c546d9942c29f170d494721c74ff220568e94ebf19c7b3fdc4456ba87e"
+    },
+    {
+      "path": "artifacts/classscribe/tsconfig.json",
+      "bytes": 520,
+      "sha256": "e0a2fd8a7f3bfc860ccab5623b1881e754eb02336612708ff8b59215e8c256c9"
+    },
+    {
+      "path": "artifacts/classscribe/vite.config.ts",
+      "bytes": 1803,
+      "sha256": "4f7c94d802c4f2d5f5c92e051ac99f5701d62d518a8cb412b9ae094879e0a4f7"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/ai-consent.js",
+      "bytes": 8805,
+      "sha256": "db5d8070b9b12c4b6ee28da02aa39debbcca9a76cc0cb40936b1b601d3b3e23c"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/chief-joseph-tribute.png",
+      "bytes": 107087,
+      "sha256": "508d60ad17950b0bbe839beb3281d8b8f46e00f1952fd374fde8671113f4b94a"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/classscribe-logo-white.png",
+      "bytes": 40063,
+      "sha256": "3e2e08319c037e01dffb9cafd4e72d904da809e19487a68d02740e801b5ae689"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/classscribe-logo.png",
+      "bytes": 53334,
+      "sha256": "0e2393c706302da4f9ddd67749ad7465baa00f82a63e4ebf45cf9d41761db544"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/clerk.browser.js",
+      "bytes": 3678067,
+      "sha256": "0f8e1b8c63afc5523cf5906f611969257d6dded9ee97737ca9c1726a095caa10"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/einstein-help.svg",
+      "bytes": 7229,
+      "sha256": "6c6e2ebc07a719aecd97bae8fd3b4d5464cd428f166d91a62c3c23aae30d6bab"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/icon-180.png",
+      "bytes": 2386,
+      "sha256": "faaf450922487431c099ebb2e37231be3ee5187f745f44519cbb9d205313cfce"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/icon-192.png",
+      "bytes": 2923,
+      "sha256": "6bab38cad3451a73153a936cfb1347d1c7bd85c4391741d36325c12ce76c5618"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/icon-512.png",
+      "bytes": 8595,
+      "sha256": "b0c98aa3a01d94e016f611698a5c19dab3f941219fab7efe1e655950560932b9"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/index.html",
+      "bytes": 567994,
+      "sha256": "3426755bf8f343cfbd95566f5b9cf6a11c8f52b55eb3a7889c59be22ded2c7ce"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/instructor/assets/index-B93ZUQ0B.js",
+      "bytes": 392015,
+      "sha256": "78a59927f5ae6bf8ff732be65aa49cd2dcd3f8cbdacae63229daeb0453342dc1"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/instructor/assets/index-DvYunNev.css",
+      "bytes": 501,
+      "sha256": "91fedbca0db25a4c97d3c9611da100e429d267cd8abf2ce76afc45b0615f0109"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/instructor/index.html",
+      "bytes": 579,
+      "sha256": "d0c93a9d384a94d050c3fd20938ae09f06e98d68d7b832f46c07e10769e7163b"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/katherine-johnson-avatar.png",
+      "bytes": 89222,
+      "sha256": "b3c11ffb9ec43d1dc1872e03ca052bf41d42c2627174266531dd6d0b81c04898"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/katherine-johnson-cartoon.png",
+      "bytes": 1571099,
+      "sha256": "3f20e9f3a334424ede37ca3d3c665f2d7cf3515c8088a82f58e7b0fce8bd639c"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/DejaVuSans-Bold.ttf",
+      "bytes": 708920,
+      "sha256": "5c1247acef7f2b8522a31742c76d6adcb5569bacc0be7ceaa4dc39dd252ce895"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/DejaVuSans.ttf",
+      "bytes": 759720,
+      "sha256": "ae7b7855e115a5966d8b1b3f80f254ccc117ec86f9965e202ee2940453837280"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/FONT-LICENSE.txt",
+      "bytes": 2358,
+      "sha256": "4e53b6e821a968403164759dcc6ede0e2142e4c0efcd89ce7d628df1dc744c4a"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/demo-notes.jpg",
+      "bytes": 31815,
+      "sha256": "e4f058d733834c994363c8f5dcae406900ac5c4b8e0f60b12012cc67030ccd8f"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/entry.js",
+      "bytes": 1922,
+      "sha256": "fd0c3d1706378f9819a470259adf1be47ac8ae0f74c20aae27bd575662cd2477"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/launch.css",
+      "bytes": 2141,
+      "sha256": "9e2dba3fdfde697251b3534e0a877cf6f81de563a45650bc00d26720472c48e2"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch-assets/launch.js",
+      "bytes": 712,
+      "sha256": "2446a221e47439fcb298e08d5ee7d80dc8ba5127118c2926a05b54984eaa3102"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/launch.html",
+      "bytes": 3030,
+      "sha256": "45b313480accc675d7c5791af380179212299df45f3a8885949269168e92ae25"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/manifest.webmanifest",
+      "bytes": 424,
+      "sha256": "e5743d8082985efd665093c15243a974b6c35c3a60fb6f2d1f63947393914a77"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/platform.js",
+      "bytes": 18536,
+      "sha256": "9352e7daec8f9e06979c565772e55a0bd16dbca80104454de5ceb571c520d4d0"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/privacy.html",
+      "bytes": 13465,
+      "sha256": "04019eaf0398a2ab30154f0d5650b5fd3e127d4ea071276aab1ce4768821cc1d"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/support.js",
+      "bytes": 9159,
+      "sha256": "caca7d25e1e7d70d28a31c8444fd3cfa640c22ba733a97251a3a6e97e8208d04"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/terence-tao-avatar.png",
+      "bytes": 82258,
+      "sha256": "3cf235d3fe61cd48a08f1489f6b1798dd240ad735497d5cb4ae2499676df4fef"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/terence-tao-cartoon.png",
+      "bytes": 1592932,
+      "sha256": "6097e3aa26c4cd205e8dbfc0a37097e1eba6c9e374de69469d059e8840a13060"
+    },
+    {
+      "path": "artifacts/classscribe/web-public/terms.html",
+      "bytes": 8337,
+      "sha256": "8567a2fc1a085d5e9f3f8ab2b1a91184dcc43ecf78cf724e7b7d39ecab4d5c4e"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/10_grades.js",
+      "bytes": 21512,
+      "sha256": "80d557bd1edf4aab1b1c1c54ff1996c22b3875b340b9f9c447d560a156af18ce"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/1_head.html",
+      "bytes": 51984,
+      "sha256": "3d15fd0361c7bbdf3a41899d6c54713ebd9814683b35a8829879d2371bc319ae"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/2_data.js",
+      "bytes": 25139,
+      "sha256": "052d0aae356ff3d17b0c005d1d3b6fb2d16f1c0cb880c11e6185931cf5391724"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/3_core.js",
+      "bytes": 63511,
+      "sha256": "f65e0e0d60c38e6a7b7c6b5da983e6ab360c4712a92ec77cb21766053902fabb"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/4_views.js",
+      "bytes": 78479,
+      "sha256": "c43ad04aec85e9565dfa82c213169255f319d17f2389e80be609183310719376"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/5_capture_lecture.js",
+      "bytes": 69223,
+      "sha256": "eea021520472764995cd3cccbaf6fb7e7c03aec5ceccc1ccebd05442ff44a574"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/6_study_social.js",
+      "bytes": 105600,
+      "sha256": "66dd91b70534e830f76e1df986024814246b0e3273dfc2bec6612eb20878c0f5"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/7_notes.js",
+      "bytes": 26980,
+      "sha256": "ed99c429cd23b3cc10ebe0a404e9a1ac453c553d7d5fb7e320d26984cb330863"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/8_account.js",
+      "bytes": 102626,
+      "sha256": "5187efcde572e991990233290a3e9c63cdb39e82464ca6e3d809981f77be82cd"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/9_schedule.js",
+      "bytes": 19822,
+      "sha256": "a07fff8af2173d05ec0f131add6088c897fb30b321ddf01f6ba8e4218ea9f62b"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/build-web.js",
+      "bytes": 7858,
+      "sha256": "e47b7cdb98c4b9e3644c08d947193fa97065e7fa4f7dffce23a73aedcf01e083"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/static/ai-consent.js",
+      "bytes": 8805,
+      "sha256": "db5d8070b9b12c4b6ee28da02aa39debbcca9a76cc0cb40936b1b601d3b3e23c"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/static/privacy.html",
+      "bytes": 13465,
+      "sha256": "04019eaf0398a2ab30154f0d5650b5fd3e127d4ea071276aab1ce4768821cc1d"
+    },
+    {
+      "path": "artifacts/classscribe/web-src/static/terms.html",
+      "bytes": 8337,
+      "sha256": "8567a2fc1a085d5e9f3f8ab2b1a91184dcc43ecf78cf724e7b7d39ecab4d5c4e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/.gitignore",
+      "bytes": 431,
+      "sha256": "a82a56c8f8529bed8dd94d978ad6c568fb8d7d2282ad4e0502519761dab87f7e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/.replit-artifact/artifact.root-candidate.toml",
+      "bytes": 688,
+      "sha256": "822fe373a928fd7ba70a44d83063e3de36130bf149b209fd3bb7dac253a7a4ba"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/.replit-artifact/artifact.toml",
+      "bytes": 787,
+      "sha256": "2563b20cbaf6c4fd9828cd1812d1388e1fe26c07859ec10c15aee096a3d16ef8"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/NATIVE_PREVIEW_DIAGNOSIS.md",
+      "bytes": 26641,
+      "sha256": "3529d4cead0c49f33941043716e5cbfe63566ae6908f23f18a583811110ea0a0"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/_layout.js",
+      "bytes": 3919,
+      "sha256": "c87cde76de1298599c6a54c39fa7cc5f24c13feaae7eaec5b341931c18d9876a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/ask/_layout.js",
+      "bytes": 138,
+      "sha256": "3e713e2517e7f9bbaf0fc4dd228e0fbc268c6141ce06b7f666947fbed37a1eb3"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/ask/index.js",
+      "bytes": 58960,
+      "sha256": "7a14c335441e4716b876784988f5ffe3928d97241746b5c3612fbae0a42782f1"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/class/_layout.js",
+      "bytes": 133,
+      "sha256": "ef5cf3542c86792d97fe527a3714d9d12483ad1507ca38704e2b222220653d0c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/class/index.js",
+      "bytes": 12272,
+      "sha256": "df831e44cc1206ca53ba7497d17a5f5be3f0842c04f3e3a9153b82005d03a717"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/contact.js",
+      "bytes": 1239,
+      "sha256": "20668c40c67a0d5a34d3dcdb629f792b0db559294067314da0d514313e83e63f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/home/_layout.js",
+      "bytes": 160,
+      "sha256": "c2dc5aecca40a6434887324fbe324419038f7ece4a6b2b5f3343161dd6324799"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/home/index.js",
+      "bytes": 27125,
+      "sha256": "a859681798a5a80621117b535795153c2be153253e20dfe4b5db17fca80bda5e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/notes/_layout.js",
+      "bytes": 128,
+      "sha256": "4335eeef5b3f2950f836fa088e62912fd6501df8cfb7ab9474a5feda8d3fd847"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/notes/index.js",
+      "bytes": 4193,
+      "sha256": "085b61ed7f83996cd71a560b7428ebfd6750af19890ef29ec4bc6267876f3e7e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/(tabs)/record-tab.js",
+      "bytes": 139,
+      "sha256": "680579d0af791241154b60253c77d88e0a0f1115cad32f2f0f012f8e1eec2c3d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/_layout.js",
+      "bytes": 6432,
+      "sha256": "54aa9946a1835d4a382116606793f4e0c838edb8890c04337ae53a3bbc6c3df7"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/account-sign-in-methods.js",
+      "bytes": 6815,
+      "sha256": "b6780332af1f862626f936ec9c095b5b895c1d615484d5d5afa75bacc2545d17"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/account-sign-in.js",
+      "bytes": 6319,
+      "sha256": "6274d11288372e8086c31fa3851d29c1a36b41be1a68e488aa7f76a1ef944689"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/account.js",
+      "bytes": 17936,
+      "sha256": "7a34467db121f4b5845fc8da9f6c7b5b43c6cb169fcba6c0987e1d1f30daa280"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/cards.js",
+      "bytes": 6923,
+      "sha256": "4a5955c213a69bfff85deb114f2baafa59b70b93920d9c7f156afb2399d9c8ab"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/catchup/[id].js",
+      "bytes": 2844,
+      "sha256": "123dc46b4726c625a11fec03c04da659124cb58ad46aed6d5552ebfa0202d932"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/course/[id].js",
+      "bytes": 11573,
+      "sha256": "f7077c12a4706d26bc87059c55cd2b80fbb29afcb1286560d10867f8f5e2104c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/course-new.js",
+      "bytes": 2488,
+      "sha256": "d9e72f5c901996e2d75efcf40a8f39e476b062f691d28bb54534867341819d09"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/course-times/[id].js",
+      "bytes": 4740,
+      "sha256": "b514f0b6729e4dd7f807147c2582d261fa91aa1cdc859dd57a11422fd067774b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/courses.js",
+      "bytes": 2123,
+      "sha256": "15336581dee51ce5683a90c8347d1edc54e9a1d526ab7c74a13488b1e93a54eb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/credits.js",
+      "bytes": 16915,
+      "sha256": "b02fc6480d3927652e17a854822c9f7ff78a7ccf3287bc2ff1d923d27c30ca40"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/exam.js",
+      "bytes": 12018,
+      "sha256": "29cbbb6a64fa8a25351a6c4873938a6abf3791057d1c6eac1c2b29d8fdd43c50"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/grades.js",
+      "bytes": 29839,
+      "sha256": "ac8a885a2f77244023d26db63649fcf229d6d6f032bfae39a51a7c0f8955d96a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/guide.js",
+      "bytes": 9049,
+      "sha256": "fada27e3748dec735cca8cdab1f5a79090e91fb832972afb6eee0065703eccf4"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/index.js",
+      "bytes": 113,
+      "sha256": "2163065e7b3b7252ec627632ce0b2a6ab8f6284f10b19da67fbd45c3f89a63c8"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/lecture/[id].js",
+      "bytes": 24028,
+      "sha256": "f1e15c38aa5fe52ae592ad46397c54817b3459edb4112ab664e385b385908abf"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/note/[id].js",
+      "bytes": 15295,
+      "sha256": "bfbe1f83053986a6cb6fd705ed5271c213b4f50075c67f34aa1a4d7aa830f934"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/plans.js",
+      "bytes": 57766,
+      "sha256": "3f947e1c24c2284e88d54a2349f306a00ee33f20ca7f282b65bb2a1abb314389"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/privacy-settings.js",
+      "bytes": 18531,
+      "sha256": "d437b25f3fc3da9652bd68c7566743a27a2f94b9ab25123f29d6ccadc7f70b78"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/record.js",
+      "bytes": 43890,
+      "sha256": "d9e8003865255c14b3fc6f4f7e5f07f55b441b9cc5749f63dd493c9a78dba061"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/recover-library.js",
+      "bytes": 2412,
+      "sha256": "7fa6f7273363ef409005554610053b06bc73521e5c96afb5933a94cbbd81318b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/recover-recordings.js",
+      "bytes": 19626,
+      "sha256": "9e4f55fbb9c9152ed98e90f542fef6d2807b992ebad7d271319b6f269b5af544"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/schedule-import.js",
+      "bytes": 8317,
+      "sha256": "f97ef12f97c1746cee3b0f4a4e63d435a520901f4005a8bf531de99d387a9b62"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/schedule.js",
+      "bytes": 4596,
+      "sha256": "29211272fcbff3f0fa10d70600017a4e9a35c8433d6aff430ea8401c0c4a3c19"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/source-import.js",
+      "bytes": 11068,
+      "sha256": "dbf844f2d536d70bbcd532ff143e53c9d2de853e6b727a6fdd729ac710cd6202"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/support.js",
+      "bytes": 7139,
+      "sha256": "439bf32e5b53771ba190cc0651e162a29872702dd83af4c1b25ee1af53aabb26"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/tutor.js",
+      "bytes": 12699,
+      "sha256": "bd6f3708b468cc313bbb17835810cb7636570dac2109f429ac00b4ddf0467ddb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app/welcome.js",
+      "bytes": 10107,
+      "sha256": "23a812c6e283e0558e5900d699507b30d1e12a65bd39c36291aa792c09b90194"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/app.json",
+      "bytes": 2009,
+      "sha256": "781444402b89b6b43e3687933415d0d81ea84e77f27b289d53693fdc106af97c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/android-icon-background.png",
+      "bytes": 5338,
+      "sha256": "639b86ad1eb7d36827b1ec8629cf6208896b5fbc3dde53b3b2f57550d463452e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/android-icon-foreground.png",
+      "bytes": 17910,
+      "sha256": "5bf851a4e4c407b874bbd8625e0481410f6752b12f07502024260fba626f66f4"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/android-icon-monochrome.png",
+      "bytes": 10234,
+      "sha256": "f83519b214b762428a4fd05b9916eb43df8bd1da7abdaa66eb71b300e39d5239"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/favicon.png",
+      "bytes": 1154,
+      "sha256": "0ec625e215e1f9302cc63707539b7bfeeab14a1210c57c0f195ab22a49e0326d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/icon.png",
+      "bytes": 16990,
+      "sha256": "a17db9f4f153ac27de2e23792dc2a5847c13a092c23ea8eb32989ec9ed64eb94"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/pen-icon.svg",
+      "bytes": 495,
+      "sha256": "cf38dec340547f10fa504971503ef30659b026098c3d9c02bc4aba8aa6d30075"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/pen-mark.svg",
+      "bytes": 443,
+      "sha256": "d6fa6830690709390bcca02590b8e5cc4ecb53708147b468729b1175de9a7bfc"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/classscribe/splash-icon.png",
+      "bytes": 10307,
+      "sha256": "a4cf2dbc678b386d99d082202e8c25a0bddf69cb4b5078a6fb2cbea9f9cfca6f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/chief-joseph-tribute.png",
+      "bytes": 107087,
+      "sha256": "508d60ad17950b0bbe839beb3281d8b8f46e00f1952fd374fde8671113f4b94a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/classscribe-brand-icon.svg",
+      "bytes": 400,
+      "sha256": "d276f887037bca38fc4ce49de2a1d9ce867b529b213b7a1f33cba65d63951eec"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/classscribe-icon.png",
+      "bytes": 783105,
+      "sha256": "1fd6d9a68724a475618679cac8c08af3810ec7e05108359b6108639b01725598"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/einstein-help.png",
+      "bytes": 44604,
+      "sha256": "e7b1dcace0bf339ba3a9ca4f02f9cf6d50348e1b9d2c3e6e7c48568c41b6e312"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/icon.png",
+      "bytes": 14103,
+      "sha256": "2cab81a1a5c2b3bbca6ef47675b9b264d1cb857662c8d3693d727492450aed43"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/katherine-johnson-avatar.png",
+      "bytes": 89222,
+      "sha256": "b3c11ffb9ec43d1dc1872e03ca052bf41d42c2627174266531dd6d0b81c04898"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/katherine-johnson-cartoon.png",
+      "bytes": 225319,
+      "sha256": "80c6512b49f59b5ae62e2bbb2ddfd4f5ec9caadffbe10da80bb017e850bae06e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/terence-tao-avatar.png",
+      "bytes": 82258,
+      "sha256": "3cf235d3fe61cd48a08f1489f6b1798dd240ad735497d5cb4ae2499676df4fef"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/assets/images/terence-tao-cartoon.png",
+      "bytes": 223263,
+      "sha256": "1599ebbd933e5dfd6b67eba4417b392b22a3d4af88d5b79c07eab068b9695e16"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/AccountSessionControls.js",
+      "bytes": 2728,
+      "sha256": "2eb064ded154ffaeaff99c18c42a979365da9a884f523b5dad599a6ab0de3eb1"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ActionSheet.js",
+      "bytes": 2763,
+      "sha256": "dc9584f4273174a8bc4daff1079b64398754dfb9639075b66cfa00cffe8bfd94"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/AiConsentDialog.js",
+      "bytes": 1489,
+      "sha256": "50df0d1437beadc79c19d07eb8798aecdb6731d5ac288ea5b0220e97b2aac063"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/BackButton.js",
+      "bytes": 1022,
+      "sha256": "b4f2fc7bbb5372cdd53acad61b62c0961ad2ed235eaad80cb946531cad365072"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/CreditsConfirmSheet.js",
+      "bytes": 2539,
+      "sha256": "312216a9ada76b98c3da66a5ad15e2d4d8c0d312effebae12d06cb9c391001b5"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ErrorBoundary.tsx",
+      "bytes": 1673,
+      "sha256": "4e6d457cbb4b8c25922e431e08f3a60c036bada40482999ccd897d510334c846"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ErrorFallback.tsx",
+      "bytes": 6702,
+      "sha256": "afd5093c4c57531ba51fd1c4698177064c2576ce43d9a65978c9bf1b0f2aa531"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ExamFeatureAccess.js",
+      "bytes": 2419,
+      "sha256": "7b06a702604e6b26a26c62bd01bdac40e7832882f7c2de76e61e738e31281077"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/HeaderTitle.js",
+      "bytes": 1120,
+      "sha256": "c6226f33da8e7f58fce74918d3efcfc6b5f17fcf91df87238af5d0206c3e9006"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/InAppNoticeHost.js",
+      "bytes": 2112,
+      "sha256": "48042d1e56437861ddb4c4ddf2572b04ac2af2267a06859931b0641bb2406b99"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/KeyboardAwareScrollViewCompat.tsx",
+      "bytes": 747,
+      "sha256": "5f55681a8a1f4293cf3c5da92a42cbdf22eceec50d71437b78e43ffdfa6bbb88"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/LaunchIntro.js",
+      "bytes": 5435,
+      "sha256": "12cca259ca59e9bc8f58fccfcbce29f2ea942260544291185cd012db3f828578"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/OptionalSignIn.js",
+      "bytes": 34483,
+      "sha256": "2c6830708c591ce7381f05a5b145a5d15104700441c0cf79d9da02d68c761743"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/PrivacySheet.js",
+      "bytes": 1759,
+      "sha256": "8a03e12d52a82d5d0d7d63f9453c8b84f6d968aaa0b946b082e6108bf681b77d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ProfileAvatar.js",
+      "bytes": 1142,
+      "sha256": "03ae017cb69a4f04ebe1adb965aab6e8967c9df7578ad47a5b99721046aff45a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ProfileFields.js",
+      "bytes": 3053,
+      "sha256": "017dbe5e3092b0b2363c879c1b975ef82161a26f865134ea0c262e98b03c98c5"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/RecordingConsentSheet.js",
+      "bytes": 7772,
+      "sha256": "d4eda16b0cd56929388cb9355b1ab18985a76f762211237af86af0e1d0552e39"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/Screen.tsx",
+      "bytes": 2214,
+      "sha256": "2b80d4fb1c11acbc1ea15e5cf9b6f88bacce672c98d143f5a76a82467a3b2e04"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/TabStack.js",
+      "bytes": 1082,
+      "sha256": "77eba4de99e4e649b1da5feb1aff01bfbb7cbfd0bdb4fdfa7375f39b6d1afbdb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/UsageAllowances.js",
+      "bytes": 1491,
+      "sha256": "4288cbe46a344cb7ffe76859a6ea4996e2b957426a004b36a997c1f5ef5f99b8"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/exports/content.ts",
+      "bytes": 3582,
+      "sha256": "19e49bcb6077dd10211a705306e92a817e391b61eb501441d06f0d2f0010e41d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/exports/save.ts",
+      "bytes": 990,
+      "sha256": "0a0d804b0ab493e4afbb208b57ed6754218800fa42f2fc2261f4266e52024fbb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/components/ui.js",
+      "bytes": 11870,
+      "sha256": "05e7325f60c305f46d53a179e7cd80cad3abade1b9d62d80c7cf9feb9d5a3564"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/constants/colors.ts",
+      "bytes": 1675,
+      "sha256": "e280388cc3e09eff443b69727af0fe4115192d182715175c8b4e1fdc4f650315"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/docs/phone-bundle-smoke.md",
+      "bytes": 1401,
+      "sha256": "09865ea4f8c34f321641ed8c2ac346dd176d953f52faa059c990b75b7c381196"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/docs/real-device-social-sign-in.md",
+      "bytes": 3530,
+      "sha256": "86958b7fa06f5b64bbe884dde42cc257a0a46f472cde8a8bf339d03e74938d65"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/eas.json",
+      "bytes": 400,
+      "sha256": "497e06a10768265e837efdacb78bdd5d36d918299f233cb4442bf7ded907f7b6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/expo-env.d.ts",
+      "bytes": 110,
+      "sha256": "6fc02634da46d3edc5a88eec9173ba6bf709726be3cba83c73ebd8e859d5c147"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/hooks/useColors.ts",
+      "bytes": 765,
+      "sha256": "0a0cc5d229c3acf1ebe6742d4782d2a9330711bee35933fd3176b253a1aaa9e4"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/account-profile.js",
+      "bytes": 321,
+      "sha256": "66ba05625d30da77c1e296c3a9c3600666bd49ae4b1dae89d4419045c12fa744"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/age-band.js",
+      "bytes": 487,
+      "sha256": "408dc86e361ddcb79d031b67902d746f5385375a8cc24995e046846a6c67044b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/ai-consent.js",
+      "bytes": 2957,
+      "sha256": "c71549fc642a5216e35401532b33eccfa15703ea299480c1687a4190f1e985b9"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/api.js",
+      "bytes": 21834,
+      "sha256": "27aa05a872a68a363e5ca9eac2c6fea7ac133167c083120354fcf0f5b0f2cd96"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/appearance-tokens.json",
+      "bytes": 1449,
+      "sha256": "54bfef112320114d04b65d504be8c755d13dcd1190dfec616a6eec6c30ced47b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/apple-auth.js",
+      "bytes": 2603,
+      "sha256": "2bff17f03296b599dc7b628f2f591e292ecedc3607747e5823d4d2a262d23b76"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/ask-citations.js",
+      "bytes": 1403,
+      "sha256": "1a110562a05690349a27ec7d1e5689e2fcae558de2c60431b1807009a8b02ad6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/ask-voice.js",
+      "bytes": 6379,
+      "sha256": "3e36e33b798231769cecb79e2f23a9264a4ae9129a96d04897c0471d56b35b28"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/billing.js",
+      "bytes": 5126,
+      "sha256": "e9547ebe1f715e76ca806936c8a62a7dc4752a5ea061ae254451180df429fb65"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/clerk-config.js",
+      "bytes": 87,
+      "sha256": "f811affe0bcf280f62b4e4e43db3c16a65831a3ec47e5161f43fafa3909368ab"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/course-sources.js",
+      "bytes": 4196,
+      "sha256": "89fb967b72b29897f93571b03c1bafef2ad256cde6ba01a733b93b8744848203"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/credits-actions.js",
+      "bytes": 1523,
+      "sha256": "2b31914734c39712061d6650ea805148251f786b83fa817c5e11ddd6791b8539"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/credits-contract.js",
+      "bytes": 656,
+      "sha256": "5856ab695ba05b70c169dd82f489b2c206b7a41956290d690a14fd87b59e942e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/credits-currency.js",
+      "bytes": 1816,
+      "sha256": "55e31e445e3458e8e58a6274332e3e69b8e55ff2aa69eafae5a30f267b4a6513"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/credits-status.js",
+      "bytes": 4662,
+      "sha256": "620a3c6478a826270be8a39e1be1b730f5314704312f28ce510e70249e7eff9a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/due-dates.js",
+      "bytes": 715,
+      "sha256": "07ff091dce275ee29b9072d4d64058e5b8f836441c4720c1c52f66fce33cbefc"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/examples.js",
+      "bytes": 26591,
+      "sha256": "b2a682e737788afa9f6a661a36e75df217fca3d0631a27ac0c9639009dee3eb7"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/lecture-audio.js",
+      "bytes": 1369,
+      "sha256": "ac5c0c55763b958bf70c37cde1435e435c2319b7d09116e27269773a16b3eb5c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/lecture-media.js",
+      "bytes": 10074,
+      "sha256": "709891899827fca21da05dc9980bc11e07c5df197724caa02d947e98e20b0375"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/library-link.js",
+      "bytes": 2265,
+      "sha256": "43a4da0e6bbd7ea5ea5ce8eb570203188853d790d287fa1488938f6950bc877c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/logic.js",
+      "bytes": 11468,
+      "sha256": "97660ad6cd63b20d2519bf56d08520ea75cfc9ded29b1afc34e135dddc1524fd"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/native-speech.js",
+      "bytes": 9335,
+      "sha256": "7491ceed3ae0622d02b4914a2f282fdafe475af8d580ad86aca2b59cad98c0eb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/native-transcript.js",
+      "bytes": 1742,
+      "sha256": "81caec5031073d7f442e7c6e7fc25d6d020365e564171dbdd515ba35943e03b6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/note-saving.js",
+      "bytes": 2538,
+      "sha256": "6c957c7a1edbfd6b299bc47a8590f28b50352b5883345ffeb339f0cad2ce2658"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/notify.js",
+      "bytes": 456,
+      "sha256": "9385cb64f79a4a21b6996876dca76c83082a8d5b10a6dd99044ebfe991ab47de"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/onboarding-plan.js",
+      "bytes": 602,
+      "sha256": "0f5539c7f14015753ee83eb2c32ac1c1da77dcf667c7246d3b0cdef4d2c9dff8"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/password-reset.js",
+      "bytes": 939,
+      "sha256": "2139089a44a3bb34ccb4c0ee9bc38c10b0214caa27d5143220c32204c36ffe44"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/plan-billing.js",
+      "bytes": 4351,
+      "sha256": "84a78059a028a81aa7e2d1c55d60348dc9ed742cafc3da4e094d8c6d1d86e3bc"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/plan-checkout.js",
+      "bytes": 283,
+      "sha256": "bcdeaf32b944c7fd72af7c64a43df99e9d76f10ff1dc952737c9524b05c3ba95"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/privacy.js",
+      "bytes": 11820,
+      "sha256": "07e5259ba859cc5b6ea80c6e5d2a345cc455faab33fb5a8dbd852b4fe5d5c5a1"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/profile-photo.js",
+      "bytes": 6200,
+      "sha256": "35b0c8965da6db861a3ab226b696e3f0f8877e2af4afd562db7cac961af52520"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/recorder-lifecycle.js",
+      "bytes": 3191,
+      "sha256": "3877eac92dc7d3ce78fd4c5113bb288ee189c15411b71ba8ec849bb9a5ec6c50"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/recording-ownership.js",
+      "bytes": 3104,
+      "sha256": "57c58cd1694282cb3e1c58ad1b6048624c25ba6e9e60c15fcde4f67c0ad6d96d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/recovery-audio.js",
+      "bytes": 1075,
+      "sha256": "5d4d448ee2f484cc5fd2a87a612cd20422dd9324f05e334bcb24c72092dbae0c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/renewal-copy.js",
+      "bytes": 1664,
+      "sha256": "c0a75d06aacc805c60ff4c6230d25511e147eca373bb6c4f4d0b4003eb3e603c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/required-auth.js",
+      "bytes": 373,
+      "sha256": "20ac138c4046cda73743cd182fc7c0ad1c4de4c9bcf5d6cb0bd9ac0dae999537"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/revenuecat-diagnostics.js",
+      "bytes": 3273,
+      "sha256": "648ef57f8ef94dd61bb24cfc62e86bb87e2d9b256eb518f5e5514098e030072c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/revenuecat-environment.js",
+      "bytes": 868,
+      "sha256": "35427cdd83b99d1688717e6a43b461c2da02bf826856009ff66ebf6d37a2c34b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/revenuecat.js",
+      "bytes": 7019,
+      "sha256": "e9f4933d1899226e07ddcd8bd59936e598d6c81ebd71db3e6cfd27d0ebf89e0f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/rotation.js",
+      "bytes": 819,
+      "sha256": "2c0ac943d2cb46dc0d1170663ffcd6ed6243472e7751bbce3dc1df9fd27f39ff"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/schedule.js",
+      "bytes": 4623,
+      "sha256": "14ab0fe46c1bf858923e8372d3a9fbb2db54ae3210a152ae1a6949a16c5dd7ad"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/shared.js",
+      "bytes": 126,
+      "sha256": "ed46f157aa48c9fd2bbc6c2b2ac43bda8f32e83fecb01f0a595a5569e21a3f70"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/store-sync.js",
+      "bytes": 2851,
+      "sha256": "0d06d3b4284fa4168c2d1951fc90a0cc89813cba084dfb61f92a9b9ced14bbc4"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/store.js",
+      "bytes": 51303,
+      "sha256": "b73c34727db25a8b76615ec91b11839a47f50372665f45a73200981dfedf88ef"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/study-scope.js",
+      "bytes": 577,
+      "sha256": "f6fa2a1382e40b48727600f4a559b1431d9edbc63dc3ce302126073e7f994254"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/theme.js",
+      "bytes": 1509,
+      "sha256": "e65d20d7486674b48b48335375a3dbd7477ac7765835a8fd7e81dca1be908d9f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/usage-allowances.js",
+      "bytes": 827,
+      "sha256": "eee9ce5ccc955be9a3d66ec275463b2b98f98790694cf85729785ebb140e9113"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/use-lecture-recorder.js",
+      "bytes": 889,
+      "sha256": "13d78a98154929c2589d7d76353a423c5cf006b2cce7431dddf28e2bb2ecb288"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/use-library-link-session.js",
+      "bytes": 773,
+      "sha256": "29d5b1e16ddf8323850f5810a03620b693dbe8e50c5a0c33292fdab76d1b9dfe"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/lib/util.js",
+      "bytes": 3425,
+      "sha256": "49c1294d3b93809e672489fe2e2a9899b44655acfe3eeac5771f2e6a11acb382"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/metro.config.js",
+      "bytes": 1124,
+      "sha256": "fa2ad775a59fe08a7825f14ba980d81fdac7b7e907b1a3799bf3fff0c5d95239"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/package.json",
+      "bytes": 12033,
+      "sha256": "f8bd9a22fe6ba2e2eac5a48c65ceddfa6324435aebfccd8941ced752024bb83b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/scripts/build.js",
+      "bytes": 17687,
+      "sha256": "e18ec82a4b990cb2ae720f49daaaa9b5ca494968f74e2a29c7f5f6d50023dc02"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/scripts/check-phone-bundles.cjs",
+      "bytes": 1696,
+      "sha256": "27e062ca4f3377e1b369150cd9392549fbaf536de6482fe78c590c4ff92cf909"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/scripts/native-preview-trace.cjs",
+      "bytes": 1269,
+      "sha256": "92ea008f2deae10b89f19bbc7198ae164a2c2f7874836d945992098179252d06"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/server/dev-proxy.js",
+      "bytes": 6950,
+      "sha256": "3ae6750f7c5e022bd2660d865423a1cfb9e867d98a746a55ba14dc50300cfec1"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/server/path-prefix.js",
+      "bytes": 1096,
+      "sha256": "382b7dda180635aef38e9be61330e923c242587a8c7b452ccd3cd734d895a201"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/server/serve.js",
+      "bytes": 5370,
+      "sha256": "bd67f90d07ba21f184bb31060356485fe015df39ea66141b4e088eafdf24b62d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/server/templates/landing-page.html",
+      "bytes": 12566,
+      "sha256": "ede561143f1acb3fbb10fc91a441bc48a312ebd3c98dec400f90788067829355"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/account-restart-device.md",
+      "bytes": 1529,
+      "sha256": "073e4493f844d5d9b7b1145124e69db4b6622ac8f93b4351be67396f6223731e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/ai-consent.test.mjs",
+      "bytes": 2726,
+      "sha256": "2245e41bbb0913d79b424d74530a68cf363e8f5d860c89936df783e54234813b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/apple-auth.test.cjs",
+      "bytes": 3502,
+      "sha256": "bd895660aa7d42756b00824ec877026f6b867970a56614a04e4ae7c8196b91af"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/ask-citations.test.cjs",
+      "bytes": 2064,
+      "sha256": "9a97a9b803254648e6e5b0a457c113ece9c44f49cf45900348c102261170c49b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/ask-switch.test.cjs",
+      "bytes": 10117,
+      "sha256": "142a5ff69ac3a30ad0ac6660b1d5583a616f5c0c87b54c7de6740faf73afbdb6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/ask-voice.test.cjs",
+      "bytes": 23093,
+      "sha256": "b5769e590a255580b9c3a25eb4aec98544f65cff4932428b96e0fd084768f302"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-age-band.mjs",
+      "bytes": 173,
+      "sha256": "bee692133846f8c6bc92d565fffcb86e178841e684371e7d2ba5dab68804c204"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-class-groups.mjs",
+      "bytes": 979,
+      "sha256": "888d9cad3b0e35558f5476cc174fde1110249e6e0c2e9c082e3b6cd60e7ed3f9"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-course-sources.mjs",
+      "bytes": 1021,
+      "sha256": "fc161ddd903476e20f1c9a085c10894b2efdc6433bb2a014e68801e011106fd6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-credits-currency.mjs",
+      "bytes": 189,
+      "sha256": "3c9cc2b8bef09b223a9e5e7ec74dfb785d497c3ae961b4763a5bd7679fd77417"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-credits-status.mjs",
+      "bytes": 1004,
+      "sha256": "7817bd3f6fc8fcdb5b7d97f8c247777a01c6524057e1d12c21771f288f0fe61f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-grade-guidance.mjs",
+      "bytes": 926,
+      "sha256": "28e7cbd52435af96178bb53e5aefd93db5bcc8ed1f6cf041d76e7e097c44d6a3"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-guide.mjs",
+      "bytes": 1114,
+      "sha256": "225f5237469dfd1017de1c7b0d24f64eb582cf5ce35514da8f0481deb0e43653"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-linked-library.mjs",
+      "bytes": 3497,
+      "sha256": "4d2030aa6ba18c269e346d5a00919f2ad1035a1e20896b5ff850133cff4d3bd5"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-native-auth.mjs",
+      "bytes": 2461,
+      "sha256": "d4dbadf3b063d5e6e5d47b56ef059df2bed1bf853f1eb8c551f5115fb68c1a13"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-navigation.mjs",
+      "bytes": 1124,
+      "sha256": "26074fa9a4afe6da5deab00675299169d130e0c768b466de00676da139b0b27c"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-note-loading.mjs",
+      "bytes": 1470,
+      "sha256": "208dd4dae807af52936274d35191a35fcca643fe367fec8b22e74788fa529996"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-privacy-settings.mjs",
+      "bytes": 1607,
+      "sha256": "e785732b09af709886375364246a2ff89feab36bf2d30f5188b3038167173687"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-profile-format.mjs",
+      "bytes": 1793,
+      "sha256": "86ec48bde0bf09689d0de846b41c289beef04d6a228ea8c16b08035b0acb7421"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-profile-photo.mjs",
+      "bytes": 2541,
+      "sha256": "2061e4aa6be28d0d87747662f3835d8ef02e8d6ddb6a761568652ff6bfe24098"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-recovery-screen.mjs",
+      "bytes": 2144,
+      "sha256": "d5f004dbb34954fd935468ed8a96d41dbdf3a5d3a1c8b1496c2fa8b48cb29302"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-required-auth.mjs",
+      "bytes": 2064,
+      "sha256": "c2b577e9128648f318247081ee3fec0427865ab761649b5042d96817673124be"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-revenuecat-diagnostics.mjs",
+      "bytes": 201,
+      "sha256": "383cf104fe036a9261c9aa607b9f4fca6a7fdf0109c1b86bcb01bdd6e9df03eb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/build-schedule-import.mjs",
+      "bytes": 877,
+      "sha256": "69504f824ec0ad7309098a9eee148841b5cc510f6b6e55f6ce7da3edebe9f8b5"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/class-groups-flow.test.jsx",
+      "bytes": 3762,
+      "sha256": "d96d65557d6b5e3d88f84fd10bf06afc0e1d09ac3e6e21e23c27dee6456a4175"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/class-groups.test.cjs",
+      "bytes": 1623,
+      "sha256": "4f8b1ea399df53d4ccf3ec618ed600b240ef2be4c981b0509080282424b93f94"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/companion-grading.test.cjs",
+      "bytes": 5625,
+      "sha256": "3a9723742329a2e841f2551640c3ae68d15f3f5318e763f1e081faa842534631"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/course-sources.test.cjs",
+      "bytes": 5254,
+      "sha256": "bf30193c6129899311c60aa22c2d021c6f852fa86851ca958971805c6f2f1d26"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/credits-contract.test.cjs",
+      "bytes": 1723,
+      "sha256": "0afcdbe3e3d8193c307660d5f8936bee89a4b4aac707eaef5f8008f192b5c94f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/credits-currency.test.cjs",
+      "bytes": 3142,
+      "sha256": "521a1e608963a7799f79b8431acabcd4f8daa9807bd1304941c42c81eb68a42d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/credits-offering.test.cjs",
+      "bytes": 1291,
+      "sha256": "4afc22e036305537b77c97087854bba4644f63c147f75bce5f18f4283711a408"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/credits-status.test.cjs",
+      "bytes": 529,
+      "sha256": "4c25aba31190ee726153a5109beb87f88ae61434f211554a71717fbd6bc8d8c5"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/credits-wiring.test.cjs",
+      "bytes": 3305,
+      "sha256": "5891ab48c4df2950b91a020215b54cd61dbd3f1a3c3fb23a8573425ec4d73f17"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/due-dates.test.cjs",
+      "bytes": 2252,
+      "sha256": "12a93a5299548fbace1db08d3d1795fd57d9547df7f153931743055e0de6acb9"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/exports.test.cjs",
+      "bytes": 3039,
+      "sha256": "672a4e2726956b1a6f7644251d62b139be49797545ba0faed7432bbb3499ee4f"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/class-groups-ui.jsx",
+      "bytes": 5724,
+      "sha256": "e04f472bce94b1d36a2e1437c12297335f873d9fc836bd971496ad857d61f6ff"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/controlled-expo-audio.cjs",
+      "bytes": 437,
+      "sha256": "da5b0c486c56751e3ed508b8b271494794dabd5d5b4e02a499b45cbf2eb1a909"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/grade-guidance-ui.jsx",
+      "bytes": 2996,
+      "sha256": "d8afe24c8c931ba23a0f1a6d5ebb18a47d42dc3da6ea029eae2c88105d86b95b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/linked-library-ui.jsx",
+      "bytes": 8716,
+      "sha256": "037f6be1fb40ca9f7db56ece5ff557bec43db77e29ae84efa0042791bb305daf"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/media-storage-native.cjs",
+      "bytes": 1176,
+      "sha256": "7fea27fd7319c487772054256122fe8e7f847e8ebdc993656f482ab946893cc1"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/native-auth-provider.jsx",
+      "bytes": 999,
+      "sha256": "3ad30acea8400f2bc9378417a70fda0fad6198dad1c4c287c8bb6089c5ed7e19"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/navigation-ui.jsx",
+      "bytes": 5976,
+      "sha256": "9ca31bdf6443a053362e0f23ef03c2f8cbd2a3ce67ff458db5ea7cb76525d241"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/note-loading-native.jsx",
+      "bytes": 4660,
+      "sha256": "014a3c94e787183223e93076c62dbbde5e1aa7366727c86a1cb6c1d8b3398946"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/privacy-request-stubs.cjs",
+      "bytes": 1067,
+      "sha256": "e3639523db671d6734ec5e11634592e5de0b338ca943e70bf450db5841569c8b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/privacy-settings-react.js",
+      "bytes": 126,
+      "sha256": "b0e5e97389337f2996409e5e5353b4d68e1373768be0749c0a5088beb986895d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/privacy-settings-ui.jsx",
+      "bytes": 8272,
+      "sha256": "d4f03881e45bf7da88505b3a91a18ba3e23c204d4d67c7e49f773c2ec13fb10b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/recovery-ui.jsx",
+      "bytes": 6421,
+      "sha256": "b6c5399957bb3b745eb4519d6a9f000299f99f808a5e49a0b0dba7c1e352c611"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/required-auth-async-storage.js",
+      "bytes": 317,
+      "sha256": "abd659a7850f080695cf0c51c17624f647fcfcae32ea88188512c7424a1a6ee0"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/required-auth-expo-constants.js",
+      "bytes": 255,
+      "sha256": "3b778856228609e2d1c925fee0e778ca12228de59ec14804ee04d5ec021d578a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/required-auth-ui.jsx",
+      "bytes": 9793,
+      "sha256": "8545c0b9c81f6fc7311c9a16bb91b8a319f47c20b6894cdf10c630853694f47b"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/schedule-import-ui.jsx",
+      "bytes": 2326,
+      "sha256": "df51fc33a77e7633d9a023f3abe8a2da3f8add462d60b431b9b340090fe77025"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/source-api-stubs.cjs",
+      "bytes": 468,
+      "sha256": "d0d6379afe2190a0e98251475f61ca35579f7c4b14fd56d258ca2c87e6281203"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/study-guide-ui.tsx",
+      "bytes": 2172,
+      "sha256": "4e4a5b5cfa6ab3d994f7376e5c7e43c254cbce0a1fdfe249244c257c539df477"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/fixtures/sync-code-rotation-native-stubs.cjs",
+      "bytes": 553,
+      "sha256": "fef811810272388b248a289c578d191fb02fd03af1e6bfde3ff5869ea33913b9"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/grade-guidance.test.jsx",
+      "bytes": 7074,
+      "sha256": "6299d41e3f82bbf80b2b979f05c6ec5021686e80c7a4bd640013413b615a1c62"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/home-header.test.cjs",
+      "bytes": 3450,
+      "sha256": "13cb8fe1dde3be42ffe3da3c0bb74de3a38cd68b9c7a6a30235f5242da2702ce"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/lecture-audio.test.cjs",
+      "bytes": 2796,
+      "sha256": "517a7da0dee0c1770cccf2266c0410fd51c6708e6f83c148f76cd1759a346175"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/lecture-media-scope.test.cjs",
+      "bytes": 1612,
+      "sha256": "c903484f6121a4d27bdc3415f2cfa2a504b9bb0a9773da54da493720605ebe45"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/linked-library-flow.test.jsx",
+      "bytes": 15942,
+      "sha256": "198c5df006ecdb538adbb59998a20cd798d2fa47635ed30f20897812e5bfe760"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/native-auth-build.test.cjs",
+      "bytes": 5748,
+      "sha256": "4a8ce57d0616474b724cedb4a5f4bf17da6e53eb72fa0dcf1399ccb762712456"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/native-auth-smoke.md",
+      "bytes": 2145,
+      "sha256": "cc34ee26c30ea48e8a496824addfc468b98cb102df5bedf3cef20c379f27e8be"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/native-auth-smoke.test.jsx",
+      "bytes": 6613,
+      "sha256": "eaa682cc9e4845d5cf30d639cbca5e0b2762183fc5b00e0ba0f9dde04ac8a9ce"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/native-transcript.test.cjs",
+      "bytes": 1309,
+      "sha256": "68a8e17ec3ccf92b7660ae9df85c57e2be9968fb69e50c3c7ed79cafc37badbd"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/navigation.test.jsx",
+      "bytes": 7896,
+      "sha256": "6140e925a0436c82f71f03c562939917646cdcc00254d7cbd8776064a9f21bc4"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/note-loading.test.jsx",
+      "bytes": 7685,
+      "sha256": "e43ab87090dc0c4074555778d3a2d593aee74e77d9781e523f3ff6e7adf4cb00"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/note-saving.test.cjs",
+      "bytes": 5728,
+      "sha256": "1f3b92956a4b316c92a2b5ccb98a8d2044f09276b29525ea1e83419b8b20c1d5"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/password-reset.test.cjs",
+      "bytes": 2705,
+      "sha256": "4b97b1a768ce65750eb7b1efc3258b8358d0114d155a35662b4a87d81560ddcb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/path-prefix.test.cjs",
+      "bytes": 1702,
+      "sha256": "728378cb47c3a4ca9a92a85c9e9fc03b673c698e3cd8155e00526a22306e0438"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/phone-syntax.test.cjs",
+      "bytes": 2259,
+      "sha256": "b2f4ed08d85c8784a920368d0926745abb50568909838dd153413b05751eb9f6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/plan-billing.test.cjs",
+      "bytes": 8915,
+      "sha256": "ff1e70275bedac10e80b77bcc2283f0c4087c70148d2412547b9c35a316fb40d"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/plan-checkout.test.mjs",
+      "bytes": 1976,
+      "sha256": "9d06c4728e4292f308b5b3c1dfcc064d2d9e9c139a27d4542e14eeb483121ebc"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/plan-onboarding.test.cjs",
+      "bytes": 7403,
+      "sha256": "53b270f503a9c59e9d7f9f39eb61d4a48b0e3c3e75587df795a85c84ea2e29bf"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/privacy-age-band.test.cjs",
+      "bytes": 690,
+      "sha256": "af8b3be68eb805968ddb9887d7dfc6f7e79ba4f29a87656792f3d48884d68245"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/privacy-request.test.cjs",
+      "bytes": 12031,
+      "sha256": "05e25346116396a86f1bfd71bb9899e8a0087ac15443e63a5b683fc6591db4a7"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/privacy-settings-flow.test.jsx",
+      "bytes": 13358,
+      "sha256": "c4c396c3601cce2f7fa1d0d191f25113804dc692929161c91bf1bfc8b6f14936"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/privacy-wiring.test.cjs",
+      "bytes": 7353,
+      "sha256": "0f0c0c8a31607bbd18e9b342d6d709fda66df752aed57a394d08a4e248afa6df"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/profile-format.test.cjs",
+      "bytes": 3072,
+      "sha256": "887f14e68e49f1f0c3b61a1d7ffe150bd32fb1e974a3d1c1cd80bcd04c3d2454"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/profile-photo.test.cjs",
+      "bytes": 10997,
+      "sha256": "26182b5395bc03891ca15fac2f85b00e8569cfcea9e7f0bcb1132231bf5be945"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/record-permission-visibility.test.cjs",
+      "bytes": 3039,
+      "sha256": "9f8018dc1d76c8e71cde835e8a5b608e811840f3325ec44114b7ffe00f601887"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recorder-lifecycle.test.mjs",
+      "bytes": 4940,
+      "sha256": "bfcaffa8e81b1d34c32306e8a0f063e594deae90c3c11830939b4ec69a985df7"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recording-ownership.test.cjs",
+      "bytes": 5553,
+      "sha256": "320860de9633b1617a79f196d21dd057f8d795e1a17eda7d358e748ad14af0c2"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recording-sign-in.test.jsx",
+      "bytes": 2569,
+      "sha256": "8c5e9fa1ce33350bbeac4b2cd5ade3d799225b69d69b8182c5017e55e4ab2189"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recovery-audio.test.cjs",
+      "bytes": 1705,
+      "sha256": "554bbfb788bc873aa73393e29c73ccc1e2186cca8a848e4c58f42e19fd540cce"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recovery-device-fixture.js",
+      "bytes": 1860,
+      "sha256": "0b94665796a41e60c6eede172d5b5f569083e318e160275d5f27a893a12960f7"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recovery-device-results.md",
+      "bytes": 1721,
+      "sha256": "c783509f7954e309e6f183dcfe1485c6b4f45b4521cde1ff2a1426fb6a67d3bc"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recovery-device.md",
+      "bytes": 4602,
+      "sha256": "a5d4c59c69dc1887050ec731de007b7b8faa001d67b17458ff6a1c5a2a287a69"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/recovery-screen.test.jsx",
+      "bytes": 15613,
+      "sha256": "d81fd353b7e1807a4fe6c1fad5ff1b2aba787836bdaec3ba119e330bc4e7b9ff"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/renewal-copy.test.cjs",
+      "bytes": 2599,
+      "sha256": "62de94a746aaf24fcbbf396cb7dcd024dea7118deb5933ca0c28149856d1f4dc"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/required-auth-flow.test.jsx",
+      "bytes": 28010,
+      "sha256": "6a87641f12b87bbff1dbc6cc47eed73e56f2cd6981393b558654ffd75f44f078"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/required-auth.test.cjs",
+      "bytes": 3877,
+      "sha256": "44d56370217207d7c12ca1d7e062bc91d86d386b4febba1cd352329c9691455e"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/revenuecat-diagnostics.test.cjs",
+      "bytes": 6170,
+      "sha256": "98e5d9e82b2e10ef9a1414ab1906fa5e157a89f606a904179bad57cc4ac9d72a"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/rotation.test.cjs",
+      "bytes": 1459,
+      "sha256": "4d181e1c19cdf8eac3c16e92596f6ea7c2318c8d32c4a7fb9a9ae1e9fff30850"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/schedule-import-handler.test.cjs",
+      "bytes": 6552,
+      "sha256": "ead19be40f4c398ffe6dc7ee824bc862d84ec7102d2832657210956ecceab524"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/schedule-import.test.jsx",
+      "bytes": 5306,
+      "sha256": "5ee710913b27817d2ce5da5ef5934646ac9a9a557e9a2d7f390e7dfdea882e64"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/serve-routing.test.cjs",
+      "bytes": 3549,
+      "sha256": "d2d7d98ec0d51d24e0e92ae98155a2a4acbb34156df4ff13a07fe845efba7631"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/store-sync.test.cjs",
+      "bytes": 4481,
+      "sha256": "6e8650ef0b587007aa43204275a7fea1921afc1aef4df8b57ec8d9e75c764edb"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/study-guide.test.jsx",
+      "bytes": 1503,
+      "sha256": "4c8d829dfcb226872a5b7c01dcd9c961ff192e687d868c91d85ec10647b25e81"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/sync-code-rotation-client.mjs",
+      "bytes": 162,
+      "sha256": "0a6eb481c75dc05e4238f0cacfe123a232095c6d3374ec2e5027cd6b26e0e6a6"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/sync-code-rotation.test.cjs",
+      "bytes": 6631,
+      "sha256": "68e6f9e8cd4cbd0780a9b9f127b2635051a5b1123418964d0798e551d59b10f7"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/test/usage-allowances.test.cjs",
+      "bytes": 2059,
+      "sha256": "15f328447f123989e53cc4300ac554b585eb1fec7719b124893d94a7cc774780"
+    },
+    {
+      "path": "artifacts/classscribe-mobile/tsconfig.json",
+      "bytes": 609,
+      "sha256": "f7b307d22bdbcb9961dcb9bba8a26d563cfa7570388a6325684abd983925f2d8"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/.replit-artifact/artifact.toml",
+      "bytes": 327,
+      "sha256": "e259a07aa72cd0a1d06c141f4aa00c16aa6942443ddf17b7cb59e88a9882f4f9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/components.json",
+      "bytes": 426,
+      "sha256": "aa1b56411ed0e8fc2ac14315f211c7059406e03d68666e1921f640186b8c096f"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/index.html",
+      "bytes": 4325,
+      "sha256": "fa4111c44a19ea399d44d7c6486387ffd49d9f21459ac87906ded4dd5c2bcb6c"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/mockupPreviewPlugin.ts",
+      "bytes": 4639,
+      "sha256": "4d579d37f3d3d12ec8d8d78571b651c606ed44b07fb04a53aff02bcc75621cfd"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/package.json",
+      "bytes": 2516,
+      "sha256": "4b1279fc2746617e4a19dcd4dc8ca99b1e4888b5f1f1ab5bdc03357851adaa02"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/.generated/mockup-components.ts",
+      "bytes": 171,
+      "sha256": "2c23d71ff9b2704c9db9aff8a414a728b810b10abc508e3bd75acf5718651cec"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/App.tsx",
+      "bytes": 3654,
+      "sha256": "0e0e60da88a64ef68a930565bb5c5d326896aaa0f9cea62702eef4c02db2462a"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/accordion.tsx",
+      "bytes": 2001,
+      "sha256": "dcbfb3243a26096fc3e5f54039ccb5c4c23d9bb79a4d5846b4be75bf912f07d9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/alert-dialog.tsx",
+      "bytes": 4419,
+      "sha256": "311bede35f785d7b1ecd7398986757e26409d1049352a94ccf83586b8603c92d"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/alert.tsx",
+      "bytes": 1598,
+      "sha256": "5950ac01377e7eedc94b00eb3fee678745e4cc1a72b5343867f0733d07db6660"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/aspect-ratio.tsx",
+      "bytes": 140,
+      "sha256": "08b0aa0b05efc573c7d63363c03e83d4b101bfeb54140764e96ddea30659cfcc"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/avatar.tsx",
+      "bytes": 1419,
+      "sha256": "e78b35ed76c67d8ff50603fbe0dfa4fe600097bd860d89e65beea3e16683dad8"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/badge.tsx",
+      "bytes": 1163,
+      "sha256": "0564174ab513773e924dda521ce205535b05c7df9842e331ebbb59dd8b86022d"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/breadcrumb.tsx",
+      "bytes": 2712,
+      "sha256": "c3d3dcb0d82fc5e91d8830bac7fead905686fe876f1f42c3ed872bb0a6b6584e"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/button-group.tsx",
+      "bytes": 2209,
+      "sha256": "e3716d270e9ef6457b5cd29464ae00194abc8093c08ebf726c9204d7a69231d9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/button.tsx",
+      "bytes": 1925,
+      "sha256": "4ea01d60fddbf1a0e66aa8234807d010378786b9bc5a934ed76a09edfa671040"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/calendar.tsx",
+      "bytes": 7569,
+      "sha256": "787a19c855cf2b826942d25440b63150c45094154c6a40e95abdb4109298b8b4"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/card.tsx",
+      "bytes": 1828,
+      "sha256": "525c4bb2c051987be64df0e92e1d90174912b219bf541e24ffbc4a3406de49e8"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/carousel.tsx",
+      "bytes": 6210,
+      "sha256": "5a4ff73c804e86c873382da80c453f1399006326ef042fb984c24162ec86666e"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/chart.tsx",
+      "bytes": 10674,
+      "sha256": "74005899ffa62cff5cc71ddd72a727bdc84a9bd9b7e26901e1f10d2ca8d90b62"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/checkbox.tsx",
+      "bytes": 1031,
+      "sha256": "ac389a574651c8bedffc10f80674c5fc2f02ab81291a5f4ad9c587d1f775fdce"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/collapsible.tsx",
+      "bytes": 329,
+      "sha256": "f4cdd104de29928bfcd40b865c7d08eed9157a537fbb8b5e6d0921f02b63cc04"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/command.tsx",
+      "bytes": 4887,
+      "sha256": "5a57ebc119f2357b097098d22865d45de8fda623ee88fe98b99999838c13633b"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/context-menu.tsx",
+      "bytes": 7406,
+      "sha256": "5369fc82c51df067aec2934f5e711aaf9e3f745ed7baadd7ba4b77397dee2a1b"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/dialog.tsx",
+      "bytes": 3835,
+      "sha256": "f9c982ed8114c253c6ca738043d3f455e89c6d65569e90c9415776d6b4d6be14"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/drawer.tsx",
+      "bytes": 3007,
+      "sha256": "47ff6248307a4ac09bf7e00181a2a29f9f846691092e04cad03e15d749bc249b"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/dropdown-menu.tsx",
+      "bytes": 7606,
+      "sha256": "dc109123ecd59af01d07aa9f3a8e8a7085bd3f337388c5369799ab1ce6c2d45f"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/empty.tsx",
+      "bytes": 2396,
+      "sha256": "9f975582a0290dbc7ce6efa3b36b376a4c3f07863026c3b74c1e73cb0023acb8"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/field.tsx",
+      "bytes": 6044,
+      "sha256": "e463611ab049c5e9b1c61691d239e05970ead7b577a191b3f80aa6f8ffccada9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/form.tsx",
+      "bytes": 4175,
+      "sha256": "d50adf86568f76246f0f319c9e1e858627475563f6c1e38f5df7d4ee23958559"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/hover-card.tsx",
+      "bytes": 1237,
+      "sha256": "00f9086b1412843e04e01d31d2fab00a25d65d789d1a382e41f01b1f3c167c3b"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/input-group.tsx",
+      "bytes": 4883,
+      "sha256": "131052098fa8b16b423192ec7dcc8c8506f0e7e81355134aae4c9044e1d3ef95"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/input-otp.tsx",
+      "bytes": 2143,
+      "sha256": "7c4799e3597f2780c09a39a1391b921fa16eaedd0476457492af734f58e2ec98"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/input.tsx",
+      "bytes": 768,
+      "sha256": "6299a6a387dc55e528aec4342deaea0b83f1ea3a365c135a31a18ee55334f441"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/item.tsx",
+      "bytes": 4494,
+      "sha256": "90983640aa7cfef8217422347d8e14825cf55137c76369decacf440767f03188"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/kbd.tsx",
+      "bytes": 862,
+      "sha256": "0c025e7736d435f563bfb44105e562629672799eb1f35cbf194148d06cd1a9f7"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/label.tsx",
+      "bytes": 724,
+      "sha256": "2eac8fbb04002c42b0fbc4062d20d131e421796eaf65c37d2049e29e42ecbc5a"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/menubar.tsx",
+      "bytes": 8608,
+      "sha256": "def61eb2c47c9ec319423471f4ca20045e99549958211cacf832e4ede769e484"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/navigation-menu.tsx",
+      "bytes": 5124,
+      "sha256": "a06d96a582ac207ffcd38445d773c05e841d646efb185b5e9b65f73e5bd388c7"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/pagination.tsx",
+      "bytes": 2751,
+      "sha256": "9506dbd19ddd0c2810d1c9668a3f01606e39d9bf33ddc43329523c03bf629012"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/popover.tsx",
+      "bytes": 1342,
+      "sha256": "04cf38bf94abd3fe1b51e90227e6e235ca74776f6fc6af718bfc149e7424f582"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/progress.tsx",
+      "bytes": 792,
+      "sha256": "6b3b4b69a1cb361076174892e9a96e1a09020307616965ef89f2f7e2495b57a9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/radio-group.tsx",
+      "bytes": 1410,
+      "sha256": "9ba7808b7404cdf2159c81883a39290033bc4308f2978eb80797c92b87421301"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/resizable.tsx",
+      "bytes": 1723,
+      "sha256": "70d1e35a5fb0897af7063cdd841d8ed636e1c332ef7ea6469f0f175a5a93dddf"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/scroll-area.tsx",
+      "bytes": 1642,
+      "sha256": "d7d02600effca55d0dcadce8c09c97ebddda3a19c5fa1d52dc9f6f727b26c6b1"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/select.tsx",
+      "bytes": 5745,
+      "sha256": "3d93ae07a8f3fe121ba60f4439e26bd7859f247eb8bfcafcf4b4a8a069888eec"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/separator.tsx",
+      "bytes": 756,
+      "sha256": "c956c4cca4b8442fa9314d6079b9f975e1ee39d5804aaf2966990f6258ac342a"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/sheet.tsx",
+      "bytes": 4280,
+      "sha256": "363f8e06aa5b53c6475f445117f60fa9294be79e9e4f1f5bf70886800188124e"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/sidebar.tsx",
+      "bytes": 21056,
+      "sha256": "53c5391594a46de2c3161de40eb56953ff6ddb09a9c64b877ea98af810b0ed35"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/skeleton.tsx",
+      "bytes": 266,
+      "sha256": "87608e7cc815ad3d88e0b9de6c402bb37b58ea1b38636cf69709da1baff6e334"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/slider.tsx",
+      "bytes": 1037,
+      "sha256": "234e38fef59169bd02d8f5b56ca02e5ec13a0bd6846c328927b924e1299f7fb0"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/sonner.tsx",
+      "bytes": 894,
+      "sha256": "771ab8637d27384c3ed030ba3be01a07b90c791c294eae06646250f8e81bc49e"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/spinner.tsx",
+      "bytes": 331,
+      "sha256": "3e6e6e8d37fb4069f8e43e55318f8db06fbc36e6c8be0096da3c9337c1c798b9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/switch.tsx",
+      "bytes": 1148,
+      "sha256": "ba5867cd3145af1290edd80bb56d4b6d61c6331aa8ef96ae0b85487f4499feaf"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/table.tsx",
+      "bytes": 2859,
+      "sha256": "a4a6972c2d47d465d7f02c1dc4a6cbfeda7a97e46479c1b0cebdaf26bf9b497a"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/tabs.tsx",
+      "bytes": 1877,
+      "sha256": "6f74706bc6b53f9e4bcebb5e7ab8743b616aef181edc7758b8ee905f9b2fdcd7"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/textarea.tsx",
+      "bytes": 649,
+      "sha256": "ec7c92aaed80f6923a7caa4bfe4eead395b50a7001504fd7fbb0b9381804dae9"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/toast.tsx",
+      "bytes": 4845,
+      "sha256": "99f9f4a3e897f71d89b01c6772b2f5db51b888cecb2c8214fb2c2dbb2b3e6356"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/toaster.tsx",
+      "bytes": 772,
+      "sha256": "1348f1a1f9820e2f1394b93cecc156a7e22f03636ab9270753985549aae2be74"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/toggle-group.tsx",
+      "bytes": 1753,
+      "sha256": "dba95ead40d163af6959198ded9853a2cc9282b2cb534980f99937a65edf4e2d"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/toggle.tsx",
+      "bytes": 1486,
+      "sha256": "955fa1bb97505b7a8bba3f7cff1991035a9afa0e1113f5d598147e6369dbf44b"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/components/ui/tooltip.tsx",
+      "bytes": 1267,
+      "sha256": "ce6afa34fb9dae51053a863b4c3f7c6e55f3da23b00149f31a8e4402bc963be0"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/hooks/use-mobile.tsx",
+      "bytes": 565,
+      "sha256": "ad0936f84f1df79d3697bfbff9c18f8ad58431c1cbaf2359c6a853b0fcc9f28b"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/hooks/use-toast.ts",
+      "bytes": 3767,
+      "sha256": "eb23d01c5e502ae1e0772f4303147170811b11f498c7e8f0dc8424c0f3463c94"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/index.css",
+      "bytes": 5760,
+      "sha256": "3935d982402c0101e55b60039685383ade4fd25227d2f4149ba356e6c2932aa3"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/lib/utils.ts",
+      "bytes": 166,
+      "sha256": "7c8c3dfc0cdd370d44932828eb067ef771c8fe7996693221d5d4b90af6d54f2d"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/src/main.tsx",
+      "bytes": 157,
+      "sha256": "29946f51942fba11605c7595fd82b50b0d7e50148e0194fd356dacbc958f18ec"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/tsconfig.json",
+      "bytes": 513,
+      "sha256": "bd0a1d0c1afa46c590350664a29d7848f6ccb91cfbd76426c40798437369fbf0"
+    },
+    {
+      "path": "artifacts/mockup-sandbox/vite.config.ts",
+      "bytes": 1592,
+      "sha256": "7de0f52b190e4d8f0854ed852e7a0d24420b4242e22423c6dd2712e7b0497cc7"
+    },
+    {
+      "path": "docs/classscribe-privacy-owner-steps.md",
+      "bytes": 5793,
+      "sha256": "3645ab47b7237d94bd6798e2ea6a064a09ed9b92ca732708c49e018d20c57040"
+    },
+    {
+      "path": "docs/classscribe-provider-privacy-owner-checklist.md",
+      "bytes": 2807,
+      "sha256": "469792cc4895afaf9cb523e3542c598080eda38510ef8eb2eaa41a1e38ea8005"
+    },
+    {
+      "path": "docs/classscribe-provider-privacy.md",
+      "bytes": 10105,
+      "sha256": "ddcb285ea0f511cec04ffcb0e1ce70b07963bb08a00f225822eef83dae94ce95"
+    },
+    {
+      "path": "docs/creditsconsolidationownersteps.md",
+      "bytes": 11693,
+      "sha256": "a25ae5610677bf78c1e608bf03e6e3910a43762936b18b12fb0059d2fd86424a"
+    },
+    {
+      "path": "docs/revenuecat-scribe-credits-owner-steps.md",
+      "bytes": 16849,
+      "sha256": "fed1cc8a45de6df285bd77006177b2e989ea37c57594852437ca798a3c8b89c2"
+    },
+    {
+      "path": "lib/api-client-react/package.json",
+      "bytes": 265,
+      "sha256": "ae70f97a12d1f7e7cbb291b5ffd1d6893f0d7a0ff7721a21e615d47bccfad789"
+    },
+    {
+      "path": "lib/api-client-react/src/custom-fetch.ts",
+      "bytes": 11735,
+      "sha256": "3597c276f47802b4cddcf75153deee4f675588a327c9cf3bdc9ae01438953528"
+    },
+    {
+      "path": "lib/api-client-react/src/generated/api.schemas.ts",
+      "bytes": 51089,
+      "sha256": "c7b122b65f19a45bcd14ce812949c98d887fc82d6bf911070b461a67ac0979fc"
+    },
+    {
+      "path": "lib/api-client-react/src/generated/api.ts",
+      "bytes": 379651,
+      "sha256": "e3a70dc4f91e359b26ceaae8cbb8eddd22cb726e7ad2e44942f81b3ade767ed3"
+    },
+    {
+      "path": "lib/api-client-react/src/index.ts",
+      "bytes": 218,
+      "sha256": "b36b23be78400e2c28b07ca26bc4c6bcc04fa63e9d6c41aa1af1771fd1985c94"
+    },
+    {
+      "path": "lib/api-client-react/tsconfig.json",
+      "bytes": 267,
+      "sha256": "a00fda842228e3478705abcf2c76d9641f5d6263cd5d2df0b613d5379088ad73"
+    },
+    {
+      "path": "lib/api-spec/openapi.yaml",
+      "bytes": 167843,
+      "sha256": "7da9084641b66a8db9410c8cb77e1cb7516752be9efc66ab5d12ffb084816031"
+    },
+    {
+      "path": "lib/api-spec/orval.config.ts",
+      "bytes": 2051,
+      "sha256": "17bbe15ed439c69c5a900398b2a146e4c8d8c79365479cb0ca9adc4dd4058776"
+    },
+    {
+      "path": "lib/api-spec/package.json",
+      "bytes": 228,
+      "sha256": "2c0f6e86a51350d26ad83e057f0ae4a886b1d8fd484965b34a6a762c0495f088"
+    },
+    {
+      "path": "lib/api-zod/package.json",
+      "bytes": 189,
+      "sha256": "07009861b2ba8decccb4e9d78d743cb7273bd91915231b5eb1463b296efca13e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/api.ts",
+      "bytes": 136959,
+      "sha256": "5afcc55f96e22bf60004d3896f7b472933116f0033bb37377780582e47e31011"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/academicDate.ts",
+      "bytes": 399,
+      "sha256": "484c44dc49a3b62d29bfc5d737623d856f1bb3dc83001031ab085a4a9b5c00cc"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/academicDateKind.ts",
+      "bytes": 299,
+      "sha256": "82fc5b8afa79f43902bf41a2d8cb637e21d2f7eb3c8a9470ee55482df7e3c9b1"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/academicDateUpdate.ts",
+      "bytes": 267,
+      "sha256": "914a1b7ff437bb53de498016463f4e63ad878138291887fae04c0eb1ede6f385"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/aiSharingDecision.ts",
+      "bytes": 199,
+      "sha256": "e37c7cf9881082623bc41585549510a5dfe15f39622c93d2819019ac75633e79"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/aiSharingPermission.ts",
+      "bytes": 236,
+      "sha256": "c7000341e67295aac6371d812b5b0799eca7b71434bc5ecefc15ddbbcb73aa36"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/analysisInput.ts",
+      "bytes": 290,
+      "sha256": "d070a3e3a70d3efe26a0406180dc4099627423b37e20afd18b93d347b772803d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/analysisInputDifficulty.ts",
+      "bytes": 363,
+      "sha256": "74b4bb6a413f0442d3b88e0942d66c6170e888edb62d17c5a7e9df1260a1f4ee"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askAnswerResult.ts",
+      "bytes": 286,
+      "sha256": "a9d56dadf1cb725547c5a2f6f3b8206d12ab21ff809a3f51021c57698cb39cd5"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askClassscribeCitation.ts",
+      "bytes": 478,
+      "sha256": "bfa3536a6692db1b306c151c2f6d7f294033a50a995520de8c304b932e44eba3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askClassscribeCitationKind.ts",
+      "bytes": 427,
+      "sha256": "405bc8fee7dc05dc3fc70d7be7c619c6766c04071d674c19aace015cd8ec052c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askClassscribeInput.ts",
+      "bytes": 566,
+      "sha256": "26a861226c4679292f07f5bebea66676d817bdce81fcae7aec940e851abcf337"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askClassscribeInputRetrievalMode.ts",
+      "bytes": 458,
+      "sha256": "faf317423805217745eaf7e88cd8705fadcb308e232642c2e00afdbd19d22895"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askSourceResult.ts",
+      "bytes": 392,
+      "sha256": "5d86b67d1699c07723ce6513b87571a97c8139433581c83f3a096f380a507b20"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/askSourceResultKind.ts",
+      "bytes": 335,
+      "sha256": "1b73a54958e84912f339ef4c8dd8d83678fe62b7eaf77ca900a60ac3c6e41136"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/bookmark.ts",
+      "bytes": 289,
+      "sha256": "0070d8045663460089abafd953714765bfffebc2345d519aefb96bf3fec77f1c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/bookmarkInput.ts",
+      "bytes": 231,
+      "sha256": "bc683eeaab892292bdaaea414fc74aade38879c700abece4414fdb310de37c7a"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/course.ts",
+      "bytes": 399,
+      "sha256": "faec714535a30b9aa40cfe4d0a4d7637fc8707d91dcbf6d5c56511f7ae260288"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseComment.ts",
+      "bytes": 249,
+      "sha256": "b5edc808bc597f338e62ea22ae2d4e0f4fafd57bfb1eaab21a8c66fe0112bee9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseCommentInput.ts",
+      "bytes": 223,
+      "sha256": "c6e13ceb32ad98febb62b7d281e4364f941826b8917b50faad99442fd17ba3fe"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseGradebook.ts",
+      "bytes": 614,
+      "sha256": "001cd76e48f86f51e796455e7514488c24b579ea839fa44f6491cc99208477de"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseInput.ts",
+      "bytes": 243,
+      "sha256": "0db525e60642df3024a28b46a02d5912857535eb2774e9eb28b2bf88d70341cd"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseInvite.ts",
+      "bytes": 170,
+      "sha256": "e2186be2266a49d1343080b60ce9091898a109f5cb2f09309454cac415b91430"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseMeeting.ts",
+      "bytes": 476,
+      "sha256": "82f1605b78812c78fa23bf6d2f67a3011da0f344ebcd4a3c5fcab96667288540"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseModule.ts",
+      "bytes": 247,
+      "sha256": "fd6271e7aac54139f334e3e8eda81a6d33d2b118ee6180b4ac95663e64feae9c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseModuleWithCourse.ts",
+      "bytes": 251,
+      "sha256": "71c08448063d65cfe9b079b8290186d7525027264c477685fc84653cb3ee8896"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseSourceAnalysis.ts",
+      "bytes": 350,
+      "sha256": "45216cfd86c5c81393b0f5c8a7cc881e6a1d5378fd96335516b610c0b4bfb664"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseSourceInput.ts",
+      "bytes": 237,
+      "sha256": "66ae533296acc605b9c700fa966dafc104d3fab14b53cb1ef5f5632ef44a0f0d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/courseUpdate.ts",
+      "bytes": 354,
+      "sha256": "54cbfb2814cdf53755cc2f3c442a910d39296dea62970523761ad1fa23106f36"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/dashboardGlance.ts",
+      "bytes": 401,
+      "sha256": "2eab133f96bbb5602fce7ddef6360565e33d332fef0da7f9fafcafa15ac8d718"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/dashboardSummary.ts",
+      "bytes": 256,
+      "sha256": "9d5a06431640f94101ddd40f946cbf7aeb6b5014c5dce68a9d5168bdfe2fd9ed"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAccessStatus.ts",
+      "bytes": 276,
+      "sha256": "7174bff0d036bffbd17936b50e13359d1120c8f22956c1c77b6ad9e81d02cd9c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAnnouncement.ts",
+      "bytes": 223,
+      "sha256": "b3420d93ecc39ce8fdfd09b509784ec1a9044b0d47e854b08832b6201c89a5c5"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAnnouncementInput.ts",
+      "bytes": 309,
+      "sha256": "746ccaae42ce4378af85f07202263d9c6fc720fa0aa2a378dcb08b54cb432ccf"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAnnouncementResult.ts",
+      "bytes": 254,
+      "sha256": "d23f4d9defe7a4777b64f4b7519cfbc3a51502f6bbaa150563336c1fc54d0136"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAnnouncementUpdate.ts",
+      "bytes": 312,
+      "sha256": "686adf1f3e6ee8725d713dfdc757d8eece0fc1fe1c28d493bccb2020a46f13b3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAssignment.ts",
+      "bytes": 557,
+      "sha256": "90e34afe2079c0a1d567c1d0748583579502a1f6f8d0149ab5f426f44adf0f4f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAssignmentInput.ts",
+      "bytes": 430,
+      "sha256": "eb552a6df8ea2d0069eafc44b288c5a6e15c4122ec75e41a9dddfc5eca8a9bb8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAssignmentResult.ts",
+      "bytes": 244,
+      "sha256": "712e8b883516caf792988d8c5513296dd83967548119bc06e4d9332b8b69c4a6"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduAssignmentUpdate.ts",
+      "bytes": 434,
+      "sha256": "456c168dee957ef6cf2cbb6c4c45e60816cd33b53ac625e54afc4a1a59261dd8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduClientActivationInput.ts",
+      "bytes": 329,
+      "sha256": "c526ec027be02e8e84e5af51c695bc27386602d25841b9a2364695544f05cc26"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduClientActivationStatus.ts",
+      "bytes": 204,
+      "sha256": "ce2a914f56ad95c3dad55a7e0dc1d2db584c4738d0ce9e70bf41c5524d59926b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourse.ts",
+      "bytes": 261,
+      "sha256": "d5ac0c96c737411bd83225677c742f0b132ee7186df0ce73345910b607d08765"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseDetail.ts",
+      "bytes": 665,
+      "sha256": "8fec6c232e4b0d06a41380026ad7d92ae6b8013591f5beaecd68b0430c857ffc"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseDetailRole.ts",
+      "bytes": 317,
+      "sha256": "80222c246f64bfc3a90bcecb6216f1d0d6f5f1a6275ff0617b584bab0ab404de"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseFileInput.ts",
+      "bytes": 307,
+      "sha256": "a94e43436e5c30ff1df6b0ed9b9cf4a1675295050218dd057eaae1bec64ba75c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseInput.ts",
+      "bytes": 311,
+      "sha256": "0bece4e60390b681629827176a5cb7873cfcb45d77bc594a436c0c6e2fcf16ec"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseList.ts",
+      "bytes": 246,
+      "sha256": "f4488a4828b9ec1365f8855c6c733950e2cbed4900275f44ad41760006201564"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseResult.ts",
+      "bytes": 224,
+      "sha256": "dfe076f16e8432f37fa93c86281955974f6c515a975fb7b6047a43686b83278a"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseSummary.ts",
+      "bytes": 365,
+      "sha256": "2546daf5bcc2658ff6939e720f5ee411b5461d974392b9ed86313e88b4005da1"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduCourseSummaryRole.ts",
+      "bytes": 321,
+      "sha256": "66e3ddd4b3f30257b0b1d6aac1f43fd725cb98587900914caa306786d9587015"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionPagination.ts",
+      "bytes": 272,
+      "sha256": "06f2744f5e1151b87ab4c72675673c6ce21da709647e667be59c98ee1ba2a569"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionReply.ts",
+      "bytes": 268,
+      "sha256": "f59f657f349c817814785a6251770dc519a155a06e762f32a79526ce860c9fa8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionReplyInput.ts",
+      "bytes": 239,
+      "sha256": "c80f2b2c6dfc423b28cf9b883b741188ec5d82cd0ea28b04f3a22a095263db06"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionReplyList.ts",
+      "bytes": 374,
+      "sha256": "04eb2c7d7dbe2dfce494ceca78a5b374b00bf5c429e413301d3d86f7e381701c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionReplyResult.ts",
+      "bytes": 259,
+      "sha256": "22ab16e60e111ba7b0484490f729a2cb11156ad0715a8dae0ac25d017d44b131"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionTopic.ts",
+      "bytes": 330,
+      "sha256": "cd4794a512a2d397d3e8f8512a7087cc9e31399eb872dae6009fe06a5e1e1154"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionTopicInput.ts",
+      "bytes": 312,
+      "sha256": "2c0db73432c295898f266975f3de7478026bb47efc7d095e0194461a573a18db"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionTopicList.ts",
+      "bytes": 373,
+      "sha256": "d44789daaf21604f883febc78b97f1b5cc649e8a95f256b48189c0d33c84f196"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionTopicResult.ts",
+      "bytes": 259,
+      "sha256": "b34a9b58d870472b0b089220cba5f0cbe57a80b59a7d652ee99bd4c0610a717e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduDiscussionTopicUpdate.ts",
+      "bytes": 391,
+      "sha256": "ad7edd98361c1420e74ed81b0adba6249ca7e4fe1da142d25c547713cdacd980"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduExpiryWarning.ts",
+      "bytes": 212,
+      "sha256": "6670392c562ecb36320cc47e9b02b7ca107f070a1e8d785810ff28863d18a133"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduExpiryWarningInput.ts",
+      "bytes": 183,
+      "sha256": "45416c19e9bc4423f248dc9655ab560f880ddcfd923517bfb75528cbf892f7cd"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduFileCleanupResult.ts",
+      "bytes": 189,
+      "sha256": "02a045871b75a73249f1364b25585994ba82768cf7781a5c901dabed37d60700"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradeInput.ts",
+      "bytes": 238,
+      "sha256": "ca1f269e4ac8cc6dfc31bcf7180ce59b1de253972f78679ca7ad4ae5d2110d8d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebook.ts",
+      "bytes": 462,
+      "sha256": "3ba818207b5c33e96311996136fdd0c795351e50a18a8212d3b66dbdcfd2a317"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebookAssignment.ts",
+      "bytes": 273,
+      "sha256": "39186a582558244d0730cceba5790940ada0d9385d3328e5fd9bd986bc94a3f0"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebookEntry.ts",
+      "bytes": 670,
+      "sha256": "e7694465d34d416ae5301b8eceb3eda6674db3eb679e25a0ef6e7a5a7ef8c12b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebookEntryStatus.ts",
+      "bytes": 657,
+      "sha256": "8b984a7e07b29e820cbb2fa58dc2b01510fc197027f80083507c60a4a4866c66"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebookStudent.ts",
+      "bytes": 406,
+      "sha256": "5f6138d4d1a9ec9e344a8a5bfd543f6ed6a22b95d8561a39694494009b8ca1b8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebookStudentTotals.ts",
+      "bytes": 529,
+      "sha256": "05dabc15a48710a31c6eea19d717be7822a310402d4909f6178f8d215d97c198"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGradebookTotals.ts",
+      "bytes": 211,
+      "sha256": "0866491d5e35f2c1be42b42c312d3ba81242119b7ab685a32744c2be7a1d158c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroup.ts",
+      "bytes": 268,
+      "sha256": "52209573ca16dd0584c8c9cba25fcfed1479b88c1bc6ff7fde88199a2cfe5ab3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroupInput.ts",
+      "bytes": 312,
+      "sha256": "d9aaddb24d1f1d0c18ec400653b4dd6c2317128b0b18f9e74dd0459a77d64db9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroupList.ts",
+      "bytes": 244,
+      "sha256": "5d42b1b224c7e9ea586382369ee47d2eddf39faa1ed82d21986edcb17536cd53"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroupListItem.ts",
+      "bytes": 329,
+      "sha256": "ace619ba0516c0fee18787e1df19083c97d528b818c927309d7213f99f0cea77"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroupMembersResult.ts",
+      "bytes": 205,
+      "sha256": "d23d4f1596778eb83687de8e1eb3ffba588a7c29844c49877272da1f16569013"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroupMembersUpdate.ts",
+      "bytes": 276,
+      "sha256": "72497f91f827f9a174d86ffdffbca7fde0ef814330e0032edd907e4f018d57b5"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduGroupResult.ts",
+      "bytes": 219,
+      "sha256": "06318e96bc2784478bd506d601098dd694f6f739d1130f368f66b5034f9edf55"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInquiryAccepted.ts",
+      "bytes": 256,
+      "sha256": "a5b457c9b6c58cc4161e2cea03ee578be7f16db8ef377d64ff75d582f6e759cb"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInquiryInput.ts",
+      "bytes": 461,
+      "sha256": "27aa972f4c61d6f474786876de57c677c7ef8dacfe2e78f5bf280a4ae2de1d03"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInstructor.ts",
+      "bytes": 312,
+      "sha256": "4a6e7b4020672fd6c340e9f6a512cf8bdd0cfeb3a9f066e1520fef632cea219b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInstructorApprovalInput.ts",
+      "bytes": 230,
+      "sha256": "bd4521a847e98613eb4a3683bec3403e4bd70c5f562fed92a39bcb2507e4d2cb"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInstructorHistoryEvent.ts",
+      "bytes": 431,
+      "sha256": "ecfae213116cf91e26faa1bc52b90adf467433d8ba32e825632aab9dece39864"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInstructorHistoryEventAction.ts",
+      "bytes": 361,
+      "sha256": "87aca4550d3f2f2e2d8a65bd40d457d4d263f0b6e98d4f9be10ee2443ac68846"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInstructorHistoryPage.ts",
+      "bytes": 361,
+      "sha256": "a43f433c351e3989e04e5027b0e1f970c6e33f8b9c316a9c2445825b9edd7d5b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduInviteResult.ts",
+      "bytes": 179,
+      "sha256": "9c157b44984ccf696a796b9d013975a144331fb693daed3bb1a797405c57d5eb"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduJoinInput.ts",
+      "bytes": 231,
+      "sha256": "80b5f2767ad37d18c00c3aa4f90251caf6730dbc2b74f1233f12c084ddc139b3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLecture.ts",
+      "bytes": 743,
+      "sha256": "d5174c0e3017f84ca1f3f0d889cb9a169e999968bba3212a781b164d8399ad71"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureInput.ts",
+      "bytes": 371,
+      "sha256": "9bc985aae2ddf40a0c8f4363abd2d2ae6d3bea724f93a0b14eb19cf53b3c0ad8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureList.ts",
+      "bytes": 254,
+      "sha256": "9df230f3385dd2eaaf13d8f4b5601abeff86f52d856fd4e167b4ad1888b33063"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureListItem.ts",
+      "bytes": 347,
+      "sha256": "e153b2d9641246badd952c580f170e97605887b7d49f38a919dd1ba958d1cb68"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureResult.ts",
+      "bytes": 229,
+      "sha256": "026ebfecf5abf022511b224ede0bff9581333f1fbf5b6e9e83a03b63147d8245"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureShareInput.ts",
+      "bytes": 184,
+      "sha256": "9dac5d8bd1b5a2fb88bc0e6d34855319a4a4f5e32bd1729d81fc3588979cb1aa"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureShareResult.ts",
+      "bytes": 206,
+      "sha256": "74eaaf4fea27217004039cf8f877e385f54215b639f41f97b1fe8e9c671b8d52"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureTranscriptionInput.ts",
+      "bytes": 469,
+      "sha256": "42e8fe772cf5dd32481309f26bab74581603261095e71adc479312c4b432a1f3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureTranscriptionInputMime.ts",
+      "bytes": 523,
+      "sha256": "decd8f1a869276c68d343f0fd4efc0119a9ed468da47f0c01ae305585175e817"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureTranscriptionStatus.ts",
+      "bytes": 401,
+      "sha256": "a2c76e53a2d3d58804cee90918efd15b3e73c5c36cf378bc7ba78485e5d09e49"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduLectureUpdate.ts",
+      "bytes": 330,
+      "sha256": "145285104d4375af1bcad4719f00e4fd12501e87919aaf44bd5ebd739c3768a8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduMaterial.ts",
+      "bytes": 409,
+      "sha256": "ff861380d7b5065c4820abde4dcf6ab5dd5dabb1da46a414993d4eedac31b4b6"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduMaterialFileInput.ts",
+      "bytes": 367,
+      "sha256": "29cec003e25939cb397ca7cd01c68d1d6d981c7ce9458dd9baa1a00604c04ab8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduMaterialInput.ts",
+      "bytes": 320,
+      "sha256": "4ccc82123354b09fba26e4d08321cc106050c22f3107f3f5d70e9ee28c556809"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduMaterialResult.ts",
+      "bytes": 234,
+      "sha256": "c3c57349b64bafd29fad8aca205c832fc6b58cdad888caa2bf144470ce7edd0f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduMaterialUpdate.ts",
+      "bytes": 359,
+      "sha256": "4b1f89e34dcc263aee18e6313e773f8e759d9745120ad33bf1f5fe273285f392"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduRosterMember.ts",
+      "bytes": 218,
+      "sha256": "981ffffc4adfd11e96134611689b6d85c7fc05a582ac4ee3c328632582460d18"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSchool.ts",
+      "bytes": 424,
+      "sha256": "fb1afaf8c207f17628252d1428861d90eabb08b4713329cdd6bafc289ebf596d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSource.ts",
+      "bytes": 1165,
+      "sha256": "e31ad519c3bc6bdde0b304281c38627e11eafa0b603d4846753b237f5b0b1dbb"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceKind.ts",
+      "bytes": 279,
+      "sha256": "308021f53f5f30fa96bb893f1ad53b5264ecad25a18b53c2c0f155eac1808f37"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceLinkInput.ts",
+      "bytes": 957,
+      "sha256": "31214f65583ba5cf4744954962c3b7f8e293a2e0c96ecfad82e550f06cc4a314"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceLinkInputVisibility.ts",
+      "bytes": 470,
+      "sha256": "ea1fc118bc0de8f3524cfb8f83a5b9aff14d6ddab93a9cc84c32e0cf331bb68e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceList.ts",
+      "bytes": 225,
+      "sha256": "cb1b2f00294248cd164fb0a39caba101456631cf9af9b5c3e2a8979b2a0b7b01"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceResult.ts",
+      "bytes": 224,
+      "sha256": "eb3fd1c915e9f360c59ff40f83e20cea1b2d26d6452c1e6657f0e3ae2a1b69d0"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceUploadInput.ts",
+      "bytes": 1190,
+      "sha256": "5d6bdefbf991f9198b67d6b8cfec0e41f81db2ef35bdc986cbd19c79eca3af5c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceUploadInputMime.ts",
+      "bytes": 357,
+      "sha256": "0fba2f7c14e754e101128daebbb25469fb40a335c4b8fd2bc8c424f260ebcdaa"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceUploadInputVisibility.ts",
+      "bytes": 478,
+      "sha256": "4e76124c1eead0bd780d90ec5ddfc598fa1e36ade6475ea527d4ac89dbd996df"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSourceVisibility.ts",
+      "bytes": 485,
+      "sha256": "0cf2bc1fae34c776559177cb1af2175ff749df063c9db625f2ca7a67934f5149"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduStudentSubmission.ts",
+      "bytes": 444,
+      "sha256": "fcbd1a3f692eee71b848add3a2748af7e2c18feb2768f0d947218268dcdd536f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSubmission.ts",
+      "bytes": 317,
+      "sha256": "0135dba790830a41bebbdddb9a3f7e7909e5ba53c9025792aa43fb9a3c55ca9e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSubmissionFileInput.ts",
+      "bytes": 502,
+      "sha256": "0f7c9db34acf63874a05493cf7ecfd37eee79fbbee4f5b74dfa8e6c7387c5843"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSubmissionFileInputMimeType.ts",
+      "bytes": 741,
+      "sha256": "4930f350f4c680380db4fe8b6fd16566376746feebde4af45753c7f53d99a1d0"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSubmissionInput.ts",
+      "bytes": 429,
+      "sha256": "535490950563aeb243ceaa993ca5bd460d117d857cb49aafc2a1dcd5a43846da"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSubmissionList.ts",
+      "bytes": 245,
+      "sha256": "b2d66f74d935eab7182d3b5e38d6db29a81b74e489056ab01930d10289f2836f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/eduSubmissionResult.ts",
+      "bytes": 293,
+      "sha256": "f8dc7086dce0d2931b36c15dfa49c1b1bd4721b4caa2b93d1dd1aeb048ea865d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/extractedDate.ts",
+      "bytes": 326,
+      "sha256": "262e93293f055502553a0c4af793371d2201d977bb5aaf9213efc6e0309bf7b7"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/extractedDateKind.ts",
+      "bytes": 303,
+      "sha256": "0c279267e55dde4e0f64b81a616865d21833f3bb26105b403d9d53591987fc10"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/getEduInstructorHistoryParams.ts",
+      "bytes": 324,
+      "sha256": "77ecab73535e3e94239f75634f4e710c7b0eb2b5fecd748a7991b5cd4d884f00"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/getLibraryLink200.ts",
+      "bytes": 276,
+      "sha256": "e54b23c78c515656e028112fc3998e72c2ee0dab5d5ddd6de7596ea40ee180af"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/glanceDueItem.ts",
+      "bytes": 431,
+      "sha256": "5c0731db34ba5ce3bc176d7e65bbcf9fcc2164641c20e341b86e022b18f1895a"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/glanceDueItemKind.ts",
+      "bytes": 303,
+      "sha256": "c0f9c80882a2573b36c28bfa9d722c14a93a1be971feda1300191fadd6c0ba5a"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/glanceDueItemSource.ts",
+      "bytes": 313,
+      "sha256": "a911f8c9240cab805bb6fd7c3a82209b6d4a10083c321cbda8f17f1733a75a03"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradeItem.ts",
+      "bytes": 592,
+      "sha256": "4327cfae84bbd580e40bd3c23c853f1d004d7d6833880d529b6f0e22803e5d5d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradeItemSource.ts",
+      "bytes": 295,
+      "sha256": "c95a5508ab164332cba98bad96135b223cbe4d9f5a5d061ec2543eb0ca8e8d93"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradeScale.ts",
+      "bytes": 263,
+      "sha256": "029d6fee39daa9d0138aa37e7d688ac9c902c31f06c3b371bfe36052d25684f8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradeScaleEntry.ts",
+      "bytes": 372,
+      "sha256": "80630537031066dcd893134e30a4c06249a5d65d42d9fc86174918e5b30e318d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradeScaleUpdate.ts",
+      "bytes": 299,
+      "sha256": "b480261506b3c9439a1c46eb39fd7df49095e4fd81fd48391153df1b30f31c56"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradeWeight.ts",
+      "bytes": 298,
+      "sha256": "84ff482e70e15365c47e51d0c3c13780d4678b288bb0179bde87c75bd5c84f77"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradebookUpdate.ts",
+      "bytes": 493,
+      "sha256": "b28f7f5e96bb76538c567010b409f01c37aab0f35f8f0afb176b3c9642e7df4f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/gradesOverview.ts",
+      "bytes": 313,
+      "sha256": "3b8e8e0f2851317ddee915bdebee4b05f368fb0beae8d7f58b619b02d12379dd"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/healthStatus.ts",
+      "bytes": 172,
+      "sha256": "cbf343355d947ee2a2fc7c6ff659866f5620a9fd2f1c84de981041f5b4aefc87"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/index.ts",
+      "bytes": 9798,
+      "sha256": "1e4f845254701ab05b8cafa874c9262796908f3739a0e82ceef6a98d6af3c7ed"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/joinCourseInput.ts",
+      "bytes": 173,
+      "sha256": "99e357f9921ad0a08e45270a55feb33355eed266c92c7cbae9c224db14ff7cf7"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/lecture.ts",
+      "bytes": 583,
+      "sha256": "22fc123e558d8e7287a0566d37e60fd0a86717f0091171426b7df83e5e1dc6be"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/lectureAnalysis.ts",
+      "bytes": 441,
+      "sha256": "80ca0bcadf20ed2d4529493aa8b8fac4956a8c2bbba07effcd6d3e1653aa871c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/lectureInput.ts",
+      "bytes": 255,
+      "sha256": "bef9b4ce78e9cc5dfd140165291dc2e89c284cbed9b94ecb8a2a67c6451f345b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/lectureUpdate.ts",
+      "bytes": 384,
+      "sha256": "27b1f95ace8661581997bef3160bd1867673d5b8496e2897fcebd0b51304e22b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiContentBlock.ts",
+      "bytes": 437,
+      "sha256": "59b6091ce60b796b9c6bdeb77ae39c8501487fa7f5f804c9b335a1de2277867e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiContentBlockInput.ts",
+      "bytes": 188,
+      "sha256": "87dc846864703d4f4d83049d1c5c8565c1d2f1f82c6324d3c5472280b05b282c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiContentBlockType.ts",
+      "bytes": 327,
+      "sha256": "40236371b475eb90164f2773972f639d965e282769cd2535a2a7f1379e43c1ce"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiInput.ts",
+      "bytes": 487,
+      "sha256": "a5f8a79a6979ed8baab2f5dd14e89c9ea6446976c589594668fd2d7a418b0b4e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiInputTier.ts",
+      "bytes": 301,
+      "sha256": "69a14f246a6269b0e0e3912f765fbef2bf6acb7d02217a3336e129458a104e61"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiMessage.ts",
+      "bytes": 359,
+      "sha256": "42a70814ea4d65f6a41dd451e24f3d7cc6722a01eae83b873019c4e8978e54de"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiMessageContent.ts",
+      "bytes": 196,
+      "sha256": "fdba7503030ca4e027b10ff9ffbea048974a62bf04fed1350b79836fc8e5a70f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiMessageRole.ts",
+      "bytes": 329,
+      "sha256": "662ca1c74cff3ffa477497207634a9f3e95860807b287016719bbd9029eb24fc"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiOutput.ts",
+      "bytes": 376,
+      "sha256": "ae2cd0b7493852562d5b1c2ada3970d3e32451855aabd5fd338518ca9d39618c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiOutputStopReason.ts",
+      "bytes": 363,
+      "sha256": "418e0b1d1b63f94c63afcb26d2886bfbb125f163a6c85b43bad6055b6f068277"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiTool.ts",
+      "bytes": 388,
+      "sha256": "c7ae12a848c3936fef2bca6f309b9a9d5c1daeae1a70c556646548ec5afeac5b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyAiToolInputSchema.ts",
+      "bytes": 186,
+      "sha256": "8c97b351ba4d772faf04e8e9b48a9197fec843ef83453ecb2789af03b33669c2"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyClassscribeHealth.ts",
+      "bytes": 235,
+      "sha256": "86f6efc2baee754cb86e614f5d4c48fdffecbe389c07738383c80c7cd2d166e3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyDbDocument.ts",
+      "bytes": 264,
+      "sha256": "1ec66146e865f9ccf890eb37280044f8427baaa06a6d47ab1236dbc31ec531fc"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyDbGetOutput.ts",
+      "bytes": 258,
+      "sha256": "d265d5c4cf244ffdc6768d324a1fe20ea421077db41c79d64fdb01d5475a05be"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyDbInput.ts",
+      "bytes": 628,
+      "sha256": "b5d4cacd44b78ec731941ba0dc8d7aae03ba94ed663242fcf4277821703deb58"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyDbListOutput.ts",
+      "bytes": 248,
+      "sha256": "3aa7234044a9f7082b481758e8f257ed8591373b79df02bea6122f4d3d33286c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyDbWriteOutput.ts",
+      "bytes": 176,
+      "sha256": "f3a2f1719a686a94ed7cf7b5da412e5a0456047e64fcc471d7a04d37aab0f3dc"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyDocumentData.ts",
+      "bytes": 183,
+      "sha256": "3e338a887a961f1ab90f90da2cd397f79e5d55f105cb8080104291dd1188ad23"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyGroupCode.ts",
+      "bytes": 312,
+      "sha256": "20bb08816ef42a10497b6f4011bbda7d6c5d1c554b70917aab1fc193d893c541"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyStudyPlan.ts",
+      "bytes": 321,
+      "sha256": "76b67cb1ffceae9a3383832b6adede1c269a33881549a7e66974d120f80ae4a9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacySyncCode.ts",
+      "bytes": 280,
+      "sha256": "8a2f10819950fb828c06ff521385b7dc941a6cdc6671606832dff4a60c7d7ff4"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyTranscriptSegment.ts",
+      "bytes": 335,
+      "sha256": "2b28fbab3448b4562497b5a229aed38bada3cc4d77ae1096d680942072dc1588"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyTranscriptionInput.ts",
+      "bytes": 415,
+      "sha256": "d183f0ba26deba1e26e9f2d8f1a69593010a62488f35850f766417fd5301245e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/legacyTranscriptionOutput.ts",
+      "bytes": 280,
+      "sha256": "4541ca4bddc016e18218ef48f94f925d2ca94757150e79ed7a596cfb9f8cce77"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusInput.ts",
+      "bytes": 866,
+      "sha256": "ac220102010f35cdb1ed27911ef56c9d753fcfbc4d550b56f0d24c9c2b5752a8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusInputCourse.ts",
+      "bytes": 335,
+      "sha256": "857928c2fd7adea14da8e3e754b56c157a1105d023030251649f0e54ab62325b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusItem.ts",
+      "bytes": 379,
+      "sha256": "72dfefedcdde63984c71cb09bd93dabcd49e56e8ae4f6f0835a6e8f043282fa3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusItemType.ts",
+      "bytes": 383,
+      "sha256": "dfec6b9dfc274a826abe7797ce0b8dd00a39d0f8eca36bce44c1a7f9a94fb5a1"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusResult.ts",
+      "bytes": 439,
+      "sha256": "7e4ce3e2ee9b7372d35c989004634626d1dbbaa3a0ce71cad5b49189d4c4d9c5"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusResultAssignmentsItem.ts",
+      "bytes": 199,
+      "sha256": "8e12ba3e7769eb5fc401141a73bc03ec15d5a38e065740fd2c4bd9e0e32c7150"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/librarySyllabusResultCourse.ts",
+      "bytes": 190,
+      "sha256": "6bb316b1eabf26022e3d1655f1de3f09fbdfed9df85e6d327b03d16d9c74cf75"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/linkLegacyLibrary200.ts",
+      "bytes": 176,
+      "sha256": "52a69db32a8579a3103412b54114702930b7ea7841e5cac607754dfcd1170302"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/linkLegacyLibraryBody.ts",
+      "bytes": 241,
+      "sha256": "aff45d4d624bdeb888b65eb2f76956354b70867540cdbd52e08a4ee8f71eb04e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/listEduDiscussionRepliesParams.ts",
+      "bytes": 363,
+      "sha256": "7a0ab13eb49258ae43a1950e88f7e42145a8d8c56de2947dcd09ef2b74a5b22f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/listEduDiscussionTopicsParams.ts",
+      "bytes": 360,
+      "sha256": "84f57853fa6475352eea31fba04a276629fbbb162e1efd3b4fbd04ca59953865"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/materialFileUpload.ts",
+      "bytes": 255,
+      "sha256": "65ba03d6c064a284c88efaeabe93df932f3aac46c537542611c62bc8c6a45f5f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/materialTextExtractionResult.ts",
+      "bytes": 280,
+      "sha256": "27abaddc8188f462762c337eb74ffeafe72a1de636e794ca32ee5b86ec534024"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/meetingType.ts",
+      "bytes": 381,
+      "sha256": "edb002db2e7a760d23d0ac50cb9b7ee39599c133250e10066db3f55929b6576c"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/neededGradeInput.ts",
+      "bytes": 244,
+      "sha256": "9468919edeb203b3b069a8a2ff7f30e76867f7061377e42f6234d2ea913cfa80"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/neededGradeResult.ts",
+      "bytes": 253,
+      "sha256": "305919b5fa3d9b454cfc401f43394e1ad3f40a8b3de937ec996e8a50de042087"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/note.ts",
+      "bytes": 415,
+      "sha256": "03002dae45309796e94eee4199bb133d39e4b7e5eef73b54d70ec012fa4197c9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/noteInput.ts",
+      "bytes": 410,
+      "sha256": "bffdcfe9e750f5a535948913b8e80a4c5d2e4043778de6ab4ee8ea932be1a3f8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/noteUpdate.ts",
+      "bytes": 413,
+      "sha256": "75700146e48d6bfff36a9e5057f9957822b138fc4a8a299db90833499ed3d9e5"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/practiceAnswer.ts",
+      "bytes": 253,
+      "sha256": "162fc0df3993ab6559c197d3261ac6ae90fe81ce37265630077f372079bca651"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/practiceAttemptResult.ts",
+      "bytes": 308,
+      "sha256": "87151e9192fbf4173005376bb91d9c9ae87e1a4f0b4fda57e09b854fbf5e11ff"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/practiceLecture.ts",
+      "bytes": 254,
+      "sha256": "c99ef7e45dafd416809a8baf9c5ade6d95f3fdad0dba4eeff1da29f11e0099e5"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/practiceProgress.ts",
+      "bytes": 367,
+      "sha256": "9ba511b250b1438e8ac5c4ca149858bb616a8b8f617ff8fb24826f4fe596da1f"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/practiceSet.ts",
+      "bytes": 288,
+      "sha256": "38e94dbc97100c84e1ad7d2a275f7aa4b0be6abddd472167aa59fb3f9e6c55d3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/practiceTopic.ts",
+      "bytes": 277,
+      "sha256": "e43642e3de016aa29623ac7c405e75265b6b3c2412fad7fac8d1c61e51946812"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/privateEvidenceCoverage.ts",
+      "bytes": 301,
+      "sha256": "bca2acd7cfd34abc1af72a34e48bb19764ddb93aa69f403dcfd29f69b7ed87eb"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/privateEvidenceInput.ts",
+      "bytes": 468,
+      "sha256": "758afa9ed0eb554f347d84aaee6b13251f920e8bc661714b48fc9bb027901196"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/privateEvidenceInputMode.ts",
+      "bytes": 333,
+      "sha256": "bd8e5b40e4a9a130f11c92f0af68abc318e2e3461b669d514c8a30914a7260c9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/privateEvidencePassage.ts",
+      "bytes": 287,
+      "sha256": "39ce17bd9904d288d694419d090f958b8328aa5af1ee5b4ef7ede9dfaa2424fa"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/privateEvidenceResult.ts",
+      "bytes": 511,
+      "sha256": "4307c4c3592ebac7971d698f160dcc3cf6db0a1d0a494124efefb8444cfd0773"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/privateEvidenceResultMode.ts",
+      "bytes": 337,
+      "sha256": "0d8997294c65b9ce54d11bee2d560421ae284d7e0efd2ca04519a024bb04ed44"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/quizQuestion.ts",
+      "bytes": 276,
+      "sha256": "535b76935092c47e50fddc92d26f547f806feeb8ba2184cb6541d55dc5a6e762"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleCourseMatch.ts",
+      "bytes": 497,
+      "sha256": "ff6700c8580837376b3845c83c15e6a0d9e5d2f4e59d7bdaaafc83d4c13b315b"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleImportConfirmCourse.ts",
+      "bytes": 558,
+      "sha256": "a1748ecb201e933e0e33b3c388d58bb2740cd7c0a1215828ae812cc20c7f96c3"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleImportConfirmInput.ts",
+      "bytes": 373,
+      "sha256": "b781460e0cd2aa21bb786befde31756393795d5a230c070f0185dd9ae32cdf04"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleImportConfirmResult.ts",
+      "bytes": 211,
+      "sha256": "0ff4bc3d64809715b408469b9b921a0586c690362ff782538c3788de9403be10"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleImportInput.ts",
+      "bytes": 519,
+      "sha256": "abc2844cd69c76e536a65eae95407704e6417f91508f6240826a8be58c76b638"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleImportInputMimeType.ts",
+      "bytes": 455,
+      "sha256": "0561eacc7a2eca9429c994ca2762e955bbac2fc3245ca82d8abba506dc48d170"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleImportPreview.ts",
+      "bytes": 276,
+      "sha256": "316e4dfdbbf162f1a90996d764f486e925b3f971dae11c3e73ef17a4c3863325"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/scheduleProposal.ts",
+      "bytes": 901,
+      "sha256": "399207fddec42a9232d4ca8a9736635cf931b2ac412a59c84c8eac9a2f2f50ae"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeAnalysis.ts",
+      "bytes": 542,
+      "sha256": "30123ac62274c7a6ae18106a4d85f58e80dd7fa84f2a3c4a34223c7c08ed4873"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeAnalysisType.ts",
+      "bytes": 390,
+      "sha256": "61892b23437ef5bb1cb47a9b53b86c9f363c7963e772f46046553bd7937d14cb"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeAnalysisTypeType.ts",
+      "bytes": 385,
+      "sha256": "384ed0009ddb0814ae17ebee11c817584ede080702aaacb98f9d524ddc2fef85"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeCourse.ts",
+      "bytes": 353,
+      "sha256": "1753c3827a0607ccf8fc7c933fb9f828b5739fb6e856d46e986722cce6561ea9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeItem.ts",
+      "bytes": 823,
+      "sha256": "d0c0f0c1a4e05413f9e6495732ee4bef9fbe7aeedefbb28361b07700710d50f9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeItemInput.ts",
+      "bytes": 723,
+      "sha256": "d8fc924674fd52cb6b45ea54705b6956bfa3a0e77adc5b6ba887d9fb28c2f29e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeItemInputType.ts",
+      "bytes": 373,
+      "sha256": "605ddb809cca36ff9ee61864c81d9f514a8d86d56862079402754fd0836252f7"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeItemType.ts",
+      "bytes": 353,
+      "sha256": "815e0b67e39faae9dd802883a44b6ce7a84de387d1843375e1dd4d2caf498971"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeListInput.ts",
+      "bytes": 186,
+      "sha256": "fc7322fb4973a45805abd1423a13e980990dde1d8dcd5d1259d87a4cd3ef715d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeListResponse.ts",
+      "bytes": 397,
+      "sha256": "d663bd397389487104193273da5a91baeebb6e7ea14a1d3cad6a3b3745b53e24"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeListResponseSummary.ts",
+      "bytes": 315,
+      "sha256": "06b76501e2a0e87d80990e1265fa90eeeed9bf14859542736a1389db9079abce"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeSaveInput.ts",
+      "bytes": 269,
+      "sha256": "2b9735f3f30a9be3c35a77de30ea9cfaad025c7f9bc496db5ec8702834088bea"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradeWeights.ts",
+      "bytes": 442,
+      "sha256": "a9e5440fb82bae30fa5c693e0848bff396a4a8065e4365b6c33e4f4246e7f703"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradebook.ts",
+      "bytes": 832,
+      "sha256": "7f6cdbaa5263735f44073b09b31ffb578f7e7b991aeb99df9f2dab8628b9fef2"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studentGradebookInput.ts",
+      "bytes": 836,
+      "sha256": "dfe1f95d45800d3d46acd5f4bbed41b8c957b20211c04ee9cb095358020fe2f8"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyGuide.ts",
+      "bytes": 315,
+      "sha256": "56206f3ae0cfe09dbd48e8dd65e9f286a5b226cf075e7fd20536a2c6afafcff6"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyGuideResult.ts",
+      "bytes": 234,
+      "sha256": "8235f54bc552f6de3c476e135ad536cbdc55b7c011f2315f88745a96edf38e78"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyGuideSource.ts",
+      "bytes": 189,
+      "sha256": "0682738f375241aa5f580bd70127631b5cec89f5f3223c91be405a489ccfb6d4"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyPlan.ts",
+      "bytes": 222,
+      "sha256": "3457d812b021facda17ab147721fc9045a1e50e6669d36090b4ed94a73b9e27e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyPlanImport.ts",
+      "bytes": 370,
+      "sha256": "b8348e48c56ee0896de08c9e1a317d64a9ab12567131f9b4e9531cca4ff90df9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyPlanImportSource.ts",
+      "bytes": 309,
+      "sha256": "8626b886b636b70a5987559bf29d54245d692130549c26cf4b6a12a98475dd72"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyPlanInput.ts",
+      "bytes": 228,
+      "sha256": "ac2430003f29acfe65e84d99345f07c29a5aa4c1958c4b23bdc01bad68091ae9"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/studyPlanUpdate.ts",
+      "bytes": 179,
+      "sha256": "6143dd88505d98e9ec8b177ed8ea8f5c241da12dd6f8826bdf4967eacbe58c9d"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabus.ts",
+      "bytes": 565,
+      "sha256": "dfc7f72587129235daf379ec0e36949f505fd31ccea7ec8d5bedd028997cedff"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusAssignment.ts",
+      "bytes": 489,
+      "sha256": "19fc2075a03fb2ca308342c5fa76d59f0e8ba7bb5a102c5a699148d27db6dd40"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusAssignmentCompletionInput.ts",
+      "bytes": 197,
+      "sha256": "39eedc5161b555f06a69a5313e317e289c185e8d6e3a19924c4816274ba062ba"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusAssignmentProposal.ts",
+      "bytes": 422,
+      "sha256": "87fda6c217e34853a4cfa45a1d0f218886aaece0a6fd90cbeaf2a881f9c9b3ac"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusAssignmentProposalType.ts",
+      "bytes": 411,
+      "sha256": "df61d41720f7009295f9b5ad2d3900c10f9bcbfb7d6058d6d381e2bbcce87f13"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusAssignmentType.ts",
+      "bytes": 379,
+      "sha256": "2ecba7a19497e5d00abf00aeab1bf6126d8a4fb834c18131151147ad6e5cb977"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusAssignmentWithCourse.ts",
+      "bytes": 275,
+      "sha256": "8c2598cda4320675c98963f729693f6615267a4720b0a2a4699f485561dad586"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusConfirmInput.ts",
+      "bytes": 584,
+      "sha256": "dad652e0a0509739f14fde9cd7dbcf294e804a2f3f1a4311710f0ad4d4d48c54"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusDate.ts",
+      "bytes": 597,
+      "sha256": "12f6687ca0fe0b3edefa4a85f1bf9809823ad72ee9989efc338993a7ee15ed24"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusDateKind.ts",
+      "bytes": 299,
+      "sha256": "194aadf9084c43195914b8b726a900de9c82d866a68babb57a163ae3b683f948"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusDateLinkStatus.ts",
+      "bytes": 490,
+      "sha256": "dd859d261a3f173763d27aa5385c6122aaa217c3a07add17888a3629fe16ba2e"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusModuleProposal.ts",
+      "bytes": 247,
+      "sha256": "98e10cb02bb2ece5f02dc3e5cabccd5c91313574de6f6cba80e9b18f40707526"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusPreview.ts",
+      "bytes": 555,
+      "sha256": "11484069d69fe06f224597adec27692541bd5d8cf050eff7de2516713b185de7"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusProposal.ts",
+      "bytes": 338,
+      "sha256": "e149ace2b13fbaf429467e17059ad1124a54d183daca53535e80841d6c25e9bf"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusProposalKind.ts",
+      "bytes": 315,
+      "sha256": "48e7dc5c29953fb46eb822db8b575751db45dc8553ada90336b28bbf6c8ec4cd"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusUploadInput.ts",
+      "bytes": 433,
+      "sha256": "7a39c1b5ef935a49bf4eda2a2088764a4fb5c25acabd7067d6f5b1e903aecb94"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusUploadInputMimeType.ts",
+      "bytes": 369,
+      "sha256": "1a8bd8274bdcabb9d4f82870d80d1b8dff748d5f0e8a5a8b39705008e8a3ab98"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/syllabusUploadResponse.ts",
+      "bytes": 207,
+      "sha256": "ac46d3caba8e150b72859b1597ea8da1e62201b6261b85a3f7cfd1b3abe12cac"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/transcriptionInput.ts",
+      "bytes": 223,
+      "sha256": "5dfc8ec56af495b4504da6429989e6cfe8e41d61557495162e3c194817d701ef"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/transcriptionOutput.ts",
+      "bytes": 183,
+      "sha256": "c86d663bb2918c5a620aeae975f40196b0b508255d402fd4c08050dcb6d09990"
+    },
+    {
+      "path": "lib/api-zod/src/generated/types/weekday.ts",
+      "bytes": 317,
+      "sha256": "ed36e45b9f5b1e4c4e126eece0761fb40dc98f433fef78eaf62f83021259a406"
+    },
+    {
+      "path": "lib/api-zod/src/index.ts",
+      "bytes": 381,
+      "sha256": "e4837b600a1145b607fd52f1928396884416c66743ed25bcd2ffc9d620ccf035"
+    },
+    {
+      "path": "lib/api-zod/tsconfig.json",
+      "bytes": 221,
+      "sha256": "bb52c0e8b13e658570a208d946cb874fdf2b8d990f7c228f96fb24254c9c5a95"
+    },
+    {
+      "path": "lib/db/drizzle.config.ts",
+      "bytes": 352,
+      "sha256": "57862221556f24a1accd28b283876930c403ad7c86b79d87cfb5c9c200ba6258"
+    },
+    {
+      "path": "lib/db/package.json",
+      "bytes": 578,
+      "sha256": "9c4e93f8f9f9fa57b581a4230c184d56a130a79ae36e377c2d4720edcbcbf15c"
+    },
+    {
+      "path": "lib/db/src/edu-course-file-cleanup.ts",
+      "bytes": 2173,
+      "sha256": "fccd123c8c7b95b364913dd2a62a3678ebb1f0e3e2744f99d4b2c9ea8d75bffd"
+    },
+    {
+      "path": "lib/db/src/edu-license-condition.ts",
+      "bytes": 728,
+      "sha256": "3ed7f7dc77238f92fe8183bec0ffb25f8a33ab92937820edc0cc82009bad37a8"
+    },
+    {
+      "path": "lib/db/src/index.ts",
+      "bytes": 819,
+      "sha256": "7c964cb570edf9b65a8ca2490e2fa396140d24e04ad85f16a406056b7a535db9"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-consents.ts",
+      "bytes": 1234,
+      "sha256": "31fa7d315f3bbaef1bd79de12e4ff108faf191ca82807159d1f9e9d250d95abd"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-credits.ts",
+      "bytes": 4592,
+      "sha256": "93a5cf519b55f31ffeef8dd043be43dc52505e50cd26b565fc2a13da318e6151"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-edu-learning.ts",
+      "bytes": 1585,
+      "sha256": "47615731a9089e3d7da880e16c407eae8f2261f7fc41e7b226e7adc0eb572965"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-edu-licenses.ts",
+      "bytes": 4713,
+      "sha256": "9799c39e845bebb70d89ba38ebd1f43942ad1d5364a3537d48de47dbd21cb4f1"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-edu-media.ts",
+      "bytes": 3736,
+      "sha256": "15d82e8be557dbf8fbc59f7281741788afaa6d3e86eccc3504b3e28b4d346e41"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-edu.ts",
+      "bytes": 4317,
+      "sha256": "08c1781ac99ad276a223e07f707e25cada9e3b7522c4893b09d3f1dde741f310"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-legacy.ts",
+      "bytes": 918,
+      "sha256": "d3902f2edf8b05595bbc60a4d618ecf64798d6969cfb92fc58852b529ba778ae"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe-privacy.ts",
+      "bytes": 3376,
+      "sha256": "c772c4c08d10b9c52af6292974459994cabba40c8ead12fe8a01483666ec7f42"
+    },
+    {
+      "path": "lib/db/src/schema/classscribe.ts",
+      "bytes": 8174,
+      "sha256": "98880870f33c8c34544bc59a3a4aa74bc1a9cb7fd672de97b0c387798333f51d"
+    },
+    {
+      "path": "lib/db/src/schema/grades.ts",
+      "bytes": 1377,
+      "sha256": "9a5f7fa7c5e5a57958447538a2d432dfe33d747fdf4738ab026c606e0693d17f"
+    },
+    {
+      "path": "lib/db/src/schema/index.ts",
+      "bytes": 1141,
+      "sha256": "b777884fabe5a550620f69586b207f0d782c031aebcbac9fa11f11787744101e"
+    },
+    {
+      "path": "lib/db/src/schema/study-plans.ts",
+      "bytes": 1389,
+      "sha256": "47b3c11231857eb8cd58e2d0bc292fc9af26ec540c718b8954cdb03651a1686d"
+    },
+    {
+      "path": "lib/db/tsconfig.json",
+      "bytes": 244,
+      "sha256": "69c976d11de35f0ac391934625beeccdd1b2689ba5d0f14c54b5384d4c30a9c9"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/package.json",
+      "bytes": 438,
+      "sha256": "413b5dfa691e70a477c9ca884c1b330f91ed8c003d4310548aee3c78218397da"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/audio/client.ts",
+      "bytes": 7946,
+      "sha256": "f5a8305b30de6d2149ad346efeda35e487fee1768aa8d3f854255c336c710a0e"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/audio/index.ts",
+      "bytes": 229,
+      "sha256": "46a81c3a1de8e8b21d3c77aa76041c6528ea6bcecc9de54a207435a76f99ff39"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/batch/index.ts",
+      "bytes": 107,
+      "sha256": "cb320b7313f831e4cd8eb7f3e8b354d0b2dab5e1b5fd36e94041605e6b6200a4"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/batch/utils.ts",
+      "bytes": 3872,
+      "sha256": "0f97ee9883e780a67c4e0a3b051ce947603c4bb82f307d4d2e470d7f8a63c252"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/client.ts",
+      "bytes": 529,
+      "sha256": "13fa1e39c7866af998e470c410043921a29c05bf514c8879573a4f44589a8cfd"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/image/client.ts",
+      "bytes": 1566,
+      "sha256": "cec58d7a7c9a0d8a85a6a67b0f0d0f573b2db02dd6592c54d73dc109d9262aae"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/image/index.ts",
+      "bytes": 68,
+      "sha256": "31eda81d6e721f2988e2d4712a6769ec4a80562b11adfd28a993d5c50ca35932"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/src/index.ts",
+      "bytes": 192,
+      "sha256": "16bb8a72af90ed0fc25e77b76c8d26b9cc432dba9a6a6306f7aa588b32707f17"
+    },
+    {
+      "path": "lib/integrations-openai-ai-server/tsconfig.json",
+      "bytes": 244,
+      "sha256": "69c976d11de35f0ac391934625beeccdd1b2689ba5d0f14c54b5384d4c30a9c9"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2462,
+      "sha256": "faa46caeaeb07a4d2d03c55fc626f9d01a8af0d0ed31820feaf590cec0b194f8"
+    },
+    {
+      "path": "patches/decode-uri-component@0.5.0.patch",
+      "bytes": 900,
+      "sha256": "35e0748cbc839a8d0dada506f20e8acd9ccca641561dc9841d5cf27319a59468"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "bytes": 631871,
+      "sha256": "dfcdbe150deba58aac9d18def2eb395182ae7cab67db015f822c112d570da61d"
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "bytes": 4726,
+      "sha256": "d84dd517140dc19e936bb899db5b2ca939b723aa019452ba17e1264f6eefb16b"
+    },
+    {
+      "path": "replit.md",
+      "bytes": 9272,
+      "sha256": "cdc18126682608a68a4a38223235ad24088d7a10e3cfda6a14d5caff5164be1c"
+    },
+    {
+      "path": "scripts/ANDROID-STORE-PREFLIGHT.md",
+      "bytes": 1591,
+      "sha256": "a55fed394b1f83cc54271f010ce9431710c79ce72ec9951e883c564aa84059e9"
+    },
+    {
+      "path": "scripts/EDU-LICENSE.md",
+      "bytes": 1678,
+      "sha256": "1a4b374b49eefa631eae76a527ffad8f6314c321025f844fd8dc46cf7f27be56"
+    },
+    {
+      "path": "scripts/README-sample-pages.md",
+      "bytes": 1820,
+      "sha256": "d8515969cd5b584f8791314f0fcea99a8301080aaaf05b9d530778a7b27fcec1"
+    },
+    {
+      "path": "scripts/package.json",
+      "bytes": 1115,
+      "sha256": "2e73982bd46a8283d8fd0809407630aae05f72f556796267fcd70080e936f350"
+    },
+    {
+      "path": "scripts/post-merge.sh",
+      "bytes": 121,
+      "sha256": "964c6b392ba3773306d84c6d27aad2bba2264dedd54599dd58e4e9dbafa59489"
+    },
+    {
+      "path": "scripts/src/align-classscribe-android-identifier.ts",
+      "bytes": 4445,
+      "sha256": "36263c983778b683626157809988278db160e8b461f1beba1ef22a69aff634a8"
+    },
+    {
+      "path": "scripts/src/align-classscribe-credits-revenuecat.ts",
+      "bytes": 19812,
+      "sha256": "b0fde1eafc54985abc14d02f9de3b3bbd8578414ec45119df8e11808417be360"
+    },
+    {
+      "path": "scripts/src/align-classscribe-credits-stripe.ts",
+      "bytes": 8891,
+      "sha256": "5b525cff33c638248a37146558ff10654618a7c053039ac8f5f454c6b217d768"
+    },
+    {
+      "path": "scripts/src/align-classscribe-revenuecat-catalog.ts",
+      "bytes": 13444,
+      "sha256": "2604ed5b8293c9dfe2dff01ea0f64b23d6454ab5f916c2a82e461f6829607cc5"
+    },
+    {
+      "path": "scripts/src/android-store-preflight.ts",
+      "bytes": 4327,
+      "sha256": "b1d5d3c2a845ab557c19e367843687fb099d94d52f1a7a956543990bdc61baf2"
+    },
+    {
+      "path": "scripts/src/audit-classscribe-revenuecat-live.ts",
+      "bytes": 16790,
+      "sha256": "743b2be7071e30a1f66278271a46a9cda75eeea0446b1b771102ec5a6fd83e71"
+    },
+    {
+      "path": "scripts/src/check-classscribe-android-store-identity.ts",
+      "bytes": 790,
+      "sha256": "edc470fd6e4c5488f58f9aa63052f72003fafd7656b5b2eb4d65f67fc2373e7a"
+    },
+    {
+      "path": "scripts/src/check-classscribe-ios-purchases.ts",
+      "bytes": 1949,
+      "sha256": "7d1ba78bc38d4a94adf5b9a1a273ea4532f72655f79730d5298c6ae4613b2476"
+    },
+    {
+      "path": "scripts/src/check-classscribe-revenuecat-catalog.ts",
+      "bytes": 3441,
+      "sha256": "a984ac53f302aef6eafa6131506be087ecfd581116f127f94a9e2e7ed0556fcd"
+    },
+    {
+      "path": "scripts/src/classscribe-edu-license-command.ts",
+      "bytes": 8378,
+      "sha256": "ca6856022d7e23e1cece7fd24370c9f7539227eb4c3a63a41632e6a8a8c5c765"
+    },
+    {
+      "path": "scripts/src/classscribe-edu-license.ts",
+      "bytes": 1668,
+      "sha256": "c08e46488874d66fc7e73c9c100e9e09fd13f1f405b629aedf795d8066321de4"
+    },
+    {
+      "path": "scripts/src/configure-classscribe-ios-purchases.ts",
+      "bytes": 4063,
+      "sha256": "4847d5a98d188d4f0582ad4b89a13e6174f871e928536b20efc68c301241f357"
+    },
+    {
+      "path": "scripts/src/credits-migration-adapter.ts",
+      "bytes": 4602,
+      "sha256": "02f7d95ad2851c3491f6927068df9e7dbb70f9c4c620b7a6ce99c2642a706ba0"
+    },
+    {
+      "path": "scripts/src/finalize-classscribe-variant-b.mjs",
+      "bytes": 4783,
+      "sha256": "509946e64ac97e8bfc0c9062705160cb51e9933a9ef6f97d127cc20155116a3b"
+    },
+    {
+      "path": "scripts/src/hello.ts",
+      "bytes": 46,
+      "sha256": "9a865c3de9900891e697e1ee8632dd565ce69bd7cb6b610e48b26bc0ee9e81e9"
+    },
+    {
+      "path": "scripts/src/migrate-classscribe-credit-currency.ts",
+      "bytes": 49457,
+      "sha256": "c1594af4b09b4e334b4d3bdf1245500c5a83fdae986a83f0af82b605fceb4f18"
+    },
+    {
+      "path": "scripts/src/reconcile-classscribe-credits.ts",
+      "bytes": 15457,
+      "sha256": "9d4176327de8039d82f67913b0e990bba7cf60b50f10e3eddd497581e2c49e63"
+    },
+    {
+      "path": "scripts/src/render-classscribe-social-demo.mjs",
+      "bytes": 12792,
+      "sha256": "b12f8f7dc74a6dd3e59699c194cdacaed9ff054565c40599668d448b1926c03f"
+    },
+    {
+      "path": "scripts/src/revenuecatClient.ts",
+      "bytes": 1275,
+      "sha256": "b8d4fcafc56baad66f90d70337de1481853e0de1147098b5bf5ec053c1d30379"
+    },
+    {
+      "path": "scripts/src/seed-classscribe-plans.ts",
+      "bytes": 4368,
+      "sha256": "29f491de9ed9e18c1ad658a660d13927ae36f93f73c1130e2676cd39f54c19cb"
+    },
+    {
+      "path": "scripts/src/seed-classscribe-revenuecat.ts",
+      "bytes": 10995,
+      "sha256": "721498690a9dc7af4f971f26983e4d401d23e1ce01484181b61fe542ded26eb9"
+    },
+    {
+      "path": "scripts/src/setup-classscribe-credits-revenuecat.ts",
+      "bytes": 26923,
+      "sha256": "2203a302dfc1c9e9ce5ce90b5a8e7bcf1d95068f1bb41b6af8ef514c09da4ad3"
+    },
+    {
+      "path": "scripts/src/setup-classscribe-revenuecat-sandbox-webhook.ts",
+      "bytes": 7878,
+      "sha256": "5509274181df95c5410b2b09e96ec62515db6a8b2b85d4dd88d159a12963c902"
+    },
+    {
+      "path": "scripts/src/stripeClient.ts",
+      "bytes": 2916,
+      "sha256": "3783158a5a47c11924b4b296a2c60e1e1b0e5a40610ea68f85c829e6c4d1b52e"
+    },
+    {
+      "path": "scripts/src/verify-classscribe-revenuecat-credits.ts",
+      "bytes": 7346,
+      "sha256": "54d7191ccbb025aa391e06370c06c6b8ca71baa16b66c66f50976dd2a04fecf6"
+    },
+    {
+      "path": "scripts/test/android-store-preflight.test.ts",
+      "bytes": 9943,
+      "sha256": "0db8020830204bfcb79e680d1af20ad4fd3974d538e13a3f74ffaa7918d736a1"
+    },
+    {
+      "path": "scripts/test/classscribe-edu-license.test.ts",
+      "bytes": 5920,
+      "sha256": "7bb838f9de0847f5ca034d6ad518836bb168027670c5a6f426d5d0a5bbb4fe66"
+    },
+    {
+      "path": "scripts/test/credits-migration-adapter.test.ts",
+      "bytes": 5594,
+      "sha256": "1f7e68841b4dd290c10024b5e27f3166dbfd584e8ca9b48ce739a04ceac99fbe"
+    },
+    {
+      "path": "scripts/test/grade-guidance-fixtures.mjs",
+      "bytes": 3661,
+      "sha256": "dca863bd9c9fb2c8677f77447646e74283addb7fad18229f36d8e064d38e6140"
+    },
+    {
+      "path": "scripts/test-appearance.mjs",
+      "bytes": 12486,
+      "sha256": "b1be673847859877c18564d9746c0cdfe73e82863e57348e221022e72da25438"
+    },
+    {
+      "path": "scripts/test-example-courses.mjs",
+      "bytes": 8480,
+      "sha256": "11a1e011b3153e5c74f7389ecd8cf72d58fec58064120f17c650a66097a27be6"
+    },
+    {
+      "path": "scripts/test-sample-pages.mjs",
+      "bytes": 14825,
+      "sha256": "7f66abf3d2dad12a97fa284c9d5c8031ec0d6057fdedde238d46b30ea9a9de6b"
+    },
+    {
+      "path": "scripts/test-sample-writes.mjs",
+      "bytes": 5651,
+      "sha256": "d1390a92bc5803225e15a65a0a152f51d57fb7320bf38f54550417e0ebcd08c7"
+    },
+    {
+      "path": "scripts/tsconfig.json",
+      "bytes": 157,
+      "sha256": "636dea76ed898c62e56d6657ed97bb3edc85feb0ea8256b5198849d5c6cf462a"
+    },
+    {
+      "path": "seo_strategy.md",
+      "bytes": 848,
+      "sha256": "8240120dc33574378e27ad837c2e3480f5a0e5cdaf76f3c900f56e94c3891af5"
+    },
+    {
+      "path": "threat_model.md",
+      "bytes": 5449,
+      "sha256": "5934d28d3f06ea38a2b7efa78ee5e022e0398061b7fc2454008fc0e335946ed3"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "bytes": 692,
+      "sha256": "2dfaa6f6168f618e0e6deff048c17e4f5f73d59325bd935d471905ae6773585c"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 301,
+      "sha256": "bd7dcd519895013d5562bddda56e2b6088536ca10ada3d5298bfcb7837af422c"
+    },
+    {
+      "path": ".replit",
+      "bytes": 2773,
+      "sha256": "27d90552418f2567fda332b6387cf8279c333e0b23657984b31d618b8a8674f8"
+    }
+  ],
+  "redactedFiles": [
+    {
+      "path": "scripts/src/configure-classscribe-ios-purchases.ts",
+      "matches": 2
+    }
+  ],
+  "excludedFileCount": 793
+}

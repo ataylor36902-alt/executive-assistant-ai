@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "ClassScribe",
+    "slug": "classscribe-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/classscribe/icon.png",
+    "scheme": "classscribe-mobile",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/classscribe/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1B6A55"
+    },
+    "ios": {
+      "bundleIdentifier": "com.classscribe.app",
+      "buildNumber": "1",
+      "supportsTablet": false,
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "ClassScribe records lectures you have permission to record and short voice questions you choose to ask.",
+        "NSSpeechRecognitionUsageDescription": "ClassScribe uses speech recognition to create transcripts of lectures you have permission to record.",
+        "NSCameraUsageDescription": "ClassScribe lets you snap slides and the board during class.",
+        "NSPhotoLibraryUsageDescription": "ClassScribe lets you choose a private profile photo for your library and attach slide photos.",
+        "UIBackgroundModes": ["audio"]
+      }
+    },
+    "android": {
+      "package": "com.edmitainvest.classscribe",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/classscribe/android-icon-foreground.png",
+        "backgroundColor": "#1B6A55"
+      },
+      "permissions": ["RECORD_AUDIO", "CAMERA"]
+    },
+    "web": {
+      "favicon": "./assets/classscribe/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "@clerk/expo",
+      "expo-apple-authentication",
+      ["expo-audio", {
+        "microphonePermission": "ClassScribe records lectures you have permission to record and short voice questions you choose to ask.",
+        "enableBackgroundRecording": true,
+        "enableBackgroundPlayback": false
+      }],
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": false
+    }
+  }
+}

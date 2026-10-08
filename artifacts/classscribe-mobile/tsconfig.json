@@ -1,0 +1,35 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "app/**/*.js",
+    "app/**/*.jsx",
+    "components/**/*.js",
+    "components/**/*.jsx",
+    "context/**/*.js",
+    "context/**/*.jsx",
+    "constants/**/*.js",
+    "hooks/**/*.js",
+    "hooks/**/*.jsx",
+    "lib/**/*.js",
+    "lib/**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ],
+  "references": [
+    {
+      "path": "../../lib/api-client-react"
+    }
+  ]
+}

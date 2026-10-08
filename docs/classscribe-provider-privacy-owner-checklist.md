@@ -1,0 +1,15 @@
+# ClassScribe provider privacy: owner verification
+
+Use this checklist with the implementation inventory and provider documentation in [classscribe-provider-privacy.md](./classscribe-provider-privacy.md). These checks require access to deployment/provider accounts and cannot be verified from application code or source-controlled configuration. Do not expose or copy secrets into logs, tickets, or this checklist.
+
+- [ ] For each deployed environment, identify whether OpenAI and Anthropic requests use Replit-managed credentials, direct provider credentials, or another proxy; confirm the actual selected provider endpoint/model and paid/free route.
+- [ ] Verify the Replit AI Integrations account plan and privacy settings. Confirm that the effective endpoint is not a free route whose provider may train on prompts/completions. Verify any claimed ZDR-only setting at the actual account and model/feature level.
+- [ ] Verify the OpenAI organization/project retention controls and approval for ZDR/MAM, if any. Confirm whether the selected chat and transcription calls are eligible. `store:false` is not ZDR.
+- [ ] Verify Anthropic commercial terms, training opt-in status, default retention, and whether the proxy and Messages API/model are covered by an explicitly enabled ZDR agreement. No Anthropic contract is verified by the report.
+- [ ] Verify that the connected ElevenLabs account is eligible for Zero Retention Mode specifically on `/v1/speech-to-text`, and that the connector forwards the documented `enable_logging=false` parameter. Enable it only after both checks; otherwise disclose the default logging behavior.
+- [ ] Establish how provider-held data requests, abuse/security retention, and legal holds are handled. Do not promise app deletion removes provider-held data.
+- [ ] Confirm the core-owned app log configuration retains logs for 30 days and that Replit-hosted logs or external log drains do not capture request bodies, transcripts, prompts, audio, provider credentials, or export tokens. Verify the hosted service separately.
+- [ ] Confirm platform database, object-store, and deployment-backup retention, expiration, restore-cycle deletion, and legal-hold guarantees. Do not claim backups are deleted without the platform owner's confirmation.
+- [ ] Review EDU lecture audio objects created before this change using a separately approved, owner-scoped process. Do not sweep paths or delete records belonging to other libraries.
+- [ ] Coordinate with the API/core owner to ensure credit-action idempotency records retain only billing/credit transaction metadata and never preserve AI responses, transcripts, prompts, or study content.
+- [ ] Recheck and date-stamp the official provider documentation and applicable contracts before publishing specific retention claims to users.

@@ -1,0 +1,4630 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: courses
+    description: Student courses and lecture organization
+  - name: lectures
+    description: Lecture capture, transcripts, and study materials
+  - name: collaboration
+    description: Course discussion and sharing
+  - name: openai
+    description: OpenAI-backed transcription and lecture analysis
+  - name: notes
+    description: Private notes synchronized across devices
+  - name: study-plans
+    description: Personal study tasks
+  - name: student-grades
+    description: Paid sync-code student grade estimates
+  - name: edu-inquiries
+    description: School and university inquiries about ClassScribe EDU
+paths:
+  /syllabus/confirm:
+    post:
+      operationId: confirmLibrarySyllabus
+      summary: Atomically confirm selected syllabus dates in the current sync-code library
+      parameters:
+        - in: header
+          name: X-CS-User
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LibrarySyllabusInput" }
+      responses:
+        "200":
+          description: Committed course and imported assignments
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LibrarySyllabusResult" }
+        "400": { description: Invalid dates or selection }
+        "403": { description: Invalid or revoked library capability }
+        "409": { description: Course missing or confirmation conflict }
+        "402": { description: Course plan limit reached }
+  /privacy/ai-consent:
+    get:
+      operationId: getAiSharingPermission
+      summary: Read the current AI-sharing notice and library permission
+      responses:
+        "200":
+          description: Current notice and server-held permission
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiSharingPermission"
+    post:
+      operationId: saveAiSharingPermission
+      summary: Explicitly grant or withdraw permission for the current notice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiSharingDecision"
+      responses:
+        "200":
+          description: Permission saved for this library
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiSharingPermission"
+  /edu-inquiries:
+    post:
+      operationId: requestEduAccess
+      security: []
+      tags: [edu-inquiries]
+      summary: Send a school inquiry to the ClassScribe EDU team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduInquiryInput" }
+      responses:
+        "200":
+          description: The request was accepted by the ClassScribe support mail provider
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduInquiryAccepted" }
+        "400": { description: Invalid or oversized inquiry }
+        "429": { description: Too many inquiries in a short period }
+        "503": { description: Inquiry delivery or request limits are unavailable }
+  /library-link:
+    get:
+      operationId: getLibraryLink
+      security: [{ ClerkSessionBearer: [] }]
+      tags: [notes]
+      summary: Get the authenticated account's linked legacy library
+      responses:
+        "200":
+          description: Linked library status; response is not cacheable
+          headers:
+            Cache-Control:
+              schema: { type: string, const: no-store }
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    required: [linked]
+                    properties:
+                      linked: { type: boolean, const: false }
+                  - type: object
+                    required: [linked, code]
+                    properties:
+                      linked: { type: boolean, const: true }
+                      code: { $ref: "#/components/schemas/LegacySyncCode" }
+        "401": { description: Authentication required }
+        "503": { description: Mapping storage or encryption unavailable }
+    post:
+      operationId: linkLegacyLibrary
+      security: [{ ClerkSessionBearer: [] }]
+      tags: [notes]
+      summary: Link a proven legacy library to the authenticated account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code]
+              additionalProperties: false
+              properties:
+                code: { $ref: "#/components/schemas/LegacySyncCode" }
+      responses:
+        "200":
+          description: Library linked (or already linked to this account)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [linked]
+                properties:
+                  linked: { type: boolean, const: true }
+        "400": { description: "Invalid, revoked, or unproven library code" }
+        "401": { description: Authentication required }
+        "409": { description: "Account or library is already linked elsewhere" }
+        "503": { description: Mapping storage or encryption unavailable }
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /health:
+    get:
+      operationId: legacyClassscribeHealth
+      tags: [health]
+      summary: Legacy ClassScribe service health
+      responses:
+        "200":
+          description: Provider status compatible with the native ClassScribe app
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyClassscribeHealth" }
+  /db/get:
+    post:
+      operationId: legacyClassscribeDbGet
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [notes]
+      summary: Read an owned or capability-scoped ClassScribe document
+      description: Shared posts/lectures require groupCode matching the stored document. Reading another member profile requires groupCode and a membership activity in that group.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyDbInput" }
+      responses:
+        "200":
+          description: Document value, or null when absent
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyDbGetOutput" }
+        "403": { description: Invalid sync code or unauthorized path }
+  /db/set:
+    post:
+      operationId: legacyClassscribeDbSet
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [notes]
+      summary: Replace an owned or group-scoped ClassScribe document
+      description: posts/shared writes require a valid group capability in data.code and the author sync code in data.by. notebooks documents use the group capability as their path id and must keep it in data.code.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyDbInput" }
+      responses:
+        "200":
+          description: Saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyDbWriteOutput" }
+  /db/update:
+    post:
+      operationId: legacyClassscribeDbUpdate
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [notes]
+      summary: Merge into an owned or group-scoped ClassScribe document
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyDbInput" }
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyDbWriteOutput" }
+  /db/delete:
+    post:
+      operationId: legacyClassscribeDbDelete
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [notes]
+      summary: Delete an owned or group-scoped ClassScribe document
+      description: Deleting posts/shared requires groupCode matching the stored document. Notebook documents are addressed by their group capability path.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyDbInput" }
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyDbWriteOutput" }
+  /db/list:
+    post:
+      operationId: legacyClassscribeDbList
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [notes]
+      summary: List direct children of an owned collection or one authorized class group
+      description: posts and shared require exactly one where clause of [code, ==, groupCode]. The server filters by the capability before returning documents.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyDbInput" }
+      responses:
+        "200":
+          description: Matching documents
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyDbListOutput" }
+  /ai:
+    post:
+      operationId: legacyClassscribeAi
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [openai]
+      summary: ClassScribe sync-code authenticated AI chat compatibility endpoint
+      description: Accepts a bounded Anthropic Messages-shaped conversation; tool calls are returned for the client to execute.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyAiInput" }
+      responses:
+        "200":
+          description: Compatible text and tool-use blocks
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyAiOutput" }
+        "429": { description: Rate or concurrency limit reached }
+        "503": { description: AI provider unavailable }
+  /transcribe:
+    post:
+      operationId: legacyClassscribeTranscribe
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [openai]
+      summary: Transcribe base64 audio for the ClassScribe native app
+      description: Lecture requests can set timed to true to use ElevenLabs Scribe when connected; segment starts come from its timed words. Otherwise the managed OpenAI integration returns text with null timestamps; a direct Whisper key can return timed segments. Audio is forwarded to the transcription provider but is not stored by this endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LegacyTranscriptionInput" }
+      responses:
+        "200":
+          description: Provider-timed transcript phrases, or explicitly untimed text when timing is unavailable
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LegacyTranscriptionOutput" }
+        "413": { description: Recording exceeds the 25 MB decoded audio limit }
+        "429": { description: Rate or concurrency limit reached }
+        "503": { description: Transcription provider unavailable }
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [courses]
+      summary: Get course and study overview
+      responses:
+        "200":
+          description: Dashboard overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+  /dashboard/glance:
+    get:
+      operationId: getDashboardGlance
+      tags: [courses]
+      summary: Get due dates, recent practice sets, and bookmarks
+      responses:
+        "200":
+          description: Home at-a-glance data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardGlance"
+  /ai/evidence:
+    post:
+      operationId: searchPrivateEvidence
+      tags: [classscribe]
+      summary: Search fresh private sync-library passages by meaning or keywords
+      parameters:
+        - in: header
+          name: X-CS-User
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PrivateEvidenceInput" }
+      responses:
+        "200":
+          description: Permission-checked passages and explicit search coverage
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PrivateEvidenceResult" }
+        "400": { description: Invalid search }
+        "403": { description: Library access or AI permission required }
+        "429": { description: Search rate limit reached }
+        "503": { description: Search unavailable }
+  /classscribe/ask:
+    post:
+      operationId: askClassscribe
+      security: [{ ClerkSessionBearer: [] }]
+      tags: [openai]
+      summary: Answer a question grounded in the student's scoped course material
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AskClassscribeInput"
+      responses:
+        "200":
+          description: Grounded answer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AskAnswerResult"
+        "401":
+          description: Sign in required
+        "404":
+          description: Course or term is unavailable to this student
+  /classscribe/ask/source/{kind}/{id}:
+    get:
+      operationId: getClassscribeAskSource
+      security: [{ ClerkSessionBearer: [] }]
+      tags: [openai]
+      summary: Retrieve an owned source cited by ClassScribe Ask
+      parameters:
+        - name: kind
+          in: path
+          required: true
+          schema: { type: string, enum: [note, assignment, syllabus] }
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Persisted source content, bounded to 24,000 characters
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AskSourceResult" }
+        "401": { description: Sign in required }
+        "404": { description: "Source kind, source ID, or ownership is unavailable" }
+  /courses:
+    get:
+      operationId: listCourses
+      tags: [courses]
+      summary: List courses available to the signed-in student
+      responses:
+        "200":
+          description: Courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+    post:
+      operationId: createCourse
+      tags: [courses]
+      summary: Create a course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseInput"
+      responses:
+        "201":
+          description: Course created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+  /schedule/import-preview:
+    post:
+      operationId: previewScheduleImport
+      tags: [courses, openai]
+      summary: Extract proposed courses and recurring meetings from schedule text or a file
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ScheduleImportInput" }
+      responses:
+        "200":
+          description: Validated proposals for student review; nothing is saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ScheduleImportPreview" }
+        "413": { description: Schedule file exceeds the 8 MB limit }
+        "422": { description: No valid courses or meetings could be extracted }
+  /schedule/import-confirm:
+    post:
+      operationId: confirmScheduleImport
+      tags: [courses]
+      summary: Apply explicitly reviewed schedule proposals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ScheduleImportConfirmInput" }
+      responses:
+        "200":
+          description: Courses whose meetings were applied
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ScheduleImportConfirmResult" }
+        "403": { description: Only a course owner may change its shared schedule }
+        "409": { description: Existing meetings require explicit replacement confirmation }
+  /courses/{id}:
+    patch:
+      operationId: updateCourse
+      tags: [courses]
+      summary: Update a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseUpdate"
+      responses:
+        "200":
+          description: Updated course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+        "404":
+          description: Course not found
+  /courses/{id}/study-guide:
+    get:
+      operationId: getStudyGuide
+      tags: [courses]
+      summary: Get the signed-in student's saved course study guide
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Current guide, or null when none has been generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudyGuideResult"
+    post:
+      operationId: generateStudyGuide
+      tags: [courses]
+      summary: Generate and save a study guide from course material
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Saved study guide
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudyGuide"
+        "422":
+          description: No course material available
+  /courses/{id}/grades:
+    get:
+      operationId: getCourseGrades
+      tags: [courses]
+      summary: Get a private course gradebook with syllabus assignments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Course gradebook
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CourseGradebook" }
+    put:
+      operationId: updateCourseGrades
+      tags: [courses]
+      summary: Save private grading weights, scores, and credit hours
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/GradebookUpdate" }
+      responses:
+        "200":
+          description: Saved gradebook
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CourseGradebook" }
+  /courses/{id}/grades/need:
+    post:
+      operationId: calculateNeededGrade
+      tags: [courses]
+      summary: Calculate a conditional score needed on one ungraded item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NeededGradeInput" }
+      responses:
+        "200":
+          description: Needed score and assumptions
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/NeededGradeResult" }
+  /grades/overview:
+    get:
+      operationId: getGradesOverview
+      tags: [courses]
+      summary: Get private course gradebooks for term GPA projections
+      responses:
+        "200":
+          description: Gradebooks and scale
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GradesOverview" }
+  /student/grades/list:
+    post:
+      operationId: listStudentGrades
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [student-grades]
+      summary: List gradebooks for courses in the paid sync-code library
+      description: Every result is an estimate from student-entered scores; it is not an official course grade.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/StudentGradeListInput" }
+      responses:
+        "200":
+          description: Grade estimates and estimated GPA
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudentGradeListResponse" }
+        "403": { description: "Invalid sync code, replaced library, or active paid plan required" }
+        "503": { description: "Paid entitlement could not be verified" }
+  /student/grades/save:
+    post:
+      operationId: saveStudentGradebook
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [student-grades]
+      summary: Save a gradebook for a course in the paid sync-code library
+      description: Supply the currently stored version (0 for a new gradebook). Successful saves increment it. All resulting grades remain estimates, never official grades.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/StudentGradeSaveInput" }
+      responses:
+        "200":
+          description: Saved gradebooks, analyses, and estimated GPA
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudentGradeListResponse" }
+        "400": { description: "Invalid gradebook data" }
+        "403": { description: "Invalid sync code, replaced library, or active paid plan required" }
+        "404": { description: "Course does not belong to this sync-code library" }
+        "409": { description: "Gradebook version conflict" }
+        "503": { description: "Paid entitlement could not be verified" }
+  /grades/scale:
+    get:
+      operationId: getGradeScale
+      tags: [courses]
+      summary: Get the student's editable school grading scale
+      responses:
+        "200":
+          description: School grading scale
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GradeScale" }
+    put:
+      operationId: updateGradeScale
+      tags: [courses]
+      summary: Save the student's school grading scale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/GradeScaleUpdate" }
+      responses:
+        "200":
+          description: School grading scale
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GradeScale" }
+  /courses/{id}/lectures:
+    get:
+      operationId: listCourseLectures
+      tags: [lectures]
+      summary: List lectures in a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lectures
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Lecture"
+  /courses/{id}/dates:
+    get:
+      operationId: listCourseDates
+      tags: [courses]
+      summary: List extracted assignment and exam dates for a course
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Course dates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AcademicDate"
+  /lectures:
+    post:
+      operationId: createLecture
+      tags: [lectures]
+      summary: Add a lecture to a course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LectureInput"
+      responses:
+        "201":
+          description: Lecture created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lecture"
+  /lectures/{id}:
+    get:
+      operationId: getLecture
+      tags: [lectures]
+      summary: Get lecture details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lecture
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lecture"
+        "404":
+          description: Lecture not found
+    patch:
+      operationId: updateLecture
+      tags: [lectures]
+      summary: Update lecture notes and transcript
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LectureUpdate"
+      responses:
+        "200":
+          description: Updated lecture
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lecture"
+        "404":
+          description: Lecture not found
+    delete:
+      operationId: deleteLecture
+      tags: [lectures]
+      summary: Delete a lecture
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Lecture deleted
+        "404":
+          description: Lecture not found
+  /lectures/{id}/transcribe:
+    post:
+      operationId: transcribeLecture
+      tags: [openai]
+      summary: Transcribe recorded lecture audio
+      description: Accepts a temporary base64-encoded audio recording. The audio is not stored.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TranscriptionInput"
+      responses:
+        "200":
+          description: Transcript
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TranscriptionOutput"
+  /materials/extract:
+    post:
+      operationId: extractMaterialText
+      security: [{ ClassscribeSyncCode: [] }]
+      tags: [notes]
+      summary: Extract text from a private source file for library import
+      description: >
+        Accepts PDF or strict UTF-8 plain text up to 8 MiB. Markdown is uploaded
+        as text/plain. Only extracted text is returned; raw file bytes are never
+        stored. Free libraries may import the result as a private existing
+        legacy note with id, courseId, lectureId:"", title, body,
+        sourceType (syllabus, reading, or study-guide), optional sourceName,
+        created, updated, and pinned:false. The note body is sent to AI only
+        when the user explicitly generates study materials; existing Student
+        and Pro AI gates still apply.
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema: { $ref: "#/components/schemas/MaterialFileUpload" }
+          text/plain:
+            schema: { $ref: "#/components/schemas/MaterialFileUpload" }
+      responses:
+        "200":
+          description: Extracted text, truncated to at most 30,000 characters
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MaterialTextExtractionResult" }
+        "400": { description: "Empty, malformed, or invalid UTF-8 file" }
+        "403": { description: Invalid or revoked library code }
+        "413": { description: File exceeds 8 MiB }
+        "415": { description: Unsupported media type or content does not match its declared type }
+        "422": { description: "PDF contains no extractable text, such as a scanned PDF" }
+  /lectures/{id}/analyze:
+    post:
+      operationId: analyzeLecture
+      tags: [openai]
+      summary: Create study materials from a lecture transcript
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalysisInput"
+      responses:
+        "200":
+          description: Lecture analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LectureAnalysis"
+  /lectures/{id}/practice-attempts:
+    post:
+      operationId: submitPracticeAttempt
+      tags: [lectures]
+      summary: Record the signed-in student's answer to a saved question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/PracticeAnswer" }
+      responses:
+        "201":
+          description: Graded answer
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PracticeAttemptResult" }
+        "409": { description: Question is no longer in the saved set }
+  /practice/progress:
+    get:
+      operationId: getPracticeProgress
+      tags: [lectures]
+      summary: Private answer-based progress across accessible lectures
+      responses:
+        "200":
+          description: Student's attempts and topic progress
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/PracticeProgress" }
+  /lectures/{id}/dates:
+    get:
+      operationId: listLectureDates
+      tags: [lectures]
+      summary: List extracted dates from one lecture
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Lecture dates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AcademicDate"
+  /dates/{id}:
+    patch:
+      operationId: updateAcademicDate
+      tags: [lectures]
+      summary: Correct and confirm an extracted date
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcademicDateUpdate"
+      responses:
+        "200":
+          description: Updated date
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcademicDate"
+  /lectures/{id}/bookmarks:
+    post:
+      operationId: createBookmark
+      tags: [lectures]
+      summary: Bookmark a lecture excerpt
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookmarkInput"
+      responses:
+        "201":
+          description: Bookmark
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bookmark"
+  /bookmarks:
+    get:
+      operationId: listBookmarks
+      tags: [lectures]
+      summary: List the signed-in user's bookmarks
+      responses:
+        "200":
+          description: Bookmarks
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Bookmark" }
+  /bookmarks/{id}:
+    delete:
+      operationId: deleteBookmark
+      tags: [lectures]
+      summary: Delete an owned bookmark
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "204": { description: Bookmark deleted }
+        "404":
+          description: Date not found
+  /courses/{id}/comments:
+    get:
+      operationId: listCourseComments
+      tags: [collaboration]
+      summary: List course discussion messages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Discussion messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseComment"
+    post:
+      operationId: createCourseComment
+      tags: [collaboration]
+      summary: Post a course discussion message
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseCommentInput"
+      responses:
+        "201":
+          description: Discussion message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseComment"
+  /courses/{id}/invite:
+    post:
+      operationId: createCourseInvite
+      tags: [collaboration]
+      summary: Create a course invite code
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Invite code
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseInvite"
+  /courses/join:
+    post:
+      operationId: joinCourse
+      tags: [collaboration]
+      summary: Join a course using an invite code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JoinCourseInput"
+      responses:
+        "200":
+          description: Joined course
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+  /courses/{id}/syllabus/upload:
+    post:
+      operationId: uploadSyllabus
+      tags: [courses]
+      summary: Upload a syllabus document
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema: { type: string, format: binary, maxLength: 10485760 }
+          text/plain:
+            schema: { type: string, format: binary, maxLength: 10485760 }
+      responses:
+        "200":
+          description: Pending syllabus upload
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Syllabus" }
+  /courses/{id}/syllabus/preview:
+    post:
+      operationId: previewSyllabus
+      tags: [courses, openai]
+      summary: Parse uploaded syllabus and propose metadata, modules, coursework and dates
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Unconfirmed syllabus proposals
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SyllabusPreview" }
+  /courses/{id}/syllabus/confirm:
+    post:
+      operationId: confirmSyllabus
+      tags: [courses]
+      summary: Confirm reviewed syllabus metadata, modules, coursework and selected dates
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SyllabusConfirmInput" }
+      responses:
+        "200":
+          description: Confirmed syllabus
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Syllabus" }
+  /courses/{id}/syllabus:
+    get:
+      operationId: getSyllabus
+      tags: [courses]
+      summary: Get syllabus metadata and confirmed modules, coursework and dates
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Syllabus
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Syllabus" }
+  /syllabus/assignments:
+    get:
+      operationId: listSyllabusAssignments
+      tags: [courses]
+      summary: List confirmed syllabus coursework across accessible courses with the current student's completion
+      responses:
+        "200":
+          description: Confirmed coursework
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/SyllabusAssignmentWithCourse" }
+  /syllabus/assignments/{id}/completion:
+    put:
+      operationId: setSyllabusAssignmentCompletion
+      tags: [courses]
+      summary: Set the current student's private completion for a confirmed coursework item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SyllabusAssignmentCompletionInput" }
+      responses:
+        "200":
+          description: Current student's completion
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SyllabusAssignmentCompletionInput" }
+  /syllabus/modules:
+    get:
+      operationId: listSyllabusModules
+      tags: [courses]
+      summary: List confirmed modules across accessible courses
+      responses:
+        "200":
+          description: Confirmed course modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/CourseModuleWithCourse" }
+  /courses/{id}/syllabus/file:
+    get:
+      operationId: getSyllabusFile
+      tags: [courses]
+      summary: Stream the syllabus to an enrolled course member
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Syllabus file }
+  /notes:
+    get:
+      operationId: listNotes
+      tags: [notes]
+      summary: List the signed-in user's private notes
+      responses:
+        "200":
+          description: Private notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Note" }
+    post:
+      operationId: createNote
+      tags: [notes]
+      summary: Create a private note
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NoteInput" }
+      responses:
+        "201":
+          description: Note created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Note" }
+  /notes/{id}:
+    get:
+      operationId: getNote
+      tags: [notes]
+      summary: Get a private note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Private note
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Note" }
+        "404": { description: Note not found }
+    patch:
+      operationId: updateNote
+      tags: [notes]
+      summary: Update a private note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NoteUpdate" }
+      responses:
+        "200":
+          description: Updated note
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Note" }
+        "404": { description: Note not found }
+    delete:
+      operationId: deleteNote
+      tags: [notes]
+      summary: Delete a private note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "204": { description: Note deleted }
+        "404": { description: Note not found }
+  /study-plans:
+    get:
+      operationId: listStudyPlans
+      tags: [study-plans]
+      summary: List signed-in user's study tasks
+      responses:
+        "200":
+          description: Study tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/StudyPlan" }
+    post:
+      operationId: createStudyPlan
+      tags: [study-plans]
+      summary: Add a study task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/StudyPlanInput" }
+      responses:
+        "201":
+          description: Created task
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudyPlan" }
+  /edu/access:
+    get:
+      operationId: getEduAccess
+      tags: [courses]
+      summary: Get the signed-in user's EDU access capabilities
+      description: Reports whether this Clerk session must verify EDU client credentials and the capabilities granted by its verified agreement.
+      responses:
+        "200":
+          description: Minimal EDU access capabilities
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduAccessStatus" }
+  /edu/activate:
+    post:
+      operationId: activateEduAccess
+      tags: [courses]
+      summary: Verify EDU license number and client PIN for this Clerk session
+      description: Activates only the signed-in user's current Clerk session. Does not grant an operator license or instructor role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduClientActivationInput" }
+      responses:
+        "200":
+          description: EDU client credentials verified for this Clerk session
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduClientActivationStatus" }
+        "401": { description: A valid Clerk session is required }
+        "403": { description: EDU client credentials are invalid or inactive }
+        "429": { description: Persistent account or IP lockout is active }
+        "503": { description: EDU credential verification is temporarily unavailable }
+  /edu/school:
+    get:
+      operationId: getEduSchool
+      tags: [courses]
+      summary: List instructors approved under the signed-in school administrator's active agreement
+      responses:
+        "200":
+          description: School agreement and instructor approvals
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSchool" }
+        "403": { description: Not an active school administrator }
+  /edu/school/instructor-history:
+    get:
+      operationId: getEduInstructorHistory
+      tags: [courses]
+      summary: Read approval and revocation history for the administrator's current active agreement
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+        - name: cursor
+          in: query
+          description: Last event ID from the previous page, belonging to the current agreement
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Newest-first audit events with a continuation cursor
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduInstructorHistoryPage" }
+        "400": { description: Invalid pagination parameters or cursor }
+        "401": { description: A valid Clerk session is required }
+        "403": { description: Not an active school administrator }
+        "503": { description: History is temporarily unavailable }
+  /edu/school/instructors:
+    post:
+      operationId: approveEduInstructor
+      tags: [courses]
+      summary: Approve an existing Clerk account under the administrator's agreement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduInstructorApprovalInput" }
+      responses:
+        "201":
+          description: Instructor approved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduInstructor" }
+        "403": { description: Not an active school administrator }
+        "409": { description: Instructor belongs to another agreement }
+  /edu/school/expiry-warning:
+    patch:
+      operationId: updateEduExpiryWarning
+      tags: [courses]
+      summary: Opt in or out of the school page warning 30 days before the verified agreement expires
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduExpiryWarningInput" }
+      responses:
+        "200":
+          description: Saved in-app warning preference; does not renew or extend access
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduExpiryWarning" }
+        "400": { description: Invalid warning preference }
+        "403": { description: Not an active school administrator }
+  /edu/school/instructors/{userId}:
+    delete:
+      operationId: revokeEduInstructor
+      tags: [courses]
+      summary: Revoke one instructor's access without deleting their courses
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "204": { description: Instructor revoked }
+        "403": { description: Not an active school administrator }
+        "404": { description: Instructor is not an active member of this school }
+  /edu/courses/{id}/gradebook:
+    get:
+      operationId: getEduGradebook
+      tags: [courses]
+      summary: Get an EDU course gradebook
+      description: Available to the signed-in course instructor and enrolled students. Instructors see the enrolled roster and each student's grades; students see only their own row. Access requires the course owner's active EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: EDU assignments, permitted student grade rows, and counts
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduGradebook" }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course is unavailable to this user }
+        "500": { description: Gradebook could not be loaded }
+        "503": { description: EDU access verification is temporarily unavailable }
+  /edu/courses/{id}/gradebook/export:
+    get:
+      operationId: exportEduGradebook
+      tags: [courses]
+      summary: Download an instructor-only course gradebook CSV
+      description: Requires the signed-in course owner and active matching EDU credentials. One row per enrolled student, with assignment points, scores, missing/ungraded statuses, and graded-only totals. Missing and ungraded work do not count as zero. CSV text is escaped for spreadsheet safety; the response must not be cached.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: UTF-8 CSV attachment, including headers for an empty roster
+          content:
+            text/csv:
+              schema: { type: string }
+        "401": { description: Clerk authentication required }
+        "403": { description: Not the course instructor or inactive EDU credentials }
+        "404": { description: EDU course is unavailable to this user }
+        "500": { description: Gradebook could not be exported }
+        "503": { description: EDU access verification is temporarily unavailable }
+  /edu/courses/{id}/discussions:
+    get:
+      operationId: listEduDiscussionTopics
+      tags: [collaboration]
+      summary: List paginated EDU discussion topics
+      description: Available to the signed-in course instructor and enrolled students when the course owner's EDU license is active.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: limit
+          in: query
+          required: false
+          description: Number of topics to return (default 50; maximum 100).
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+        - name: offset
+          in: query
+          required: false
+          description: Number of topics to skip (default 0).
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        "200":
+          description: Topics ordered newest first, with the effective pagination values
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduDiscussionTopicList" }
+        "400": { description: Invalid pagination; limit must be 1–100 and offset a non-negative integer }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course is unavailable to this user }
+        "500": { description: Discussions could not be loaded }
+        "503": { description: EDU access verification is temporarily unavailable }
+    post:
+      operationId: createEduDiscussionTopic
+      tags: [collaboration]
+      summary: Create an EDU discussion topic
+      description: Any authenticated instructor or enrolled student may create a topic in an accessible EDU course with an active owner license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduDiscussionTopicInput" }
+      responses:
+        "201":
+          description: Created discussion topic
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduDiscussionTopicResult" }
+        "400": { description: Title or body is missing or exceeds its length limit }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course is unavailable to this user }
+        "500": { description: Discussion topic could not be created }
+        "503": { description: EDU access verification is temporarily unavailable }
+  /edu/courses/{id}/discussions/{topicId}/replies:
+    get:
+      operationId: listEduDiscussionReplies
+      tags: [collaboration]
+      summary: List paginated replies to an EDU discussion topic
+      description: Available to the signed-in course instructor and enrolled students when the course owner's EDU license is active.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: topicId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: limit
+          in: query
+          required: false
+          description: Number of replies to return (default 50; maximum 100).
+          schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+        - name: offset
+          in: query
+          required: false
+          description: Number of replies to skip (default 0).
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        "200":
+          description: Replies ordered oldest first, with the effective pagination values
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduDiscussionReplyList" }
+        "400": { description: Invalid pagination; limit must be 1–100 and offset a non-negative integer }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course or discussion topic is unavailable to this user }
+        "500": { description: Discussion replies could not be loaded }
+        "503": { description: EDU access verification is temporarily unavailable }
+    post:
+      operationId: createEduDiscussionReply
+      tags: [collaboration]
+      summary: Reply to an unlocked EDU discussion topic
+      description: Any authenticated instructor or enrolled student may reply to an unlocked topic in an accessible EDU course with an active owner license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: topicId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduDiscussionReplyInput" }
+      responses:
+        "201":
+          description: Created discussion reply
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduDiscussionReplyResult" }
+        "400": { description: "Reply body is missing or exceeds 10,000 characters" }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course or discussion topic is unavailable to this user }
+        "409": { description: Discussion topic is locked }
+        "500": { description: Discussion reply could not be created }
+        "503": { description: EDU access verification is temporarily unavailable }
+  /edu/courses/{id}/discussions/{topicId}:
+    patch:
+      operationId: updateEduDiscussionTopic
+      tags: [collaboration]
+      summary: Update an EDU discussion topic or its lock state
+      description: The topic creator may edit its title or body; only the course instructor may lock or unlock it. Instructor and creator access requires an active course-owner EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: topicId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduDiscussionTopicUpdate" }
+      responses:
+        "200":
+          description: Updated discussion topic
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduDiscussionTopicResult" }
+        "400": { description: No valid fields supplied or title/body is invalid }
+        "401": { description: Clerk authentication required }
+        "403": { description: Only the course instructor can lock or unlock a topic }
+        "404": { description: Topic unavailable to this user or course }
+        "500": { description: Discussion topic could not be updated }
+        "503": { description: EDU access verification is temporarily unavailable }
+    delete:
+      operationId: deleteEduDiscussionTopic
+      tags: [collaboration]
+      summary: Delete an EDU discussion topic
+      description: The topic creator or course instructor may delete it; deleting a topic also removes its replies. Access requires an active course-owner EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: topicId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Topic and its replies deleted }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Topic unavailable to this user or course }
+        "500": { description: Discussion topic could not be deleted }
+        "503": { description: EDU access verification is temporarily unavailable }
+  /edu/courses/{id}/discussions/{topicId}/replies/{replyId}:
+    patch:
+      operationId: updateEduDiscussionReply
+      tags: [collaboration]
+      summary: Edit an EDU discussion reply
+      description: The reply creator or course instructor may edit it in an accessible EDU course with an active owner license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: topicId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: replyId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduDiscussionReplyInput" }
+      responses:
+        "200":
+          description: Updated discussion reply
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduDiscussionReplyResult" }
+        "400": { description: "Reply body is missing or exceeds 10,000 characters" }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Reply unavailable to this user or course }
+        "500": { description: Discussion reply could not be updated }
+        "503": { description: EDU access verification is temporarily unavailable }
+    delete:
+      operationId: deleteEduDiscussionReply
+      tags: [collaboration]
+      summary: Delete an EDU discussion reply
+      description: The reply creator or course instructor may delete it. Access requires an active course-owner EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: topicId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: replyId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Reply deleted }
+        "401": { description: Clerk authentication required }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Reply unavailable to this user or course }
+        "500": { description: Discussion reply could not be deleted }
+        "503": { description: EDU access verification is temporarily unavailable }
+  /edu/courses/{id}/groups:
+    get:
+      operationId: listEduGroups
+      tags: [collaboration]
+      summary: List EDU course groups visible to the signed-in user
+      description: Instructors see all course groups; students see only groups they belong to. Course access requires an active EDU license held by the course owner.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Visible course groups
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduGroupList" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course is unavailable to this user }
+    post:
+      operationId: createEduGroup
+      tags: [collaboration]
+      summary: Create a group in an EDU course
+      description: Instructor-only; the instructor must own the course and have an active EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduGroupInput" }
+      responses:
+        "201":
+          description: Created course group
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduGroupResult" }
+        "400": { description: Invalid group name or description }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/groups/{groupId}/members:
+    put:
+      operationId: replaceEduGroupMembers
+      tags: [collaboration]
+      summary: Replace the enrolled student membership of an EDU group
+      description: Instructor-only; every supplied member ID must be an enrolled course member. The course owner is excluded from the resulting memberIds.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: groupId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduGroupMembersUpdate" }
+      responses:
+        "200":
+          description: Replaced group membership
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduGroupMembersResult" }
+        "400": { description: Invalid memberIds or one or more IDs are not enrolled in the course }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course or group unavailable to the instructor }
+  /edu/courses/{id}/lectures:
+    get:
+      operationId: listEduLectures
+      tags: [lectures]
+      summary: List EDU lectures visible to the signed-in user
+      description: Instructors see all course lectures; students see only lectures shared with one or more of their groups. Returned lecture objects omit private audio storage keys. Course access requires an active owner EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Visible EDU lectures
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduLectureList" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course is unavailable to this user }
+    post:
+      operationId: createEduLecture
+      tags: [lectures]
+      summary: Create a lecture in an EDU course
+      description: Instructor-only; the instructor must own the course and have an active EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduLectureInput" }
+      responses:
+        "201":
+          description: Created lecture (private audio object key is omitted)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduLectureResult" }
+        "400": { description: "Invalid title, professor, or lectureDate" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/lectures/{lectureId}:
+    patch:
+      operationId: updateEduLecture
+      tags: [lectures]
+      summary: Update EDU lecture metadata
+      description: Instructor-only; only title, professor, and lectureDate can be updated.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: lectureId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduLectureUpdate" }
+      responses:
+        "200":
+          description: Updated lecture (private audio object key is omitted)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduLectureResult" }
+        "400": { description: "Empty update, unsupported field, or invalid metadata" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course or lecture unavailable to the instructor }
+  /edu/courses/{id}/lectures/{lectureId}/share:
+    post:
+      operationId: shareEduLecture
+      tags: [lectures]
+      summary: Replace the groups that can access an EDU lecture
+      description: Instructor-only. groupIds may be empty to remove all group sharing; every ID must identify a group in this course.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: lectureId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduLectureShareInput" }
+      responses:
+        "200":
+          description: Replaced group sharing
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduLectureShareResult" }
+        "400": { description: groupIds contains a group outside this course or an invalid ID }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course or lecture unavailable to the instructor }
+  /edu/courses/{id}/lectures/{lectureId}/transcribe:
+    post:
+      operationId: transcribeEduLecture
+      tags: [openai]
+      summary: Securely store and transcribe an EDU lecture recording
+      description: Instructor-only. Accepts supported base64 audio up to 20 MB, stores it privately, and persists the transcript/status on the lecture. Limits are four requests per user per minute and one active request per user; at most two requests run concurrently. A failure can leave the recording saved privately for retry.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: lectureId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduLectureTranscriptionInput" }
+      responses:
+        "200":
+          description: Updated lecture with transcription status and transcript (private audio object key is omitted)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduLectureResult" }
+        "400": { description: "Invalid base64 audio, unsupported MIME type, unsafe filename, or signature mismatch" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course or lecture unavailable to the instructor }
+        "409": { description: A transcription is already in progress }
+        "413": { description: Decoded audio exceeds 20 MB }
+        "429": { description: Per-user transcription request limit reached or provider rate limit }
+        "503": { description: Transcription provider or private object storage is unavailable }
+  /edu/courses/{id}/lectures/{lectureId}/audio:
+    get:
+      operationId: downloadEduLectureAudio
+      tags: [lectures]
+      summary: Download a privately stored EDU lecture recording
+      description: The instructor may download any lecture recording; a student may download it only if the lecture is shared with a group they belong to. The response is private and not cacheable.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: lectureId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Audio file attachment; Content-Type is the stored audio MIME type, Content-Disposition is attachment, and Cache-Control is private, no-store
+          headers:
+            Content-Type: { schema: { type: string } }
+            Content-Disposition: { schema: { type: string } }
+            Cache-Control: { schema: { type: string, const: "private, no-store" } }
+          content:
+            audio/mp4:
+              schema: { type: string, format: binary }
+            audio/mpeg:
+              schema: { type: string, format: binary }
+            audio/wav:
+              schema: { type: string, format: binary }
+            audio/x-wav:
+              schema: { type: string, format: binary }
+            audio/webm:
+              schema: { type: string, format: binary }
+            audio/aac:
+              schema: { type: string, format: binary }
+            audio/ogg:
+              schema: { type: string, format: binary }
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: "EDU course, lecture, or authorized audio is unavailable" }
+        "503": { description: Private lecture audio is temporarily unavailable }
+  /edu/courses/{id}/sources/links:
+    post:
+      operationId: createEduSourceLink
+      tags: [lectures]
+      summary: Add an HTTP(S) link as an EDU course source
+      description: Instructor-only. Visibility defaults to private when omitted. Private sources are visible only to instructors; groups sources require one or more valid groupIds from this course and are visible only to students assigned to at least one of those groups; class sources are visible to all enrolled students. groupIds is accepted only with groups visibility.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduSourceLinkInput" }
+      responses:
+        "201":
+          description: Created link source (private storage object key is omitted)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSourceResult" }
+        "400": { description: "Invalid title, HTTP(S) URL, description, visibility, groupIds, or visibility/groupIds combination" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/sources/uploads:
+    post:
+      operationId: uploadEduSource
+      tags: [lectures]
+      summary: Upload a PDF or plain-text EDU course source
+      description: Instructor-only. Accepts base64-encoded PDF or TXT files up to 10 MB. Visibility defaults to private when omitted. Private sources are visible only to instructors; groups sources require one or more valid groupIds from this course and are visible only to students assigned to at least one of those groups; class sources are visible to all enrolled students. groupIds is accepted only with groups visibility.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduSourceUploadInput" }
+      responses:
+        "201":
+          description: Created upload source (private storage object key is omitted)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSourceResult" }
+        "400": { description: "Invalid file metadata, base64, content signature, visibility, groupIds, or visibility/groupIds combination" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: Course unavailable to the instructor }
+        "413": { description: Decoded source file exceeds 10 MB }
+        "503": { description: Private source file could not be stored }
+  /edu/courses/{id}/sources:
+    get:
+      operationId: listEduSources
+      tags: [lectures]
+      summary: List EDU course sources visible to the signed-in user
+      description: Instructors see all course sources and receive every groupId assigned to each source. Students see class sources with an empty groupIds array and groups sources only when assigned to one or more of their groups; each student's groupIds contains only their matching groups. Private sources are not returned to students. Private object keys are omitted. Course access requires an active owner EDU license.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Visible EDU sources
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSourceList" }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: EDU course is unavailable to this user }
+  /edu/courses/{id}/sources/{sourceId}/download:
+    get:
+      operationId: downloadEduSource
+      tags: [lectures]
+      summary: Download a privately stored EDU source upload
+      description: The instructor may download any source upload. Students may download class sources or groups sources when they belong to at least one assigned group; private sources are instructor-only. The response is private and not cacheable.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: sourceId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Source file attachment; Content-Type is the stored MIME type, Content-Disposition is attachment, and Cache-Control is private, no-store
+          headers:
+            Content-Type: { schema: { type: string } }
+            Content-Disposition: { schema: { type: string } }
+            Cache-Control: { schema: { type: string, const: "private, no-store" } }
+          content:
+            application/pdf:
+              schema: { type: string, format: binary }
+            text/plain:
+              schema: { type: string, format: binary }
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "403": { description: Course instructor's EDU license is not active }
+        "404": { description: "EDU course, source upload, or authorized download is unavailable" }
+        "503": { description: Private source file is temporarily unavailable }
+  /edu/courses:
+    get:
+      operationId: listEduCourses
+      tags: [courses]
+      summary: List EDU courses accessible to the signed-in instructor or student
+      responses:
+        "200":
+          description: EDU courses
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduCourseList" }
+    post:
+      operationId: createEduCourse
+      tags: [courses]
+      summary: Create an EDU-enabled instructor course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduCourseInput" }
+      responses:
+        "201":
+          description: EDU course created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduCourseResult" }
+        "403": { description: An approved EDU license agreement is required }
+  /edu/join:
+    post:
+      operationId: joinEduCourse
+      tags: [collaboration]
+      summary: Join an EDU course using its existing modern course invite code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduJoinInput" }
+      responses:
+        "200":
+          description: Joined EDU course
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduCourseResult" }
+        "404": { description: Invite code not found or not for an EDU course }
+  /edu/courses/{id}:
+    get:
+      operationId: getEduCourse
+      tags: [courses]
+      summary: Get EDU course content and the current student's own assignment submissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: EDU course details
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduCourseDetail" }
+        "404": { description: Course inaccessible or not EDU-enabled }
+  /edu/courses/{id}/invite:
+    post:
+      operationId: createEduCourseInvite
+      tags: [collaboration]
+      summary: Get the modern course invite code as the EDU course owner
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Reusable course invite code
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduInviteResult" }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/invite/rotate:
+    post:
+      operationId: rotateEduCourseInvite
+      tags: [collaboration]
+      summary: Atomically replace an EDU course invite code
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: New reusable invite code; the previous code is invalidated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduInviteResult" }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/announcements:
+    post:
+      operationId: createEduAnnouncement
+      tags: [courses]
+      summary: Create an instructor announcement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduAnnouncementInput" }
+      responses:
+        "201":
+          description: Announcement created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduAnnouncementResult" }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/announcements/{itemId}:
+    patch:
+      operationId: updateEduAnnouncement
+      tags: [courses]
+      summary: Update an instructor announcement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduAnnouncementUpdate" }
+      responses:
+        "200":
+          description: Announcement updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduAnnouncementResult" }
+        "404": { description: Announcement unavailable to the instructor }
+    delete:
+      operationId: deleteEduAnnouncement
+      tags: [courses]
+      summary: Delete an instructor announcement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Announcement deleted }
+        "404": { description: Announcement unavailable to the instructor }
+  /edu/courses/{id}/materials:
+    post:
+      operationId: createEduMaterial
+      tags: [courses]
+      summary: Link an instructor-provided web material
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduMaterialInput" }
+      responses:
+        "201":
+          description: Material link created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduMaterialResult" }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/materials/{itemId}:
+    patch:
+      operationId: updateEduMaterial
+      tags: [courses]
+      summary: Update an instructor material link
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduMaterialUpdate" }
+      responses:
+        "200":
+          description: Material updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduMaterialResult" }
+        "404": { description: Material unavailable to the instructor }
+    delete:
+      operationId: deleteEduMaterial
+      tags: [courses]
+      summary: Delete an instructor material and its stored file
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Material deleted }
+        "404": { description: Material unavailable to the instructor }
+  /edu/courses/{id}/materials/uploads:
+    post:
+      operationId: uploadEduMaterial
+      tags: [courses]
+      summary: Save a private classroom material file through the authenticated server
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduMaterialFileInput" }
+      responses:
+        "201":
+          description: Material file saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduMaterialResult" }
+        "400": { description: Invalid or oversized file }
+        "404": { description: Course unavailable }
+  /edu/courses/{id}/materials/{itemId}/file:
+    get:
+      operationId: downloadEduMaterialFile
+      tags: [courses]
+      summary: Download a material after verifying enrollment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Private file stream
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "404": { description: Material unavailable }
+  /edu/courses/{id}/assignments:
+    post:
+      operationId: createEduAssignment
+      tags: [courses]
+      summary: Create an instructor assignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduAssignmentInput" }
+      responses:
+        "201":
+          description: Assignment created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduAssignmentResult" }
+        "404": { description: Course unavailable to the instructor }
+  /edu/courses/{id}/assignments/{itemId}:
+    patch:
+      operationId: updateEduAssignment
+      tags: [courses]
+      summary: Update an instructor assignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduAssignmentUpdate" }
+      responses:
+        "200":
+          description: Assignment updated
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduAssignmentResult" }
+        "404": { description: Assignment unavailable to the instructor }
+    delete:
+      operationId: deleteEduAssignment
+      tags: [courses]
+      summary: Delete an instructor assignment and its EDU submissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Assignment and submissions deleted }
+        "404": { description: Assignment unavailable to the instructor }
+  /edu/courses/{id}/assignments/{itemId}/attachment:
+    post:
+      operationId: uploadEduAssignmentAttachment
+      tags: [courses]
+      summary: Attach a private file to an instructor assignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduCourseFileInput" }
+      responses:
+        "200":
+          description: Attachment saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduAssignmentResult" }
+        "404": { description: Assignment unavailable to instructor }
+    delete:
+      operationId: deleteEduAssignmentAttachment
+      tags: [courses]
+      summary: Delete the stored attachment without deleting the assignment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Attachment removed }
+        "404": { description: Attachment unavailable }
+  /edu/courses/{id}/assignments/{itemId}/file:
+    get:
+      operationId: downloadEduAssignmentFile
+      tags: [courses]
+      summary: Download an assignment attachment after verifying enrollment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Private file stream
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "404": { description: Assignment unavailable }
+  /edu/courses/{id}/assignments/{itemId}/submission:
+    delete:
+      operationId: deleteEduSubmission
+      tags: [courses]
+      summary: Delete your own ungraded submission and its private attachment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Submission deleted; storage cleanup may be retried
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduFileCleanupResult" }
+        "404": { description: Submission unavailable }
+        "409": { description: Submission is already graded }
+    post:
+      operationId: submitEduAssignment
+      tags: [courses]
+      summary: Create or update the signed-in student's own ungraded submission
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduSubmissionInput" }
+      responses:
+        "200":
+          description: Submission saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSubmissionResult" }
+        "404": { description: Assignment unavailable to the student }
+        "409": { description: Submission is already graded }
+  /edu/courses/{id}/assignments/{itemId}/submissions/{submissionId}/file:
+    get:
+      operationId: downloadEduSubmissionFile
+      tags: [courses]
+      summary: Download a private submission file as its student or course instructor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: submissionId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Private file, never publicly cached
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "404": { description: File unavailable to this account }
+  /edu/courses/{id}/assignments/{itemId}/submissions:
+    get:
+      operationId: listEduSubmissions
+      tags: [courses]
+      summary: Instructor-only assignment submissions and grades
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Submissions visible only to this course instructor
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSubmissionList" }
+        "404": { description: Assignment unavailable to the instructor }
+  /edu/courses/{id}/assignments/{itemId}/submissions/{submissionId}:
+    patch:
+      operationId: gradeEduSubmission
+      tags: [courses]
+      summary: Grade a submission owned by an EDU course student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: itemId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+        - name: submissionId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EduGradeInput" }
+      responses:
+        "200":
+          description: Grade saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EduSubmissionResult" }
+        "404": { description: Submission unavailable to the instructor }
+  /study-plans/import:
+    post:
+      operationId: importStudyPlans
+      tags: [study-plans]
+      summary: Import local tasks once, safely on retry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/StudyPlanImport" }
+      responses:
+        "200":
+          description: Imported tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/StudyPlan" }
+  /study-plans/{id}:
+    patch:
+      operationId: updateStudyPlan
+      tags: [study-plans]
+      summary: Check or uncheck a study task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/StudyPlanUpdate" }
+      responses:
+        "200":
+          description: Updated task
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/StudyPlan" }
+        "404": { description: Task not found }
+    delete:
+      operationId: deleteStudyPlan
+      tags: [study-plans]
+      summary: Delete a study task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "204": { description: Task deleted }
+        "404": { description: Task not found }
+  /ai/study/source-summary:
+    post:
+      operationId: analyzeCourseSource
+      summary: Summarize an uploaded course document and extract key points on any plan
+      security:
+        - ClassscribeSyncCode: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseSourceInput"
+      responses:
+        "200":
+          description: Private source analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseSourceAnalysis"
+        "400":
+          description: Invalid material
+        "403":
+          description: AI-sharing permission is required
+        "503":
+          description: Analysis is temporarily unavailable
+components:
+  securitySchemes:
+    ClassscribeSyncCode:
+      type: apiKey
+      in: header
+      name: X-CS-User
+      description: High-entropy ClassScribe bearer sync code (u_ plus 16–40 alphanumeric characters). This is separate from a class group capability (g_ plus 32 lowercase hexadecimal characters).
+    ClerkSessionBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Clerk-authenticated account session token.
+  schemas:
+    LibrarySyllabusInput:
+      type: object
+      additionalProperties: false
+      required: [importId, courseId, existing, course, modules, assignments, selectedDates]
+      properties:
+        importId: { type: string, minLength: 1, maxLength: 64, pattern: "^[A-Za-z0-9_-]+$" }
+        courseId: { type: string, minLength: 1, maxLength: 64, pattern: "^[A-Za-z0-9_-]+$" }
+        existing: { type: boolean }
+        course:
+          type: object
+          additionalProperties: false
+          required: [code, name, professor, semester]
+          properties:
+            code: { type: string, maxLength: 100 }
+            name: { type: string, maxLength: 300 }
+            professor: { type: string, maxLength: 300 }
+            semester: { type: string, maxLength: 100 }
+        modules:
+          type: array
+          maxItems: 200
+          items: { type: string, minLength: 1, maxLength: 500 }
+        assignments:
+          type: array
+          maxItems: 300
+          items: { $ref: "#/components/schemas/LibrarySyllabusItem" }
+        selectedDates:
+          type: array
+          maxItems: 300
+          items: { type: integer, minimum: 0, maximum: 299 }
+    LibrarySyllabusItem:
+      type: object
+      additionalProperties: false
+      required: [title, type, due]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 500 }
+        type: { type: string, enum: [homework, reading, quiz, exam, project] }
+        due: { type: string, maxLength: 10 }
+    LibrarySyllabusResult:
+      type: object
+      required: [course, assignments]
+      properties:
+        course:
+          type: object
+          additionalProperties: true
+        assignments:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    CourseSourceInput:
+      type: object
+      additionalProperties: false
+      required: [material]
+      properties:
+        material:
+          type: string
+          minLength: 1
+          maxLength: 60000
+    CourseSourceAnalysis:
+      type: object
+      required: [summary, keyPoints]
+      properties:
+        summary:
+          type: string
+          minLength: 1
+          maxLength: 3000
+        keyPoints:
+          type: array
+          maxItems: 12
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1500
+    AiSharingDecision:
+      type: object
+      additionalProperties: false
+      required: [version, accepted]
+      properties:
+        version: { type: string }
+        accepted: { type: boolean }
+    AiSharingPermission:
+      type: object
+      required: [version, title, notice, accepted]
+      properties:
+        version: { type: string }
+        title: { type: string }
+        notice: { type: string }
+        accepted: { type: boolean }
+    MaterialFileUpload:
+      type: string
+      description: Raw PDF or UTF-8 plain-text bytes, at most 8 MiB; transported as the request body.
+    MaterialTextExtractionResult:
+      type: object
+      additionalProperties: false
+      required: [text, truncated, originalLength]
+      properties:
+        text: { type: string, maxLength: 30000 }
+        truncated: { type: boolean }
+        originalLength: { type: integer, minimum: 0 }
+    EduInquiryInput:
+      type: object
+      additionalProperties: false
+      required: [name, email, school, role]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 120 }
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        school: { type: string, minLength: 1, maxLength: 160 }
+        role: { type: string, minLength: 1, maxLength: 120 }
+        message: { type: string, maxLength: 1200 }
+    EduInquiryAccepted:
+      type: object
+      required: [accepted]
+      properties:
+        accepted: { type: boolean, const: true }
+    LegacyClassscribeHealth:
+      type: object
+      required: [ok, ai, transcribe, model]
+      properties:
+        ok: { type: boolean }
+        ai: { type: boolean }
+        transcribe: { type: boolean }
+        model: { type: string }
+    LegacyDocumentData:
+      type: object
+      additionalProperties: true
+    LegacyDbInput:
+      type: object
+      required: [path]
+      properties:
+        path: { type: string, minLength: 1, maxLength: 512 }
+        data: { $ref: "#/components/schemas/LegacyDocumentData" }
+        groupCode:
+          $ref: "#/components/schemas/LegacyGroupCode"
+          description: Required for direct reads/deletes of posts/shared documents and for looking up another member profile.
+        where:
+          type: array
+          maxItems: 10
+          items:
+            type: array
+            minItems: 3
+            maxItems: 3
+            items: {}
+    LegacyGroupCode:
+      type: string
+      pattern: "^g_[a-f0-9]{32}$"
+      description: Independent, high-entropy per-class invite capability. Not the human-readable course code or X-CS-User sync code.
+    LegacySyncCode:
+      type: string
+      pattern: "^u_[A-Za-z0-9]{16,40}$"
+      description: Private library bearer code; an authenticated linked account may recover it.
+    LegacyDbGetOutput:
+      type: object
+      required: [data]
+      properties:
+        data:
+          oneOf:
+            - $ref: "#/components/schemas/LegacyDocumentData"
+            - type: "null"
+    LegacyDbWriteOutput:
+      type: object
+      required: [ok]
+      properties:
+        ok: { type: boolean }
+    LegacyDbDocument:
+      type: object
+      required: [id, data]
+      properties:
+        id: { type: string }
+        data: { $ref: "#/components/schemas/LegacyDocumentData" }
+    LegacyDbListOutput:
+      type: object
+      required: [docs]
+      properties:
+        docs:
+          type: array
+          items: { $ref: "#/components/schemas/LegacyDbDocument" }
+    StudentGradeListInput:
+      type: object
+      additionalProperties: false
+    StudentGradeWeights:
+      type: object
+      required: [assignment, project, quiz, test]
+      additionalProperties: false
+      properties:
+        assignment: { type: number, minimum: 0, maximum: 100 }
+        project: { type: number, minimum: 0, maximum: 100 }
+        quiz: { type: number, minimum: 0, maximum: 100 }
+        test: { type: number, minimum: 0, maximum: 100 }
+    StudentGradeItem:
+      type: object
+      required: [id, title, type, earned, possible, date]
+      additionalProperties: false
+      properties:
+        id: { type: string, minLength: 1, maxLength: 160 }
+        assignmentId: { type: string, minLength: 1, maxLength: 160, description: "Optional private course assignment linked to this score. The score snapshot remains if the assignment is removed." }
+        title: { type: string, minLength: 1, maxLength: 160 }
+        type: { type: string, enum: [assignment, project, quiz, test] }
+        earned: { type: ["number", "null"], minimum: 0 }
+        possible: { type: number, exclusiveMinimum: 0 }
+        date: { type: ["string", "null"], pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+    StudentGradeItemInput:
+      type: object
+      required: [id, title, type, earned, possible]
+      additionalProperties: false
+      properties:
+        id: { type: string, minLength: 1, maxLength: 160 }
+        assignmentId: { type: string, minLength: 1, maxLength: 160 }
+        title: { type: string, minLength: 1, maxLength: 160 }
+        type: { type: string, enum: [assignment, project, quiz, test] }
+        earned: { type: ["number", "null"], minimum: 0 }
+        possible: { type: number, exclusiveMinimum: 0 }
+        date: { type: ["string", "null"], pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+    StudentGradebook:
+      type: object
+      required: [courseId, credits, weights, items, finalPercent, version]
+      additionalProperties: false
+      properties:
+        courseId: { type: string, minLength: 1, maxLength: 160 }
+        credits: { type: number, minimum: 0, maximum: 12 }
+        weights:
+          oneOf:
+            - $ref: "#/components/schemas/StudentGradeWeights"
+            - type: "null"
+        items:
+          type: array
+          maxItems: 100
+          items: { $ref: "#/components/schemas/StudentGradeItem" }
+        finalPercent:
+          type: ["number", "null"]
+          minimum: 0
+          maximum: 100
+          description: Optional student-entered overall estimate, not an official grade.
+        version:
+          type: integer
+          minimum: 0
+          description: Stored version used for optimistic concurrency; start at 0 for a new gradebook.
+    StudentGradebookInput:
+      type: object
+      required: [courseId, credits, weights, items, finalPercent, version]
+      additionalProperties: false
+      properties:
+        courseId: { type: string, minLength: 1, maxLength: 160 }
+        credits: { type: number, minimum: 0, maximum: 12 }
+        weights:
+          oneOf:
+            - $ref: "#/components/schemas/StudentGradeWeights"
+            - type: "null"
+        items:
+          type: array
+          maxItems: 100
+          items: { $ref: "#/components/schemas/StudentGradeItemInput" }
+        finalPercent:
+          type: ["number", "null"]
+          minimum: 0
+          maximum: 100
+          description: Optional student-entered overall estimate, not an official grade.
+        version:
+          type: integer
+          minimum: 0
+          description: Current version. Saves increment this after a successful write.
+    StudentGradeAnalysisType:
+      type: object
+      required: [type, averagePercent]
+      properties:
+        type: { type: string, enum: [assignment, project, quiz, test] }
+        averagePercent: { type: ["number", "null"], minimum: 0, maximum: 100 }
+    StudentGradeAnalysis:
+      type: object
+      required: [averagePercent, letter, gradePoints, byType, isEstimate]
+      properties:
+        averagePercent: { type: ["number", "null"], minimum: 0, maximum: 100 }
+        letter: { type: ["string", "null"] }
+        gradePoints: { type: ["number", "null"], minimum: 0, maximum: 4 }
+        byType:
+          type: array
+          items: { $ref: "#/components/schemas/StudentGradeAnalysisType" }
+        isEstimate: { type: boolean }
+    StudentGradeCourse:
+      type: object
+      required: [gradebook, analysis]
+      properties:
+        gradebook: { $ref: "#/components/schemas/StudentGradebook" }
+        analysis: { $ref: "#/components/schemas/StudentGradeAnalysis" }
+    StudentGradeListResponse:
+      type: object
+      required: [courses, summary]
+      properties:
+        courses:
+          type: array
+          items: { $ref: "#/components/schemas/StudentGradeCourse" }
+        summary:
+          type: object
+          required: [estimatedGpa, countedCredits]
+          properties:
+            estimatedGpa: { type: ["number", "null"], minimum: 0, maximum: 4 }
+            countedCredits: { type: number, minimum: 0 }
+    StudentGradeSaveInput:
+      type: object
+      required: [gradebook]
+      additionalProperties: false
+      properties:
+        gradebook: { $ref: "#/components/schemas/StudentGradebookInput" }
+    LegacyAiMessage:
+      type: object
+      required: [role, content]
+      properties:
+        role: { type: string, enum: [user, assistant, system] }
+        content:
+          oneOf:
+            - type: string
+            - type: array
+              items: { type: object, additionalProperties: true }
+    LegacyAiTool:
+      type: object
+      required: [name, description, input_schema]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 64 }
+        description: { type: string, maxLength: 2000 }
+        input_schema: { type: object, additionalProperties: true }
+    LegacyAiInput:
+      type: object
+      required: [messages]
+      properties:
+        messages:
+          type: array
+          minItems: 1
+          maxItems: 80
+          items: { $ref: "#/components/schemas/LegacyAiMessage" }
+        tools:
+          type: array
+          maxItems: 16
+          items: { $ref: "#/components/schemas/LegacyAiTool" }
+        tier: { type: string, enum: [quick, standard] }
+    LegacyAiContentBlock:
+      type: object
+      properties:
+        type: { type: string, enum: [text, tool_use] }
+        text: { type: string }
+        id: { type: string }
+        name: { type: string }
+        input: { type: object, additionalProperties: true }
+    LegacyAiOutput:
+      type: object
+      required: [content, stop_reason]
+      properties:
+        content:
+          type: array
+          items: { $ref: "#/components/schemas/LegacyAiContentBlock" }
+        stop_reason: { type: string, enum: [end_turn, tool_use, max_tokens] }
+    LegacyTranscriptionInput:
+      type: object
+      required: [audio]
+      properties:
+        audio: { type: string, contentEncoding: base64, maxLength: 34952536 }
+        filename: { type: string, maxLength: 120 }
+        mime: { type: string, maxLength: 80 }
+        timed: { type: boolean, description: "Request provider-timed transcript phrases when a timestamp-capable provider is connected." }
+    LegacyTranscriptSegment:
+      type: object
+      required: [t, x]
+      properties:
+        t: { type: ["number", "null"], minimum: 0, description: "Seconds from the start of the audio, or null if the provider returned only text." }
+        x: { type: string }
+    LegacyTranscriptionOutput:
+      type: object
+      required: [segments]
+      properties:
+        segments:
+          type: array
+          items: { $ref: "#/components/schemas/LegacyTranscriptSegment" }
+    GradeWeight:
+      type: object
+      required: [category, weight]
+      properties:
+        category: { type: string, minLength: 1, maxLength: 80 }
+        weight: { type: number, minimum: 0, maximum: 100 }
+    GradeItem:
+      type: object
+      required: [id, title, category, type, source, scorePercent]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 200 }
+        title: { type: string, minLength: 1, maxLength: 200 }
+        category: { type: string, minLength: 1, maxLength: 80 }
+        type: { type: string }
+        source: { type: string, enum: [syllabus, manual] }
+        scorePercent: { type: ["number", "null"], minimum: 0, maximum: 100 }
+        archived: { type: boolean }
+    GradebookUpdate:
+      type: object
+      required: [creditHours, finalLetter, weights, items]
+      properties:
+        creditHours: { type: ["number", "null"], minimum: 0, maximum: 30 }
+        finalLetter: { type: ["string", "null"] }
+        weights:
+          type: array
+          maxItems: 30
+          items: { $ref: "#/components/schemas/GradeWeight" }
+        items:
+          type: array
+          maxItems: 500
+          items: { $ref: "#/components/schemas/GradeItem" }
+    CourseGradebook:
+      type: object
+      required: [courseId, courseName, term, creditHours, finalLetter, weights, items, weightsTotal, currentPercent, currentLetter, needsWeightReview]
+      properties:
+        courseId: { type: string, format: uuid }
+        courseName: { type: string }
+        term: { type: string }
+        creditHours: { type: ["number", "null"] }
+        finalLetter: { type: ["string", "null"] }
+        weights:
+          type: array
+          items: { $ref: "#/components/schemas/GradeWeight" }
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/GradeItem" }
+        weightsTotal: { type: number }
+        currentPercent: { type: ["number", "null"] }
+        currentLetter: { type: ["string", "null"] }
+        needsWeightReview: { type: boolean }
+    GradeScaleEntry:
+      type: object
+      required: [letter, minPercent, points]
+      properties:
+        letter: { type: string, minLength: 1, maxLength: 12 }
+        minPercent: { type: number, minimum: 0, maximum: 100 }
+        points: { type: number, minimum: 0, maximum: 5 }
+    GradeScale:
+      type: object
+      required: [entries, customized]
+      properties:
+        entries:
+          type: array
+          items: { $ref: "#/components/schemas/GradeScaleEntry" }
+        customized: { type: boolean }
+    GradeScaleUpdate:
+      type: object
+      required: [entries]
+      properties:
+        entries:
+          type: array
+          minItems: 2
+          maxItems: 20
+          items: { $ref: "#/components/schemas/GradeScaleEntry" }
+    GradesOverview:
+      type: object
+      required: [scale, courses]
+      properties:
+        scale: { $ref: "#/components/schemas/GradeScale" }
+        courses:
+          type: array
+          items: { $ref: "#/components/schemas/CourseGradebook" }
+    NeededGradeInput:
+      type: object
+      required: [itemId, targetLetter]
+      properties:
+        itemId: { type: string, minLength: 1 }
+        targetLetter: { type: string, minLength: 1 }
+    NeededGradeResult:
+      type: object
+      required: [requiredPercent, message, assumption]
+      properties:
+        requiredPercent: { type: ["number", "null"] }
+        message: { type: string }
+        assumption: { type: string }
+    StudyGuideSource:
+      type: object
+      required: [id, title]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+    StudyGuide:
+      type: object
+      required: [id, courseId, content, sources, updatedAt]
+      properties:
+        id: { type: string, format: uuid }
+        courseId: { type: string, format: uuid }
+        content: { type: string }
+        sources:
+          type: array
+          items: { $ref: "#/components/schemas/StudyGuideSource" }
+        updatedAt: { type: string, format: date-time }
+    StudyGuideResult:
+      type: object
+      required: [guide]
+      properties:
+        guide:
+          oneOf:
+            - $ref: "#/components/schemas/StudyGuide"
+            - type: "null"
+    StudyPlan:
+      type: object
+      required: [id, text, completed, createdAt]
+      properties:
+        id: { type: string }
+        text: { type: string }
+        completed: { type: boolean }
+        createdAt: { type: string, format: date-time }
+    StudyPlanInput:
+      type: object
+      required: [text]
+      properties:
+        text: { type: string, minLength: 1, maxLength: 500 }
+    StudyPlanUpdate:
+      type: object
+      required: [completed]
+      properties:
+        completed: { type: boolean }
+    LegacyStudyPlan:
+      type: object
+      required: [id, text, completed]
+      properties:
+        id: { type: string, minLength: 1, maxLength: 100 }
+        text: { type: string, minLength: 1, maxLength: 500 }
+        completed: { type: boolean }
+    StudyPlanImport:
+      type: object
+      required: [source, tasks]
+      properties:
+        source: { type: string, enum: [web, mobile] }
+        tasks:
+          type: array
+          maxItems: 1000
+          items: { $ref: "#/components/schemas/LegacyStudyPlan" }
+    PrivateEvidenceInput:
+      type: object
+      additionalProperties: false
+      required: [query, courseIds, mode]
+      properties:
+        query: { type: string, minLength: 1, maxLength: 2000 }
+        mode: { type: string, enum: [semantic, keyword] }
+        courseIds:
+          type: array
+          minItems: 1
+          maxItems: 100
+          uniqueItems: true
+          items: { type: string, pattern: "^[A-Za-z0-9_-]{1,128}$" }
+    PrivateEvidencePassage:
+      type: object
+      required: [kind, id, courseId, title, text]
+      properties:
+        kind: { type: string }
+        id: { type: string }
+        courseId: { type: string }
+        title: { type: string }
+        text: { type: string }
+        seconds: { type: number, minimum: 0 }
+    PrivateEvidenceCoverage:
+      type: object
+      required: [searchedPassages, availablePassages, truncatedSources, partial, sourceLimitReached]
+      properties:
+        searchedPassages: { type: integer }
+        availablePassages: { type: integer }
+        truncatedSources: { type: integer }
+        partial: { type: boolean }
+        sourceLimitReached: { type: boolean }
+    PrivateEvidenceResult:
+      type: object
+      required: [mode, hits, coverage, notice]
+      properties:
+        mode: { type: string, enum: [semantic, keyword] }
+        hits:
+          type: array
+          items: { $ref: "#/components/schemas/PrivateEvidencePassage" }
+        coverage: { $ref: "#/components/schemas/PrivateEvidenceCoverage" }
+        notice: { type: string }
+    AskClassscribeInput:
+      type: object
+      additionalProperties: false
+      required: [question]
+      properties:
+        retrievalMode:
+          type: string
+          enum: [keyword, semantic]
+          description: Request-local semantic passage ranking, without a persistent text or audio index.
+        question:
+          type: string
+          minLength: 3
+          maxLength: 500
+        courseId:
+          type: string
+          format: uuid
+        term:
+          type: string
+          minLength: 1
+          maxLength: 120
+    AskAnswerResult:
+      type: object
+      additionalProperties: false
+      required: [answer, citations]
+      properties:
+        answer:
+          type: string
+        citations:
+          type: array
+          items: { $ref: "#/components/schemas/AskClassscribeCitation" }
+    AskClassscribeCitation:
+      type: object
+      additionalProperties: false
+      required: [id, kind, courseId, title, courseName, excerpt]
+      properties:
+        id: { type: string }
+        kind: { type: string, enum: [lecture, note, syllabus, assignment, practice-attempt] }
+        courseId: { type: string, format: uuid }
+        title: { type: string }
+        courseName: { type: string }
+        excerpt: { type: string }
+        lectureId: { type: string, format: uuid }
+        seconds: { type: integer, minimum: 0 }
+        noteId: { type: string, format: uuid }
+        assignmentId: { type: string, format: uuid }
+    AskSourceResult:
+      type: object
+      additionalProperties: false
+      required: [id, kind, courseId, title, courseName, content, truncated]
+      properties:
+        id: { type: string, format: uuid }
+        kind: { type: string, enum: [note, assignment, syllabus] }
+        courseId: { type: string, format: uuid }
+        title: { type: string }
+        courseName: { type: string }
+        content: { type: string, maxLength: 24000 }
+        truncated: { type: boolean }
+    EduGradebook:
+      type: object
+      required: [assignments, students, totals]
+      properties:
+        assignments:
+          type: array
+          items: { $ref: "#/components/schemas/EduGradebookAssignment" }
+        students:
+          type: array
+          items: { $ref: "#/components/schemas/EduGradebookStudent" }
+        totals: { $ref: "#/components/schemas/EduGradebookTotals" }
+    EduGradebookAssignment:
+      type: object
+      required: [id, title, points, dueAt, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        points: { type: number }
+        dueAt: { type: ["string", "null"], format: date-time }
+        createdAt: { type: string, format: date-time }
+    EduGradebookStudent:
+      type: object
+      required: [studentId, name, grades, totals]
+      properties:
+        studentId: { type: string }
+        name: { type: string }
+        grades:
+          type: array
+          items: { $ref: "#/components/schemas/EduGradebookEntry" }
+        totals: { $ref: "#/components/schemas/EduGradebookStudentTotals" }
+    EduGradebookEntry:
+      type: object
+      required: [assignmentId, status, score, feedback, submittedAt]
+      properties:
+        assignmentId: { type: string, format: uuid }
+        status:
+          type: string
+          enum: [missing, not_submitted, no_deadline, ungraded, graded]
+          description: "For absent submissions, missing means overdue (dueAt strictly before the server read time), not_submitted means due now or later, and no_deadline means dueAt is null. Submitted work remains ungraded or graded regardless of deadline."
+        score: { type: ["number", "null"] }
+        feedback: { type: ["string", "null"] }
+        submittedAt: { type: ["string", "null"], format: date-time }
+    EduGradebookStudentTotals:
+      type: object
+      required: [earned, possible, gradedCount, ungradedCount, missingCount, notSubmittedCount, noDeadlineCount]
+      properties:
+        earned: { type: number }
+        possible: { type: number }
+        gradedCount: { type: integer }
+        ungradedCount: { type: integer }
+        missingCount: { type: integer, description: Number of overdue assignments without a submission. }
+        notSubmittedCount: { type: integer, description: Number of assignments due now or later without a submission. }
+        noDeadlineCount: { type: integer, description: Number of assignments without a deadline or submission. }
+    EduGradebookTotals:
+      type: object
+      required: [assignmentCount, studentCount]
+      properties:
+        assignmentCount: { type: integer }
+        studentCount: { type: integer }
+    EduDiscussionTopic:
+      type: object
+      required: [id, courseId, creatorId, title, body, lockedAt, createdAt, updatedAt]
+      properties:
+        id: { type: string, format: uuid }
+        courseId: { type: string, format: uuid }
+        creatorId: { type: string }
+        title: { type: string }
+        body: { type: string }
+        lockedAt: { type: ["string", "null"], format: date-time }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    EduDiscussionReply:
+      type: object
+      required: [id, topicId, creatorId, body, createdAt, updatedAt]
+      properties:
+        id: { type: string, format: uuid }
+        topicId: { type: string, format: uuid }
+        creatorId: { type: string }
+        body: { type: string }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    EduDiscussionPagination:
+      type: object
+      required: [limit, offset]
+      properties:
+        limit: { type: integer, minimum: 1, maximum: 100 }
+        offset: { type: integer, minimum: 0 }
+    EduDiscussionTopicList:
+      type: object
+      required: [topics, pagination]
+      properties:
+        topics:
+          type: array
+          items: { $ref: "#/components/schemas/EduDiscussionTopic" }
+        pagination: { $ref: "#/components/schemas/EduDiscussionPagination" }
+    EduDiscussionReplyList:
+      type: object
+      required: [replies, pagination]
+      properties:
+        replies:
+          type: array
+          items: { $ref: "#/components/schemas/EduDiscussionReply" }
+        pagination: { $ref: "#/components/schemas/EduDiscussionPagination" }
+    EduDiscussionTopicInput:
+      type: object
+      required: [title, body]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        body: { type: string, minLength: 1, maxLength: 10000 }
+    EduDiscussionTopicUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        body: { type: string, minLength: 1, maxLength: 10000 }
+        locked: { type: boolean, description: Only the course instructor may set this field. }
+    EduDiscussionTopicResult:
+      type: object
+      required: [topic]
+      properties:
+        topic: { $ref: "#/components/schemas/EduDiscussionTopic" }
+    EduDiscussionReplyInput:
+      type: object
+      required: [body]
+      properties:
+        body: { type: string, minLength: 1, maxLength: 10000 }
+    EduDiscussionReplyResult:
+      type: object
+      required: [reply]
+      properties:
+        reply: { $ref: "#/components/schemas/EduDiscussionReply" }
+    EduGroup:
+      type: object
+      required: [id, courseId, name, description, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        courseId: { type: string, format: uuid }
+        name: { type: string }
+        description: { type: ["string", "null"] }
+        createdAt: { type: string, format: date-time }
+    EduGroupList:
+      type: object
+      required: [groups]
+      properties:
+        groups:
+          type: array
+          items: { $ref: "#/components/schemas/EduGroupListItem" }
+    EduGroupListItem:
+      allOf:
+        - $ref: "#/components/schemas/EduGroup"
+        - type: object
+          required: [memberIds]
+          properties:
+            memberIds:
+              type: array
+              description: All assigned student IDs for instructors; the current student's own ID for a student.
+              items: { type: string }
+    EduGroupInput:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 120 }
+        description: { type: ["string", "null"], maxLength: 2000 }
+    EduGroupResult:
+      type: object
+      required: [group]
+      properties:
+        group: { $ref: "#/components/schemas/EduGroup" }
+    EduGroupMembersUpdate:
+      type: object
+      required: [memberIds]
+      properties:
+        memberIds:
+          type: array
+          maxItems: 1000
+          items: { type: string, minLength: 1, maxLength: 200 }
+    EduGroupMembersResult:
+      type: object
+      required: [groupId, memberIds]
+      properties:
+        groupId: { type: string, format: uuid }
+        memberIds:
+          type: array
+          items: { type: string }
+    EduLecture:
+      type: object
+      description: Public lecture representation; private audioObjectKey is intentionally not returned.
+      required: [id, courseId, createdBy, title, professor, lectureDate, durationSeconds, transcript, transcriptionStatus, audioMimeType, audioFilename, createdAt, updatedAt]
+      properties:
+        id: { type: string, format: uuid }
+        courseId: { type: string, format: uuid }
+        createdBy: { type: string }
+        title: { type: string }
+        professor: { type: string }
+        lectureDate: { type: string, format: date-time }
+        durationSeconds: { type: ["integer", "null"] }
+        transcript: { type: ["string", "null"] }
+        transcriptionStatus: { type: string, enum: [draft, transcribing, complete, failed] }
+        audioMimeType: { type: ["string", "null"] }
+        audioFilename: { type: ["string", "null"] }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    EduLectureList:
+      type: object
+      required: [lectures]
+      properties:
+        lectures:
+          type: array
+          items: { $ref: "#/components/schemas/EduLectureListItem" }
+    EduLectureListItem:
+      allOf:
+        - $ref: "#/components/schemas/EduLecture"
+        - type: object
+          required: [groupIds]
+          properties:
+            groupIds:
+              type: array
+              description: All sharing group IDs for instructors; only groups the current student belongs to for a student.
+              items: { type: string, format: uuid }
+    EduLectureInput:
+      type: object
+      required: [title]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        professor: { type: string, maxLength: 200, default: "" }
+        lectureDate: { type: string, description: Valid date string; defaults to the current time when omitted. }
+    EduLectureUpdate:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        professor: { type: string, maxLength: 200 }
+        lectureDate: { type: string, description: Valid date string. }
+    EduLectureResult:
+      type: object
+      required: [lecture]
+      properties:
+        lecture: { $ref: "#/components/schemas/EduLecture" }
+    EduLectureShareInput:
+      type: object
+      required: [groupIds]
+      properties:
+        groupIds:
+          type: array
+          items: { type: string, format: uuid }
+    EduLectureShareResult:
+      type: object
+      required: [lectureId, groupIds]
+      properties:
+        lectureId: { type: string, format: uuid }
+        groupIds:
+          type: array
+          items: { type: string, format: uuid }
+    EduLectureTranscriptionInput:
+      type: object
+      required: [audio, mime]
+      properties:
+        audio: { type: string, minLength: 1, contentEncoding: base64, maxLength: 27962035 }
+        mime:
+          type: string
+          enum: [audio/mp4, audio/mpeg, audio/wav, audio/x-wav, audio/webm, audio/aac, audio/ogg]
+        filename:
+          type: string
+          maxLength: 120
+          pattern: "^[^/\\\\\\r\\n]*$"
+          default: lecture-audio
+    EduSource:
+      type: object
+      description: Public source representation; private objectKey is intentionally not returned. groupIds contains all source groups for instructors and only matching groups for students; it is empty for class sources.
+      required: [id, courseId, createdBy, kind, title, description, url, filename, mimeType, sizeBytes, visibility, groupIds, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        courseId: { type: string, format: uuid }
+        createdBy: { type: string }
+        kind: { type: string, enum: [link, upload] }
+        title: { type: string }
+        description: { type: ["string", "null"] }
+        url: { type: ["string", "null"] }
+        filename: { type: ["string", "null"] }
+        mimeType: { type: ["string", "null"] }
+        sizeBytes: { type: ["integer", "null"] }
+        visibility:
+          type: string
+          enum: [private, groups, class]
+          description: Private sources are instructor-only; groups sources are visible to members of assigned groups; class sources are visible to all enrolled students.
+        groupIds:
+          type: array
+          description: All assigned group IDs for instructors; only the student's matching group IDs for students; empty for class sources.
+          items: { type: string, format: uuid }
+        createdAt: { type: string, format: date-time }
+    EduSourceList:
+      type: object
+      required: [sources]
+      properties:
+        sources:
+          type: array
+          items: { $ref: "#/components/schemas/EduSource" }
+    EduSourceLinkInput:
+      type: object
+      description: Visibility defaults to private. groups requires nonempty groupIds from this course; groupIds must be omitted for private, class, and omitted visibility.
+      required: [title, url]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        url: { type: string, format: uri, description: Must use HTTP or HTTPS. }
+        description: { type: ["string", "null"], maxLength: 2000, default: null }
+        visibility:
+          type: string
+          enum: [private, groups, class]
+          default: private
+          description: Omitted means private. groups requires one or more groupIds; private and class reject groupIds.
+        groupIds:
+          type: array
+          minItems: 1
+          items: { type: string, format: uuid }
+          description: Required and nonempty for groups visibility; every ID must identify a group in this course. Omit for private or class visibility.
+    EduSourceUploadInput:
+      type: object
+      description: Visibility defaults to private. groups requires nonempty groupIds from this course; groupIds must be omitted for private, class, and omitted visibility.
+      required: [title, filename, mime, data]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        filename: { type: string, maxLength: 180, pattern: "^[^/\\\\\\r\\n]*$" }
+        mime: { type: string, enum: [application/pdf, text/plain] }
+        data: { type: string, minLength: 1, contentEncoding: base64, maxLength: 13981022 }
+        description: { type: ["string", "null"], maxLength: 2000, default: null }
+        visibility:
+          type: string
+          enum: [private, groups, class]
+          default: private
+          description: Omitted means private. groups requires one or more groupIds; private and class reject groupIds.
+        groupIds:
+          type: array
+          minItems: 1
+          items: { type: string, format: uuid }
+          description: Required and nonempty for groups visibility; every ID must identify a group in this course. Omit for private or class visibility.
+    EduSourceResult:
+      type: object
+      required: [source]
+      properties:
+        source: { $ref: "#/components/schemas/EduSource" }
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    Course:
+      type: object
+      properties:
+        id:
+          type: string
+        isOwner:
+          type: boolean
+        name:
+          type: string
+        subject:
+          type: string
+        term:
+          type: string
+        color:
+          type: string
+        meetings:
+          type: array
+          items: { $ref: "#/components/schemas/CourseMeeting" }
+        lectureCount:
+          type: integer
+        memberCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, isOwner, name, subject, term, color, meetings, lectureCount, memberCount, createdAt]
+    CourseInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        subject:
+          type: string
+        term:
+          type: string
+        color:
+          type: string
+      required: [name, subject, term, color]
+    CourseUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        subject:
+          type: string
+        term:
+          type: string
+        color:
+          type: string
+        meetings:
+          type: array
+          maxItems: 20
+          items: { $ref: "#/components/schemas/CourseMeeting" }
+    CourseMeeting:
+      type: object
+      additionalProperties: false
+      required: [days, start, end, location, type]
+      properties:
+        days:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items: { $ref: "#/components/schemas/Weekday" }
+        start: { type: string, pattern: "^(?:[01]\\d|2[0-3]):[0-5]\\d$" }
+        end: { type: string, pattern: "^(?:[01]\\d|2[0-3]):[0-5]\\d$" }
+        location: { type: string, maxLength: 160 }
+        type: { $ref: "#/components/schemas/MeetingType" }
+    Weekday:
+      type: string
+      enum: [Mon, Tue, Wed, Thu, Fri, Sat, Sun]
+    MeetingType:
+      type: string
+      enum: [Lecture, Lab, Discussion, Seminar, Recitation, "Office hours"]
+    ScheduleImportInput:
+      type: object
+      additionalProperties: false
+      properties:
+        text: { type: string, maxLength: 30000 }
+        filename: { type: ["string", "null"], maxLength: 255 }
+        mimeType: { type: ["string", "null"], enum: [application/pdf, image/jpeg, image/png, image/webp, null] }
+        contentBase64: { type: ["string", "null"], maxLength: 11184812 }
+    ScheduleProposal:
+      type: object
+      additionalProperties: false
+      required: [name, subject, term, meetings, courseId, existingName, existingTerm, existingMeetingCount, existingMeetings, ownerWritable, requiresExplicitMatchChoice, matchingCourses]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 160 }
+        subject: { type: string, minLength: 1, maxLength: 80 }
+        term: { type: string, maxLength: 80 }
+        meetings:
+          type: array
+          maxItems: 20
+          items: { $ref: "#/components/schemas/CourseMeeting" }
+        courseId: { type: ["string", "null"], format: uuid }
+        existingName: { type: ["string", "null"] }
+        existingTerm: { type: ["string", "null"] }
+        existingMeetingCount: { type: integer, minimum: 0 }
+        existingMeetings:
+          type: array
+          maxItems: 20
+          items: { $ref: "#/components/schemas/CourseMeeting" }
+        ownerWritable: { type: boolean }
+        requiresExplicitMatchChoice: { type: boolean }
+        matchingCourses:
+          type: array
+          maxItems: 20
+          items: { $ref: "#/components/schemas/ScheduleCourseMatch" }
+    ScheduleCourseMatch:
+      type: object
+      additionalProperties: false
+      required: [courseId, name, subject, term, meetings, ownerWritable]
+      properties:
+        courseId: { type: string, format: uuid }
+        name: { type: string, minLength: 1, maxLength: 160 }
+        subject: { type: string, minLength: 1, maxLength: 80 }
+        term: { type: string, maxLength: 80 }
+        meetings:
+          type: array
+          maxItems: 20
+          items: { $ref: "#/components/schemas/CourseMeeting" }
+        ownerWritable: { type: boolean }
+    ScheduleImportPreview:
+      type: object
+      required: [courses]
+      properties:
+        courses:
+          type: array
+          maxItems: 40
+          items: { $ref: "#/components/schemas/ScheduleProposal" }
+    ScheduleImportConfirmCourse:
+      type: object
+      additionalProperties: false
+      required: [courseId, name, subject, term, color, meetings]
+      properties:
+        courseId: { type: ["string", "null"], format: uuid }
+        name: { type: string, minLength: 1, maxLength: 160 }
+        subject: { type: string, minLength: 1, maxLength: 80 }
+        term: { type: string, maxLength: 80 }
+        color: { type: string, pattern: "^#[0-9A-Fa-f]{6}$" }
+        meetings:
+          type: array
+          maxItems: 20
+          items: { $ref: "#/components/schemas/CourseMeeting" }
+    ScheduleImportConfirmInput:
+      type: object
+      additionalProperties: false
+      required: [courses, replaceExisting]
+      properties:
+        courses:
+          type: array
+          minItems: 1
+          maxItems: 40
+          items: { $ref: "#/components/schemas/ScheduleImportConfirmCourse" }
+        replaceExisting: { type: boolean }
+    ScheduleImportConfirmResult:
+      type: object
+      required: [savedCount]
+      properties:
+        savedCount: { type: integer, minimum: 0 }
+    Lecture:
+      type: object
+      properties:
+        id:
+          type: string
+        courseId:
+          type: string
+        title:
+          type: string
+        professor:
+          type: string
+        lectureDate:
+          type: string
+          format: date-time
+        durationSeconds:
+          type: ["integer", "null"]
+        transcript:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+        summary:
+          type: ["string", "null"]
+        keyPoints:
+          type: array
+          items:
+            type: string
+        definitions:
+          type: array
+          items:
+            type: string
+        quizQuestions:
+          type: array
+          items: { $ref: "#/components/schemas/QuizQuestion" }
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, courseId, title, professor, lectureDate, durationSeconds, transcript, notes, summary, keyPoints, definitions, quizQuestions, createdAt]
+    QuizQuestion:
+      type: object
+      required: [id, topic, prompt, options]
+      properties:
+        id: { type: string, format: uuid }
+        topic: { type: string }
+        prompt: { type: string }
+        options:
+          type: array
+          minItems: 2
+          maxItems: 4
+          items: { type: string }
+    PracticeAnswer:
+      type: object
+      required: [questionId, selectedIndex]
+      properties:
+        questionId: { type: string, format: uuid }
+        selectedIndex: { type: integer, minimum: 0, maximum: 3 }
+    PracticeAttemptResult:
+      type: object
+      required: [id, lectureId, questionId, selectedIndex, correctIndex, correct, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        lectureId: { type: string, format: uuid }
+        questionId: { type: string, format: uuid }
+        selectedIndex: { type: integer }
+        correctIndex: { type: integer }
+        correct: { type: boolean }
+        createdAt: { type: string, format: date-time }
+    PracticeTopic:
+      type: object
+      required: [courseId, courseName, topic, answered, correct, lectureCount]
+      properties:
+        courseId: { type: string, format: uuid }
+        courseName: { type: string }
+        topic: { type: string }
+        answered: { type: integer }
+        correct: { type: integer }
+        lectureCount: { type: integer }
+    PracticeLecture:
+      type: object
+      required: [lectureId, courseId, title, answered, correct]
+      properties:
+        lectureId: { type: string, format: uuid }
+        courseId: { type: string, format: uuid }
+        title: { type: string }
+        answered: { type: integer }
+        correct: { type: integer }
+    PracticeProgress:
+      type: object
+      required: [answered, correct, topics, lectures]
+      properties:
+        answered: { type: integer }
+        correct: { type: integer }
+        topics:
+          type: array
+          items: { $ref: "#/components/schemas/PracticeTopic" }
+        lectures:
+          type: array
+          items: { $ref: "#/components/schemas/PracticeLecture" }
+    LectureInput:
+      type: object
+      properties:
+        courseId:
+          type: string
+        title:
+          type: string
+          minLength: 1
+        professor:
+          type: string
+        lectureDate:
+          type: string
+          format: date-time
+      required: [courseId, title, professor, lectureDate]
+    LectureUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        professor:
+          type: string
+        transcript:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+        summary:
+          type: ["string", "null"]
+        keyPoints:
+          type: array
+          items:
+            type: string
+        definitions:
+          type: array
+          items:
+            type: string
+    DashboardSummary:
+      type: object
+      properties:
+        courseCount:
+          type: integer
+        lectureCount:
+          type: integer
+        studyMinutes:
+          type: integer
+        upcomingItems:
+          type: array
+          items:
+            type: string
+      required: [courseCount, lectureCount, studyMinutes, upcomingItems]
+    DashboardGlance:
+      type: object
+      properties:
+        dueSoon:
+          type: array
+          items: { $ref: "#/components/schemas/GlanceDueItem" }
+        recentPracticeSets:
+          type: array
+          items: { $ref: "#/components/schemas/PracticeSet" }
+        recentBookmarks:
+          type: array
+          items: { $ref: "#/components/schemas/Bookmark" }
+      required: [dueSoon, recentPracticeSets, recentBookmarks]
+    GlanceDueItem:
+      type: object
+      properties:
+        id: { type: string }
+        courseId: { type: string }
+        courseName: { type: string }
+        title: { type: string }
+        kind: { type: string, enum: [assignment, exam] }
+        dueDate: { type: string, format: date }
+        source: { type: string, enum: [lecture, syllabus] }
+      required: [id, courseId, courseName, title, kind, dueDate, source]
+    PracticeSet:
+      type: object
+      properties:
+        lectureId: { type: string }
+        lectureTitle: { type: string }
+        courseId: { type: string }
+        courseName: { type: string }
+        analyzedAt: { type: string, format: date-time }
+        studyQuestions:
+          type: array
+          items: { type: string }
+      required: [lectureId, lectureTitle, courseId, courseName, analyzedAt, studyQuestions]
+    Bookmark:
+      type: object
+      properties:
+        id: { type: string }
+        lectureId: { type: string }
+        lectureTitle: { type: string }
+        courseId: { type: string }
+        courseName: { type: string }
+        excerpt: { type: string }
+        createdAt: { type: string, format: date-time }
+      required: [id, lectureId, lectureTitle, courseId, courseName, excerpt, createdAt]
+    BookmarkInput:
+      type: object
+      properties:
+        excerpt: { type: string, minLength: 1, maxLength: 2000 }
+      required: [excerpt]
+    SyllabusUploadInput:
+      type: object
+      properties:
+        filename: { type: string, minLength: 1, maxLength: 255 }
+        mimeType: { type: string, enum: [application/pdf, text/plain] }
+        size: { type: integer, minimum: 1, maximum: 10485760 }
+      required: [filename, mimeType, size]
+    SyllabusUploadResponse:
+      type: object
+      properties:
+        uploadURL: { type: string, format: uri }
+        objectPath: { type: string }
+      required: [uploadURL, objectPath]
+    SyllabusProposal:
+      type: object
+      properties:
+        title: { type: string }
+        kind: { type: string, enum: [assignment, exam] }
+        dueDate: { type: ["string", "null"], format: date }
+        sourceText: { type: string }
+      required: [title, kind, dueDate, sourceText]
+    SyllabusModuleProposal:
+      type: object
+      properties:
+        title: { type: string, minLength: 1 }
+        sourceText: { type: string, minLength: 1 }
+      required: [title, sourceText]
+    SyllabusAssignmentProposal:
+      type: object
+      properties:
+        title: { type: string, minLength: 1 }
+        type: { type: string, enum: [homework, reading, quiz, exam, project] }
+        dueDate: { type: ["string", "null"], format: date }
+        sourceText: { type: string, minLength: 1 }
+      required: [title, type, dueDate, sourceText]
+    SyllabusPreview:
+      type: object
+      properties:
+        proposedName: { type: string }
+        proposedSubject: { type: string }
+        proposedTerm: { type: string }
+        dates:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusProposal" }
+        modules:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusModuleProposal" }
+        assignments:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusAssignmentProposal" }
+      required: [proposedName, proposedSubject, proposedTerm, dates, modules, assignments]
+    SyllabusConfirmInput:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        subject: { type: string }
+        term: { type: string }
+        selectedDates:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusProposal" }
+        selectedModules:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusModuleProposal" }
+        selectedAssignments:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusAssignmentProposal" }
+      required: [name, subject, term, selectedDates]
+    CourseModule:
+      type: object
+      properties:
+        id: { type: string }
+        courseId: { type: string }
+        title: { type: string }
+        sourceText: { type: string }
+        position: { type: integer }
+      required: [id, courseId, title, sourceText, position]
+    CourseModuleWithCourse:
+      allOf:
+        - $ref: "#/components/schemas/CourseModule"
+        - type: object
+          properties:
+            courseName: { type: string }
+          required: [courseName]
+    SyllabusAssignment:
+      type: object
+      properties:
+        id: { type: string }
+        courseId: { type: string }
+        title: { type: string }
+        type: { type: string, enum: [homework, reading, quiz, exam, project] }
+        dueDate: { type: ["string", "null"], format: date }
+        sourceText: { type: string }
+        position: { type: integer }
+        completed: { type: boolean, description: Whether the authenticated student has completed this item }
+      required: [id, courseId, title, type, dueDate, sourceText, position, completed]
+    SyllabusAssignmentCompletionInput:
+      type: object
+      properties:
+        completed: { type: boolean }
+      required: [completed]
+    SyllabusAssignmentWithCourse:
+      allOf:
+        - $ref: "#/components/schemas/SyllabusAssignment"
+        - type: object
+          properties:
+            courseName: { type: string }
+          required: [courseName]
+    SyllabusDate:
+      type: object
+      properties:
+        id: { type: string }
+        courseId: { type: string }
+        title: { type: string }
+        kind: { type: string, enum: [assignment, exam] }
+        dueDate: { type: string, format: date }
+        sourceText: { type: string }
+        confirmed: { type: boolean }
+        linkStatus:
+          type: string
+          enum: [linked, ambiguous, standalone]
+          description: Whether this confirmed date uniquely matches coursework, has a non-unique title match, or is only tracked as a syllabus date.
+      required: [id, courseId, title, kind, dueDate, sourceText, confirmed, linkStatus]
+    Syllabus:
+      type: object
+      properties:
+        courseId: { type: string }
+        filename: { type: ["string", "null"] }
+        mimeType: { type: ["string", "null"] }
+        uploadedAt: { type: ["string", "null"], format: date-time }
+        dates:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusDate" }
+        modules:
+          type: array
+          items: { $ref: "#/components/schemas/CourseModule" }
+        assignments:
+          type: array
+          items: { $ref: "#/components/schemas/SyllabusAssignment" }
+      required: [courseId, filename, mimeType, uploadedAt, dates, modules, assignments]
+    TranscriptionInput:
+      type: object
+      properties:
+        audioBase64:
+          type: string
+        fileName:
+          type: string
+        mimeType:
+          type: string
+      required: [audioBase64, fileName, mimeType]
+    TranscriptionOutput:
+      type: object
+      properties:
+        transcript:
+          type: string
+      required: [transcript]
+    AnalysisInput:
+      type: object
+      properties:
+        transcript:
+          type: string
+        difficulty:
+          type: string
+          enum: [beginner, intermediate, advanced]
+      required: [transcript, difficulty]
+    LectureAnalysis:
+      type: object
+      properties:
+        summary:
+          type: string
+        keyPoints:
+          type: array
+          items:
+            type: string
+        definitions:
+          type: array
+          items:
+            type: string
+        discussion:
+          type: array
+          items:
+            type: string
+        studyQuestions:
+          type: array
+          items:
+            type: string
+        quizQuestions:
+          type: array
+          items: { $ref: "#/components/schemas/QuizQuestion" }
+        dates:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExtractedDate"
+      required: [summary, keyPoints, definitions, discussion, studyQuestions, quizQuestions, dates]
+    ExtractedDate:
+      type: object
+      properties:
+        title: { type: string }
+        kind: { type: string, enum: [assignment, exam] }
+        dueDate: { type: ["string", "null"], format: date }
+        sourceText: { type: string }
+      required: [title, kind, dueDate, sourceText]
+    AcademicDate:
+      type: object
+      properties:
+        id: { type: string }
+        lectureId: { type: string }
+        courseId: { type: string }
+        title: { type: string }
+        kind: { type: string, enum: [assignment, exam] }
+        dueDate: { type: ["string", "null"], format: date }
+        sourceText: { type: string }
+        confirmed: { type: boolean }
+      required: [id, lectureId, courseId, title, kind, dueDate, sourceText, confirmed]
+    AcademicDateUpdate:
+      type: object
+      properties:
+        title: { type: string, minLength: 1 }
+        dueDate: { type: ["string", "null"], format: date }
+        confirmed: { type: boolean }
+    CourseComment:
+      type: object
+      properties:
+        id:
+          type: string
+        courseId:
+          type: string
+        authorName:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, courseId, authorName, content, createdAt]
+    CourseCommentInput:
+      type: object
+      properties:
+        authorName:
+          type: string
+        content:
+          type: string
+          minLength: 1
+      required: [authorName, content]
+    CourseInvite:
+      type: object
+      properties:
+        code:
+          type: string
+      required: [code]
+    JoinCourseInput:
+      type: object
+      properties:
+        code:
+          type: string
+      required: [code]
+    Note:
+      type: object
+      properties:
+        id: { type: string }
+        userId: { type: string }
+        title: { type: string }
+        markdownBody: { type: string }
+        courseId: { type: ["string", "null"] }
+        lectureId: { type: ["string", "null"] }
+        pinned: { type: boolean }
+        prevBody: { type: ["string", "null"] }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+      required: [id, userId, title, markdownBody, courseId, lectureId, pinned, prevBody, createdAt, updatedAt]
+    NoteInput:
+      type: object
+      properties:
+        title: { type: string, minLength: 1, maxLength: 500 }
+        markdownBody: { type: string }
+        courseId: { type: ["string", "null"] }
+        lectureId: { type: ["string", "null"] }
+        pinned: { type: boolean }
+        prevBody: { type: ["string", "null"] }
+      required: [title, markdownBody]
+    NoteUpdate:
+      type: object
+      properties:
+        title: { type: string, minLength: 1, maxLength: 500 }
+        markdownBody: { type: string }
+        courseId: { type: ["string", "null"] }
+        lectureId: { type: ["string", "null"] }
+        pinned: { type: boolean }
+        prevBody: { type: ["string", "null"] }
+    EduCourseSummary:
+      type: object
+      required: [id, name, subject, term, role]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        subject: { type: string }
+        term: { type: string }
+        role: { type: string, enum: [instructor, student] }
+        memberCount: { type: integer, minimum: 1 }
+    EduCourseList:
+      type: object
+      required: [courses]
+      properties:
+        courses:
+          type: array
+          items: { $ref: "#/components/schemas/EduCourseSummary" }
+    EduAccessStatus:
+      type: object
+      required: [canCreateCourse, canJoinLicensedCourse, needsCredentials, canManageSchool]
+      properties:
+        canCreateCourse: { type: boolean }
+        canJoinLicensedCourse: { type: boolean }
+        needsCredentials: { type: boolean }
+        canManageSchool: { type: boolean }
+    EduInstructorHistoryEvent:
+      type: object
+      required: [id, issuerUserId, instructorUserId, action, occurredAt, expiresAt]
+      properties:
+        id: { type: string, format: uuid }
+        issuerUserId: { type: string }
+        instructorUserId: { type: string }
+        action: { type: string, enum: [approved, revoked] }
+        occurredAt: { type: string, format: date-time }
+        expiresAt: { type: ["string", "null"], format: date-time }
+    EduInstructorHistoryPage:
+      type: object
+      required: [signedAgreementRef, events, nextCursor]
+      properties:
+        signedAgreementRef: { type: string }
+        events:
+          type: array
+          items: { $ref: "#/components/schemas/EduInstructorHistoryEvent" }
+        nextCursor: { type: ["string", "null"], format: uuid }
+    EduInstructorApprovalInput:
+      type: object
+      additionalProperties: false
+      required: [userId]
+      properties:
+        userId: { type: string, pattern: "^user_[A-Za-z0-9]{10,64}$" }
+    EduInstructor:
+      type: object
+      required: [userId, signedAgreementRef, issuerUserId, approvedAt, expiresAt]
+      properties:
+        userId: { type: string }
+        signedAgreementRef: { type: string }
+        issuerUserId: { type: string }
+        approvedAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time }
+        revokedAt: { type: ["string", "null"], format: date-time }
+    EduSchool:
+      type: object
+      required: [signedAgreementRef, adminUserId, verifiedAt, expiresAt, instructors, expiryWarning]
+      properties:
+        signedAgreementRef: { type: string }
+        adminUserId: { type: string }
+        verifiedAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time }
+        instructors:
+          type: array
+          items: { $ref: "#/components/schemas/EduInstructor" }
+        expiryWarning: { $ref: "#/components/schemas/EduExpiryWarning" }
+    EduExpiryWarningInput:
+      type: object
+      additionalProperties: false
+      required: [enabled]
+      properties:
+        enabled: { type: boolean }
+    EduExpiryWarning:
+      type: object
+      required: [enabled, startsAt, due]
+      properties:
+        enabled: { type: boolean }
+        startsAt: { type: string, format: date-time }
+        due: { type: boolean }
+    EduClientActivationInput:
+      type: object
+      additionalProperties: false
+      required: [licenseNumber, clientPin]
+      properties:
+        licenseNumber: { type: string, pattern: "^EDU-[A-F0-9]{24}$" }
+        clientPin: { type: string, minLength: 8, maxLength: 12, pattern: "^[0-9]+$" }
+    EduClientActivationStatus:
+      type: object
+      required: [verified, expiresAt]
+      properties:
+        verified: { type: boolean, enum: [true] }
+        expiresAt: { type: string, format: date-time }
+    EduCourseInput:
+      type: object
+      additionalProperties: false
+      required: [name]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 160 }
+        subject: { type: string, maxLength: 80 }
+        term: { type: string, maxLength: 80 }
+    EduCourse:
+      type: object
+      required: [id, name, subject, term, ownerId]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        subject: { type: string }
+        term: { type: string }
+        ownerId: { type: ["string", "null"] }
+    EduCourseResult:
+      type: object
+      required: [course]
+      properties:
+        course: { $ref: "#/components/schemas/EduCourse" }
+    EduJoinInput:
+      type: object
+      additionalProperties: false
+      required: [inviteCode]
+      properties:
+        inviteCode: { type: string, minLength: 1, maxLength: 64 }
+    EduInviteResult:
+      type: object
+      required: [inviteCode]
+      properties:
+        inviteCode: { type: string }
+    EduAnnouncement:
+      type: object
+      required: [id, title, body, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        body: { type: string }
+        createdAt: { type: string, format: date-time }
+    EduAnnouncementInput:
+      type: object
+      additionalProperties: false
+      required: [title, body]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        body: { type: string, minLength: 1, maxLength: 20000 }
+    EduAnnouncementUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        body: { type: string, minLength: 1, maxLength: 20000 }
+    EduAnnouncementResult:
+      type: object
+      required: [announcement]
+      properties:
+        announcement: { $ref: "#/components/schemas/EduAnnouncement" }
+    EduMaterial:
+      type: object
+      required: [id, title, url, description, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        url: { type: string }
+        description: { type: ["string", "null"] }
+        filename: { type: ["string", "null"] }
+        mimeType: { type: ["string", "null"] }
+        sizeBytes: { type: ["number", "null"] }
+        createdAt: { type: string, format: date-time }
+    EduMaterialInput:
+      type: object
+      additionalProperties: false
+      required: [title, url]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        url: { type: string, format: uri, maxLength: 2048 }
+        description: { type: string, maxLength: 4000 }
+    EduCourseFileInput:
+      type: object
+      required: [filename, mimeType, data]
+      properties:
+        filename: { type: string, minLength: 1, maxLength: 180 }
+        mimeType: { type: string }
+        data: { type: string, description: Base64 encoded file bytes, maximum 10 MB decoded }
+    EduMaterialFileInput:
+      allOf:
+        - $ref: "#/components/schemas/EduCourseFileInput"
+        - type: object
+          required: [title]
+          properties:
+            title: { type: string, minLength: 1, maxLength: 200 }
+            description: { type: string, maxLength: 4000 }
+    EduMaterialUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        url: { type: string, format: uri, maxLength: 2048 }
+        description: { type: ["string", "null"], maxLength: 4000 }
+    EduMaterialResult:
+      type: object
+      required: [material]
+      properties:
+        material: { $ref: "#/components/schemas/EduMaterial" }
+    EduAssignment:
+      type: object
+      required: [id, title, instructions, dueAt, points, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        title: { type: string }
+        instructions: { type: string }
+        dueAt: { type: ["string", "null"], format: date-time }
+        points: { type: number, minimum: 0 }
+        createdAt: { type: string, format: date-time }
+        filename: { type: ["string", "null"] }
+        mimeType: { type: ["string", "null"] }
+        sizeBytes: { type: ["number", "null"] }
+        mySubmission: { $ref: "#/components/schemas/EduStudentSubmission" }
+    EduAssignmentInput:
+      type: object
+      additionalProperties: false
+      required: [title, instructions, points]
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        instructions: { type: string, minLength: 1, maxLength: 20000 }
+        dueAt: { type: ["string", "null"], format: date-time }
+        points: { type: number, minimum: 0, maximum: 100000 }
+    EduAssignmentUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        title: { type: string, minLength: 1, maxLength: 200 }
+        instructions: { type: string, minLength: 1, maxLength: 20000 }
+        dueAt: { type: ["string", "null"], format: date-time }
+        points: { type: number, minimum: 0, maximum: 100000 }
+    EduAssignmentResult:
+      type: object
+      required: [assignment]
+      properties:
+        assignment: { $ref: "#/components/schemas/EduAssignment" }
+    EduStudentSubmission:
+      type: object
+      required: [id, text, score, feedback, submittedAt]
+      properties:
+        id: { type: string, format: uuid }
+        text: { type: string }
+        score: { type: ["number", "null"] }
+        feedback: { type: ["string", "null"] }
+        submittedAt: { type: string, format: date-time }
+        filename: { type: ["string", "null"] }
+        mimeType: { type: ["string", "null"] }
+        sizeBytes: { type: ["number", "null"] }
+    EduSubmission:
+      allOf:
+        - $ref: "#/components/schemas/EduStudentSubmission"
+        - type: object
+          required: [studentId]
+          properties:
+            studentId: { type: string }
+            studentName: { type: ["string", "null"] }
+    EduSubmissionInput:
+      type: object
+      additionalProperties: false
+      required: [text]
+      properties:
+        text: { type: string, maxLength: 100000 }
+        attachment:
+          description: Omit to keep the current file; null removes it; an upload replaces it. Text or a file is required.
+          oneOf:
+            - $ref: "#/components/schemas/EduSubmissionFileInput"
+            - type: "null"
+    EduSubmissionFileInput:
+      type: object
+      additionalProperties: false
+      required: [filename, mimeType, data]
+      properties:
+        filename: { type: string, minLength: 1, maxLength: 180 }
+        mimeType:
+          type: string
+          enum: [application/pdf, text/plain, image/png, image/jpeg, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.presentationml.presentation]
+        data: { type: string, minLength: 1, maxLength: 13981024, description: Base64 file bytes; decoded size at most 10 MB }
+    EduFileCleanupResult:
+      type: object
+      required: [cleanupPending]
+      properties:
+        cleanupPending: { type: boolean }
+    EduGradeInput:
+      type: object
+      additionalProperties: false
+      required: [score, feedback]
+      properties:
+        score: { type: number, minimum: 0 }
+        feedback: { type: string, maxLength: 10000 }
+    EduSubmissionResult:
+      type: object
+      required: [submission]
+      properties:
+        submission: { $ref: "#/components/schemas/EduStudentSubmission" }
+        cleanupPending: { type: boolean }
+    EduSubmissionList:
+      type: object
+      required: [submissions]
+      properties:
+        submissions:
+          type: array
+          items: { $ref: "#/components/schemas/EduSubmission" }
+    EduRosterMember:
+      type: object
+      required: [userId]
+      properties:
+        userId: { type: string }
+        name: { type: ["string", "null"] }
+    EduCourseDetail:
+      type: object
+      required: [course, role, announcements, materials, assignments]
+      properties:
+        course: { $ref: "#/components/schemas/EduCourse" }
+        role: { type: string, enum: [instructor, student] }
+        roster:
+          type: array
+          items: { $ref: "#/components/schemas/EduRosterMember" }
+        announcements:
+          type: array
+          items: { $ref: "#/components/schemas/EduAnnouncement" }
+        materials:
+          type: array
+          items: { $ref: "#/components/schemas/EduMaterial" }
+        assignments:
+          type: array
+          items: { $ref: "#/components/schemas/EduAssignment" }

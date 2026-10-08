@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "ClassScribe"
+description = "A course-centered lecture companion for college students to record or add lectures, create searchable transcripts and key points, organize class notes, collaborate, study, and share by email."
+version = "1.0.0"
+id = "artifacts/classscribe"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22333
+
+[services.development]
+run = "pnpm --filter @workspace/classscribe run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/classscribe", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/classscribe/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22333"
+BASE_PATH = "/"

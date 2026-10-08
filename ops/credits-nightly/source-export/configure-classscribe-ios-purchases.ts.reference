@@ -1,0 +1,111 @@
+import { createPrivateKey } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
+import { revenueCatRequest } from "./revenuecatClient";
+
+type RevenueCatApp = {
+  id: string;
+  type?: string;
+  app_store?: {
+    bundle_id?: string;
+    subscription_key_configured?: boolean;
+  };
+};
+
+async function main(): Promise<void> {
+  const projectId = process.env.REVENUECAT_PROJECT_ID;
+  const appId = process.env.REVENUECAT_APPLE_APP_STORE_APP_ID;
+  if (!projectId || !appId) {
+    throw new Error("revenuecat_ios_app_not_configured");
+  }
+  const path = `/v2/projects/${encodeURIComponent(projectId)}/apps/${encodeURIComponent(appId)}`;
+  const before = await revenueCatRequest<RevenueCatApp>(path);
+  if (
+    before.id !== appId ||
+    before.type !== "app_store" ||
+    before.app_store?.bundle_id !== "com.classscribe.app"
+  ) {
+    throw new Error("revenuecat_ios_bundle_mismatch");
+  }
+  if (before.app_store.subscription_key_configured) {
+    console.log("ClassScribe iOS In-App Purchase key is already configured.");
+    return;
+  }
+
+  const keyFile = process.argv[2];
+  const rawKey = keyFile ? readFileSync(keyFile, "utf8") : process.env.APPLE_IAP_P8_KEY;
+  const filenameKeyId = keyFile
+    ? /^SubscriptionKey_([A-Z0-9]{10})(?:_\d+)?\.p8$/.exec(basename(keyFile))?.[1]
+    : undefined;
+  const keyId = filenameKeyId ?? process.env.APPLE_IAP_KEY_ID;
+  const issuerId = process.env.APPLE_IAP_ISSUER_ID;
+  if (!rawKey || !keyId || !issuerId) {
+    throw new Error("apple_iap_credentials_missing");
+  }
+  const normalizedKey = rawKey.replace(/\\n/g, "\n").replace(/\r\n/g, "\n");
+  const beginMarker = "REDACTED_CREDENTIAL";
+  const begin = normalizedKey.indexOf(beginMarker);
+  const end = normalizedKey.indexOf(endMarker);
+  if (begin < 0 || end < begin) {
+    throw new Error("apple_iap_p8_pem_markers_missing");
+  }
+  const privateKey = normalizedKey.slice(begin, end + endMarker.length).trim() + "\n";
+  if (!/^REDACTED_CREDENTIAL\s$/.test(privateKey)) {
+    throw new Error("apple_iap_p8_pem_format_invalid");
+  }
+  if (!/^[A-Z0-9]{10}$/.test(keyId.trim())) {
+    throw new Error("apple_iap_key_id_format_invalid");
+  }
+  if (!/^[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(issuerId.trim())) {
+    throw new Error("apple_iap_issuer_id_format_invalid");
+  }
+  let parsedKey: ReturnType<typeof createPrivateKey>;
+  try {
+    parsedKey = createPrivateKey(privateKey);
+  } catch {
+    throw new Error("apple_iap_private_key_invalid");
+  }
+  if (
+    parsedKey.asymmetricKeyType !== "ec" ||
+    parsedKey.asymmetricKeyDetails?.namedCurve !== "prime256v1"
+  ) {
+    throw new Error("apple_iap_private_key_type_invalid");
+  }
+
+  await revenueCatRequest<RevenueCatApp>(path, "POST", {
+    app_store: {
+      bundle_id: "com.classscribe.app",
+      subscription_private_key: privateKey,
+      subscription_key_id: keyId.trim(),
+      subscription_key_issuer: issuerId.trim(),
+    },
+  });
+
+  const after = await revenueCatRequest<RevenueCatApp>(path);
+  if (
+    after.id !== appId ||
+    after.type !== "app_store" ||
+    after.app_store?.bundle_id !== "com.classscribe.app" ||
+    after.app_store.subscription_key_configured !== true
+  ) {
+    throw new Error("revenuecat_ios_iap_key_not_confirmed");
+  }
+  console.log("ClassScribe iOS In-App Purchase key is configured in RevenueCat.");
+}
+
+main().catch((error: unknown) => {
+  // Provider errors may contain request details. Never print the error message:
+  // the request included a private signing key.
+  const providerStatus = error instanceof Error
+    ? /RevenueCat API request failed \((\d{3})\)/.exec(error.message)?.[1]
+    : undefined;
+  const code = providerStatus
+    ? `revenuecat_api_status_${providerStatus}`
+    : error instanceof Error && error.message.startsWith("apple_")
+    ? error.message
+    : error instanceof Error && error.message.startsWith("revenuecat_ios_")
+      ? error.message
+      : "revenuecat_ios_configuration_failed";
+  console.error(`ClassScribe iOS configuration stopped (${code}).`);
+  process.exitCode = 1;
+});

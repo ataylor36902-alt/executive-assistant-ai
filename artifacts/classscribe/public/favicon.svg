@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ClassScribe">
+  <rect width="512" height="512" rx="112" fill="#1F2A93"/>
+  <path d="M256 183c-39-26-83-35-140-32v205c57-3 101 7 140 33V183Z" fill="#fff"/>
+  <path d="M256 183c39-26 83-35 140-32v205c-57-3-101 7-140 33V183Z" fill="#fff"/>
+  <path d="M256 183v206" stroke="#1F2A93" stroke-width="14"/>
+  <circle cx="256" cy="148" r="39" fill="#E26D46" stroke="#1F2A93" stroke-width="12"/>
+</svg>
